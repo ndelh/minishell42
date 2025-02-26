@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/02/26 12:13:00 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:23:55 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	ft_gen(t_data **data, char **envp);
 void	ft_free_tab(char **tab);
 void	ft_print_tab(char **tab);
 int		tab_len(char **tab);
+//tokenize
+void	ft_tokenize(t_data *data, char *line);
+char	**split_quote(char *s);
 //end
 void	ft_end(t_data *data);
 #endif

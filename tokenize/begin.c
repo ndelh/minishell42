@@ -1,37 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   begin.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 09:29:19 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/02/26 12:32:26 by ndelhota         ###   ########.fr       */
+/*   Created: 2025/02/26 13:04:53 by ndelhota          #+#    #+#             */
+/*   Updated: 2025/02/26 13:43:30 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	main(int ac, char **argv, char **envp)
+void	ft_tokenize(t_data *data, char *line)
 {
-	char	*line;
-	t_data	*data;
+	char	**first_split;
 
+	first_split = split_quote(line);
+	ft_print_tab(first_split);
+	ft_free_tab(first_split);
 	data = NULL;
-	argv = NULL;
-	if (ac == 1)
-	{
-		ft_gen(&data, envp);
-		while (1)
-		{
-			line = readline("minishell > ");
-			if (line == NULL)
-				break ;
-			add_history(line);
-			ft_tokenize(data, line);
-			free(line);
-		}
-		free(line);
-		ft_end(data);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:42:28 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/02/26 13:23:27 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:16:45 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	skip_single(char **s)
 {
-	(*s)++;	
+	(*s)++;
 	while (**s != '\'')
 	{
 		(*s)++;
@@ -32,8 +32,8 @@ void	skip_double(char **s)
 
 int	word_numb(char *s)
 {
-	int ret;
-	
+	int	ret;
+
 	ret = 0;
 	while (*s)
 	{
@@ -62,14 +62,14 @@ char	*ft_dup(char **s)
 {
 	char	*cursor;
 	char	*ret;
-	int	i;
-	
+	int		i;
+
 	cursor = *s;
 	if (*cursor == '\"')
 		skip_double(&cursor);
 	else if (*cursor == '\'')
 		skip_single(&cursor);
-	else 
+	else
 	{
 		while (*cursor && *cursor != '\'' && *cursor != '\"')
 			cursor++;
@@ -82,9 +82,9 @@ char	*ft_dup(char **s)
 
 char	**split_quote(char *s)
 {
-	char **to_ret;
-	int	i;
-	int	nb;
+	char	**to_ret;
+	int		i;
+	int		nb;
 
 	i = 0;
 	nb = word_numb(s);

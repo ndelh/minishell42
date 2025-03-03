@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:44:26 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/02/26 12:12:00 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:36:33 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_gen(t_data **data, char **envp)
 	to_ret = malloc(sizeof(t_data));
 	if (to_ret)
 	{
+		ft_memset(to_ret, 0, sizeof(t_data));
 		to_ret->my_env = ft_get_envp(envp);
 	}
 	*data = to_ret;

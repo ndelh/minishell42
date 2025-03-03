@@ -1,37 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_end_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 09:29:19 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/02/26 17:00:11 by ndelhota         ###   ########.fr       */
+/*   Created: 2025/02/26 15:48:40 by ndelhota          #+#    #+#             */
+/*   Updated: 2025/03/02 14:44:30 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	main(int ac, char **argv, char **envp)
+void	free_token_list(t_token *to_free)
 {
-	char	*line;
-	t_data	*data;
+	t_token	*temp;
 
-	data = NULL;
-	argv = NULL;
-	if (ac == 1)
+	while (to_free)
 	{
-		ft_gen(&data, envp);
-		while (1)
-		{
-			line = readline("minishell > ");
-			if (line == NULL)
-				break ;
-			add_history(line);
-			ft_tokenize(data, line);
-			free(line);
-		}
-		free(line);
-		ft_end(data);
+		temp = to_free->next;
+		printf("%s\n", to_free->piece);
+		printf("%u\n", to_free->cmd_num);
+		free(to_free->piece);
+		free(to_free);
+		to_free = temp;
 	}
 }

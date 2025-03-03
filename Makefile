@@ -6,7 +6,7 @@
 #    By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/02/26 13:19:55 by ndelhota         ###   ########.fr        #
+#    Updated: 2025/03/03 15:10:25 by ndelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,14 @@ SRC := main.c \
        gen/ft_gen.c \
        tokenize/begin.c \
        tokenize/ft_split_quote.c \
+       tokenize/first_sort.c \
+       tokenize/second_sort.c \
+       tokenize/split_pipe.c \
+       tokenize/split_redir.c \
+       tokenize/third_sort.c \
        utils/tab_utils.c \
        end/ft_end.c \
+       end/ft_end_list.c \
 
 CC := cc
 

@@ -6,39 +6,69 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:44:26 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/02/26 16:36:33 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/08 17:42:16 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	**ft_get_envp(char **envp)
+void	ft_add_last_env(t_env **list, t_env *to_add)
 {
-	char	**to_ret;
-	int		i;
+	static t_env	*cursor;
 
-	to_ret = (char **)malloc(sizeof(char *) * (tab_len(envp) + 1));
-	if (!to_ret)
-		exit (0);
-	i = 0;
-	while (i < tab_len(envp))
+	if (!*list || !list)
+		*list = to_add;
+	else
 	{
-		to_ret[i] = ft_strdup(envp[i]);
-		i++;
+		cursor->next = to_add;
+		to_add->previous = cursor;
 	}
-	to_ret[i] = NULL;
+	cursor = to_add;
+}
+
+void	ft_add_string(t_env *node, char *s)
+{
+	char	*cursor;
+
+	cursor = ft_strchr(s, '=');
+	if (!cursor)
+		node->name = ft_strdup(s);
+	else
+	{
+		node->name = ft_substr(s, 0, (ft_strlen(s) - ft_strlen(cursor)));
+		node->content = ft_substr(cursor, 1, ft_strlen(cursor) - 1);
+		node->status = 1;
+	}
+}
+
+t_env	*ft_gen_env_node(char *s)
+{
+	t_env	*to_ret;
+
+	to_ret = malloc(sizeof(t_env));
+	ft_memset(to_ret, 0, sizeof(t_env));
+	ft_add_string(to_ret, s);
+	return (to_ret);
+}
+
+t_env	*ft_gen_env_list(char **envp)
+{
+	t_env	*to_ret;
+	t_env	*to_add;
+
+	to_ret = NULL;
+	while (*envp)
+	{
+		to_add = ft_gen_env_node(*envp);
+		ft_add_last_env(&to_ret, to_add);
+		envp++;
+	}
 	return (to_ret);
 }
 
 void	ft_gen(t_data **data, char **envp)
 {
-	t_data	*to_ret;
-
-	to_ret = malloc(sizeof(t_data));
-	if (to_ret)
-	{
-		ft_memset(to_ret, 0, sizeof(t_data));
-		to_ret->my_env = ft_get_envp(envp);
-	}
-	*data = to_ret;
+	*data = malloc(sizeof(t_data));
+	ft_memset(*data, 0, sizeof(t_data));
+	(*data)->my_env = ft_gen_env_list(envp);
 }

@@ -6,7 +6,7 @@
 #    By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/03/03 15:10:25 by ndelhota         ###   ########.fr        #
+#    Updated: 2025/03/16 14:04:59 by ndelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,19 @@ SRC := main.c \
        tokenize/first_sort.c \
        tokenize/second_sort.c \
        tokenize/split_pipe.c \
+       tokenize/separate_cmd.c \
        tokenize/split_redir.c \
        tokenize/third_sort.c \
+       tokenize/seek_block_utils.c \
+       tokenize/seek_block.c \
+       tokenize/seek_block_tail.c \
+       tokenize/isolate_redir.c \
+       tokenize/expand.c \
+       tokenize/gen_expand.c \
+       tokenize/expand_utils.c \
+       tokenize/complex_line.c \
+       tokenize/convert_list.c \
+       tokenize/convert_redir_list.c \
        utils/tab_utils.c \
        end/ft_end.c \
        end/ft_end_list.c \

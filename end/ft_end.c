@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:08:15 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/02/26 16:12:18 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:08:55 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ft_end(t_data *data)
 {
-	ft_free_tab(data->my_env);
-	free_token_list(data->token_list);
+	free_env_list(data->my_env);
+	if (data->cmd_list)
+		free_cmd_list(data->cmd_list);
 	free(data);
 }

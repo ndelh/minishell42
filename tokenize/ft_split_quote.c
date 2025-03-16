@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:42:28 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/02/26 17:16:45 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:29:47 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char	*ft_dup(char **s)
 {
 	char	*cursor;
 	char	*ret;
-	int		i;
 
 	cursor = *s;
 	if (*cursor == '\"')
@@ -74,8 +73,7 @@ char	*ft_dup(char **s)
 		while (*cursor && *cursor != '\'' && *cursor != '\"')
 			cursor++;
 	}
-	i = ft_strlen(*s) - ft_strlen(cursor);
-	ret = ft_substr(*s, 0, i);
+	ret = ft_substr(*s, 0, ft_strlen(*s) - ft_strlen(cursor));
 	*s = cursor;
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:57:50 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/02/26 12:13:55 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/15 19:33:00 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,34 @@ void	ft_print_tab(char **tab)
 		printf("%s\n", *tab);
 		tab++;
 	}
+}
+void	print_complex_tab(char **s, int i)
+{
+	int	j;
+	
+	j = 0;
+	while (j < i)
+	{
+		printf("line number :%d %s\n", j, *s);
+		j++;
+		s++;
+	}
+}
+void	free_complex_tab(char **s, int i)
+{
+	int	j;
+	char	**to_free;
+
+	to_free = s;
+	j = 0;
+	while (j < i)
+	{
+		free(*s);
+		j++;
+		s++;
+	}
+	free(*s);
+	free(to_free);
 }
 
 int	tab_len(char **tab)

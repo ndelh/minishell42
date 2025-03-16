@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:03 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/03 16:33:02 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/10 09:25:09 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ void	split_rline(t_token **to_frag)
 	*to_frag = new_list;
 }
 
+void	add_redir_type(t_token *cursor)
+{
+	while (cursor)
+	{
+		if (has_redir(cursor->piece))
+			cursor->type = REDIR;
+		cursor = cursor->next;
+	}
+}
+
 void	gen_redirection_line(t_token **old_list)
 {
 	t_token	*cursor;
@@ -49,6 +59,7 @@ void	gen_redirection_line(t_token **old_list)
 			remind_p = cursor->previous;
 			remind_n = cursor->next;
 			split_rline(&cursor);
+			add_redir_type(cursor);
 			if (!remind_p)
 				*old_list = cursor;
 			restablish_link(&cursor, remind_p, remind_n);

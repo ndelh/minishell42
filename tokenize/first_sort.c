@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:54:00 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/02/27 15:40:18 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/16 15:09:20 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@ void	ft_add_last(t_token **list, t_token *to_add)
 	cursor = to_add;
 }
 
+char	*ft_cut_quote(char *s)
+{
+	char	*to_ret;
+
+	to_ret = ft_substr(s, 1, ft_strlen(s) - 2);
+	free(s);
+	return (to_ret);
+}
+
 void	ft_insert(t_data *data, char *s)
 {
 	t_token	*to_insert;
@@ -39,11 +48,14 @@ void	ft_insert(t_data *data, char *s)
 		return ;
 	}
 	ft_memset(to_insert, 0, sizeof(t_token));
-	to_insert->piece = s;
 	if (*s == '\'')
 		to_insert->type = S_QUOTE;
 	if (*s == '\"')
 		to_insert->type = D_QUOTE;
+	if (*s == '\'' || *s == '\"')
+		to_insert->piece = ft_cut_quote(s);
+	else
+		to_insert->piece = s;
 	ft_add_last(&data->token_list, to_insert);
 }
 

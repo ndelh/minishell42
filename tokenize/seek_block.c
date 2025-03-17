@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:46:21 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:16:49 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:23:59 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	go_next_list(t_token *list)
 		return (0);
 	if (list->next->type == REDIR)
 		return (0);
-	if (*(list->next->piece) == ' ')
+	if (*(list->next->piece) == ' ' && (list->next->type == UNKNOW))
 		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:57:50 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/15 19:33:00 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:05:34 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ void	ft_print_tab(char **tab)
 		tab++;
 	}
 }
+
 void	print_complex_tab(char **s, int i)
 {
 	int	j;
-	
+
 	j = 0;
 	while (j < i)
 	{
@@ -50,9 +51,10 @@ void	print_complex_tab(char **s, int i)
 		s++;
 	}
 }
+
 void	free_complex_tab(char **s, int i)
 {
-	int	j;
+	int		j;
 	char	**to_free;
 
 	to_free = s;

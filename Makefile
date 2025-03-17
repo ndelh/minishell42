@@ -6,7 +6,7 @@
 #    By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/03/16 14:04:59 by ndelhota         ###   ########.fr        #
+#    Updated: 2025/03/17 16:00:57 by ndelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ SRC := main.c \
        tokenize/complex_line.c \
        tokenize/convert_list.c \
        tokenize/convert_redir_list.c \
+       tokenize/tokenize_utils.c \
+       tokenize/create_here_doc.c \
        utils/tab_utils.c \
        end/ft_end.c \
        end/ft_end_list.c \

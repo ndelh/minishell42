@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:48:40 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:23:47 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:51:58 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ void	free_token_list(t_token *to_free, int i)
 	{
 		temp = to_free->next;
 		if (i)
+		{
 			printf("%s\n", to_free->piece);
+			if (to_free->type == HEREDOC)
+				unlink(to_free->piece);
+		}
 		free(to_free->piece);
 		free(to_free);
 		to_free = temp;

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:29:38 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:07:50 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:58:25 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ void	attribute_rdir_type(t_token *node)
 		else
 			node->type = OUTFILE;
 	}
+	cursor = sanitize(node->piece);
+	free(node->piece);
+	node->piece = cursor;
 }
 
 void	replace_piece_redir(t_token *list, t_data *data)

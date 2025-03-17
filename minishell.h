@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:24:24 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:00:28 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "lib/libft/libft.h"
+# include <fcntl.h>
 
 typedef enum type_e
 {
@@ -80,6 +81,7 @@ void	print_complex_tab(char **s, int i);
 void	ft_add_last(t_token **list, t_token *to_add);
 void	ft_go_last(t_token **list);
 int		tab_len(char **tab);
+char	*sanitize(char *s);
 //tokenize
 int		is_incomplete(char *s);
 int		count_expand_line(char *s, t_env *env);
@@ -95,6 +97,7 @@ char	**split_quote(char *s);
 char	*ft_mend_line(char **tab, int i);
 char	**isolate_expand(char *s, int i);
 char	**split_at_char(char *s, char c);
+char	*gen_expand_line(char *s, t_env *env);
 void	first_sort(t_data *data, char **first_split);
 void	gen_pipe_list(t_token **oldlist);
 void	gen_redirection_line(t_token **oldlist);
@@ -110,6 +113,7 @@ void	convert_cmd_list(t_cmd *cmd);
 void	multiple_complex_line(t_token *list, t_cmd *cmd, int *i);
 void	one_complex_line(t_token **list, t_cmd *cmd, int *i);
 void	convert_redir_list(t_cmd *cmd);
+void	change_hdoc(t_cmd *cmd, t_data *data);
 //end
 void	free_token_list(t_token *to_free, int i);
 void	free_env_list(t_env *env);

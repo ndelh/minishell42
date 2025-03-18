@@ -17,5 +17,6 @@ void	ft_end(t_data *data)
 	free_env_list(data->my_env);
 	if (data->cmd_list)
 		free_cmd_list(data->cmd_list);
+	ft_free_tab(data->envpath);
 	free(data);
 }

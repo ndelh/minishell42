@@ -27,25 +27,24 @@ void	waiter(t_data *data, t_cmd *cmd)
 		if (pid == -1)
 		{
 			perror("waitpid failed");
-			(void)data;
-			// free_all(data);
+			ft_end(data);
 			exit(EXIT_FAILURE);
 		}
-		printf("child %d exit code: %d\n", i++, g_status);//tmp for test
+		printf("child %d exit code: %d\n", i++, g_status % 255);//tmp for test
 		cmd = cmd->next;
 	}
 }
 
 void	secured_dup2(t_data *data, int fd1, int fd2)
 {
+	if (fd1 == -1 || fd2 == -1)
+		return ;
 	if (dup2(fd1, fd2) == -1)
 	{
 		perror("dup2 failed");
-		(void)data;
-		// free_all(data);
+		ft_end(data);
 		exit(EXIT_FAILURE);
 	}
-	(void)data;
 }
 
 void	secured_pipe(t_data *data, int pfd[2])
@@ -53,8 +52,7 @@ void	secured_pipe(t_data *data, int pfd[2])
 	if (pipe(pfd) == -1)
 	{
 		perror("pipe creation failed");
-		(void)data;
-		// free_all(data);
+		ft_end(data);
 		exit(EXIT_FAILURE);
 	}
 	(void)data;
@@ -68,8 +66,7 @@ pid_t	secured_fork(t_data *data)
 	if (ret == -1)
 	{
 		perror("fork failed");
-		(void)data;
-		// free_all(data);
+		ft_end(data);
 		exit(EXIT_FAILURE);
 	}
 	return (ret);

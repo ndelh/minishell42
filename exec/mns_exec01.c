@@ -1,12 +1,11 @@
 #include "../minishell.h"
 
 //checks list of redirs in cmd block. Opens them.
-static void	open_files(t_data *data, t_cmd *cmd, int prev)
+static void	open_files(t_data *data, t_cmd *cmd)
 {
 	t_token	*rdir_list;
 
 	rdir_list = cmd->rdir_list;
-	secured_dup2(data, prev, 0);
 	while (rdir_list)
 	{
 		if (rdir_list->type == 4 || rdir_list->type == 6)
@@ -24,16 +23,16 @@ static void	open_files(t_data *data, t_cmd *cmd, int prev)
 }
 
 //redirects stdin and stdout in pipes or in redis, then execs cmd.
-static void	exec_cmd(t_data *data, t_cmd *cmd, int pfd[2])
+static void	exec_cmd(t_data *data, t_cmd *cmd, int pfd[2], int prev)
 {
 	t_token	*rdir_list;
 
 	rdir_list = cmd->rdir_list;
 	if (cmd->previous)
-		secured_dup2(data, pfd[0], 0);
+		secured_dup2(data, prev, 0);
 	if (cmd->next)
 		secured_dup2(data, pfd[1], 1);
-	closer(2, pfd[0], pfd[1]);
+	closer(3, prev, pfd[0], pfd[1]);
 	while (rdir_list)
 	{
 		if (rdir_list->type == 4 || rdir_list->type == 6)
@@ -47,8 +46,7 @@ static void	exec_cmd(t_data *data, t_cmd *cmd, int pfd[2])
 	}
 	execve(cmd->cmd_path, cmd->cmd_arg, NULL);//put actual envp instead of NULL
 	perror("execve failed");
-	(void)data;
-	//free_all(data);
+	ft_end(data);
 	exit(127);
 }
 
@@ -58,16 +56,16 @@ static void	handle_pipes(t_data *data, t_cmd *cmd)
 	int		pfd[2];
 	int		prev;
 
-	prev = 0;
+	prev = -1;
 	while (cmd)
 	{
 		secured_pipe(data, pfd);
 		cmd->pid = secured_fork(data);
 		if (!cmd->pid)
 		{
-			open_files(data, cmd, prev);
+			open_files(data, cmd);
 			check_access(data, cmd);
-			exec_cmd(data, cmd, pfd);
+			exec_cmd(data, cmd, pfd, prev);
 		}
 		close(prev);
 		prev = dup(pfd[0]);
@@ -89,7 +87,7 @@ void	start_exec(t_data *data)
 		handle_pipes(data, cmd);
 	else
 	{
-		open_files(data, cmd, 0);
-		exec_cmd(data, cmd, NULL);
+		open_files(data, cmd);
+		exec_cmd(data, cmd, NULL, 0);
 	}
 }

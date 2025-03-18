@@ -1,0 +1,95 @@
+#include "../minishell.h"
+
+//checks list of redirs in cmd block. Opens them.
+static void	open_files(t_data *data, t_cmd *cmd, int prev)
+{
+	t_token	*rdir_list;
+
+	rdir_list = cmd->rdir_list;
+	secured_dup2(data, prev, 0);
+	while (rdir_list)
+	{
+		if (rdir_list->type == 4 || rdir_list->type == 6)
+			rdir_list->fd = open (rdir_list->piece, O_RDONLY);
+		else if (rdir_list->type == 5)
+			rdir_list->fd = open (rdir_list->piece,
+					O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else if (rdir_list->type == 7)
+			rdir_list->fd = open (rdir_list->piece,
+					O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (rdir_list->fd == -1)
+			redir_error(data, cmd, rdir_list);
+		rdir_list = rdir_list->next;
+	}
+}
+
+//redirects stdin and stdout in pipes or in redis, then execs cmd.
+static void	exec_cmd(t_data *data, t_cmd *cmd, int pfd[2])
+{
+	t_token	*rdir_list;
+
+	rdir_list = cmd->rdir_list;
+	if (cmd->previous)
+		secured_dup2(data, pfd[0], 0);
+	if (cmd->next)
+		secured_dup2(data, pfd[1], 1);
+	closer(2, pfd[0], pfd[1]);
+	while (rdir_list)
+	{
+		if (rdir_list->type == 4 || rdir_list->type == 6)
+			secured_dup2(data, rdir_list->fd, 0);
+		if (rdir_list->type == 6)
+			unlink(rdir_list->piece);
+		else if (rdir_list->type == 5 || rdir_list->type == 7)
+			secured_dup2(data, rdir_list->fd, 1);
+		close(rdir_list->fd);
+		rdir_list = rdir_list->next;
+	}
+	execve(cmd->cmd_path, cmd->cmd_arg, NULL);//put actual envp instead of NULL
+	perror("execve failed");
+	(void)data;
+	//free_all(data);
+	exit(127);
+}
+
+//forks and executes each cmd.
+static void	handle_pipes(t_data *data, t_cmd *cmd)
+{
+	int		pfd[2];
+	int		prev;
+
+	prev = 0;
+	while (cmd)
+	{
+		secured_pipe(data, pfd);
+		cmd->pid = secured_fork(data);
+		if (!cmd->pid)
+		{
+			open_files(data, cmd, prev);
+			check_access(data, cmd);
+			exec_cmd(data, cmd, pfd);
+		}
+		close(prev);
+		prev = dup(pfd[0]);
+		closer(2, pfd[0], pfd[1]);
+		cmd = cmd->next;
+	}
+	close(prev);
+	waiter(data, data->cmd_list);
+}
+
+//recieves all cmds. Forks if we have pipes or no build-ins.
+void	start_exec(t_data *data)
+{
+	t_cmd	*cmd;
+
+	data->envpath = set_path(data);
+	cmd = data->cmd_list;
+	if (cmd->next || !cmd->buildin)
+		handle_pipes(data, cmd);
+	else
+	{
+		open_files(data, cmd, 0);
+		exec_cmd(data, cmd, NULL);
+	}
+}

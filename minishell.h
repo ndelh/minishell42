@@ -20,6 +20,12 @@
 # include <readline/history.h>
 # include "lib/libft/libft.h"
 # include <fcntl.h>
+# include <sys/wait.h>
+# include <errno.h>
+# include <sys/stat.h>
+# include <signal.h>
+
+extern int	g_status;
 
 typedef enum type_e
 {
@@ -65,9 +71,11 @@ typedef struct s_env
 	char			*content;
 	int				status;
 }	t_env;
+
 typedef struct s_data
 {
 	t_env		*my_env;
+	char		**envpath;
 	t_token		*token_list;
 	t_cmd		*cmd_list;
 }	t_data;
@@ -82,6 +90,11 @@ void	ft_add_last(t_token **list, t_token *to_add);
 void	ft_go_last(t_token **list);
 int		tab_len(char **tab);
 char	*sanitize(char *s);
+void	closer(int count, ...);
+void	waiter(t_data *data, t_cmd *cmd);
+void	secured_dup2(t_data *data, int fd1, int fd2);
+void	secured_pipe(t_data *data, int pfd[2]);
+pid_t	secured_fork(t_data *data);
 //tokenize
 int		is_incomplete(char *s);
 int		count_expand_line(char *s, t_env *env);
@@ -119,4 +132,16 @@ void	free_token_list(t_token *to_free, int i);
 void	free_env_list(t_env *env);
 void	free_cmd_list(t_cmd *to_free);
 void	ft_end(t_data *data);
+//error management
+void	redir_error(t_data *data, t_cmd *cmd, t_token *redirlst);
+void	isdir_error(t_data *data, t_cmd *cmd);
+void	fct_error(t_data *data, t_cmd *cmd);
+//signals
+void	signals_init(void);
+void	sig_handler(int sig);
+//exec
+void	start_exec(t_data *data);
+void	check_access(t_data *data, t_cmd *cmd);
+char	**set_path(t_data *data);
+
 #endif

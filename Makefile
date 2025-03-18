@@ -37,13 +37,19 @@ SRC := main.c \
        utils/tab_utils.c \
        end/ft_end.c \
        end/ft_end_list.c \
+       utils/mns_utils01.c \
+       utils/mns_error01.c \
+       gen/mns_sig_init.c \
+       exec/mns_exec01.c \
+       exec/mns_exec02.c
 
 CC := cc
 
 CFLAGS := -g -Wall -Werror -Wextra
 
-OBJ := $(SRC:.c=.o)
-
+OBJDIR = obj
+OBJ = $(SRC:.c=.o)
+OBJ := $(addprefix $(OBJDIR)/, $(OBJ))
 
 LIB := lib/libft/libft.a \
 
@@ -52,11 +58,15 @@ all : $(LIB) $(OBJ) $(NAME)
 $(NAME) : $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $(NAME) -lreadline
 
+$(OBJDIR)/%.o: %.c
+	mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c -o $@ $^
+
 $(LIB) :
 	make -C lib/libft
 
 clean :
-	rm -f $(OBJ) 
+	rm -rf $(OBJDIR) 
 	make -C lib/libft clean
 
 fclean : clean 
@@ -65,5 +75,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY : all clean fclean re
 .PHONY : all clean fclean re

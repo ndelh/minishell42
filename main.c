@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+int	g_status;
+
 int	main(int ac, char **argv, char **envp)
 {
 	char	*line;
@@ -19,6 +21,7 @@ int	main(int ac, char **argv, char **envp)
 
 	data = NULL;
 	argv = NULL;
+	g_status = 0;//$? will expand to this var.
 	if (ac == 1)
 	{
 		ft_gen(&data, envp);
@@ -29,10 +32,12 @@ int	main(int ac, char **argv, char **envp)
 				break ;
 			add_history(line);
 			ft_tokenize(data, line);
+			start_exec(data);
 			free_cmd_list(data->cmd_list);
 			data->cmd_list = NULL;
 			free(line);
 		}
 		ft_end(data);
 	}
+	return (g_status % 255);
 }

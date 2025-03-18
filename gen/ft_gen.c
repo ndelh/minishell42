@@ -69,6 +69,7 @@ t_env	*ft_gen_env_list(char **envp)
 void	ft_gen(t_data **data, char **envp)
 {
 	*data = malloc(sizeof(t_data));
+	signals_init();
 	ft_memset(*data, 0, sizeof(t_data));
 	(*data)->my_env = ft_gen_env_list(envp);
 }

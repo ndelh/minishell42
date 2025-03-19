@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 16:12:55 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:14:49 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:22:35 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,28 @@ void	gen_cmd_tab(t_cmd *cmd, t_token *list)
 	cmd->cmd_arg[i] = NULL;
 }
 
+void	adjust_cmd(t_token **list)
+{
+	t_token	*temp;
+
+	if (!list || !*list)
+		return ;
+	if ((*list)->type == PIPE && *(*list)->piece == 0)
+	{
+		temp = (*list)->next;
+		free((*list)->piece);
+		free(*list);
+		*list = temp;
+		if (*list)
+			(*list)->previous = NULL;
+	}
+}
+
 void	convert_cmd_list(t_cmd *cmd)
 {
 	while (cmd)
 	{
+		adjust_cmd(&cmd->current_cmd);
 		gen_cmd_tab(cmd, cmd->current_cmd);
 		cmd = cmd->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:08 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/01 17:24:09 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:16:38 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	count_char(char *s, char a)
 			count++;
 		s++;
 	}
-	if (*(s - 1) == a)
-		count--;
 	return (count);
 }
 

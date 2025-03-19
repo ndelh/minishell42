@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_end.c                                           :+:      :+:    :+:   */
+/*   ft_dup_std.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 11:08:15 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/19 16:47:41 by ndelhota         ###   ########.fr       */
+/*   Created: 2025/03/19 16:30:07 by ndelhota          #+#    #+#             */
+/*   Updated: 2025/03/19 16:49:52 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	close_fds(t_data *data)
+void	ft_dup_std(t_data *data)
 {
-	if (data->standard_out != -1)
-		close(data->standard_out);
-	if (data->standard_in != -1)
-		close(data->standard_in);
-}
-
-void	ft_end(t_data *data)
-{
-	free_env_list(data->my_env);
-	close_fds(data);
-	if (data->cmd_list)
-		free_cmd_list(data->cmd_list);
-	free(data);
+	data->standard_out = -1;
+	data->standard_in = dup(0);
+	if (data->standard_in == -1)
+	{
+		perror("stock [0]");
+		ft_end(data);
+	}
+	data->standard_out = dup(1);
+	if (data->standard_out == -1)
+	{
+		perror("stock [1]");
+		ft_end(data);
+	}
 }

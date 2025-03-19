@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 16:09:31 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:06:51 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/18 18:45:37 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	one_complex_line(t_token **list, t_cmd *cmd, int *i)
 	cmd->cmd_arg[*i] = ft_calloc(1, len);
 	while (*list != stoppage)
 	{
+		printf("list piece%s\n", (*list)->piece);
 		ft_strlcat(cmd->cmd_arg[*i], (*list)->piece, len);
 		*list = (*list)->next;
 	}

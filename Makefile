@@ -6,7 +6,7 @@
 #    By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/03/17 16:00:57 by ndelhota         ###   ########.fr        #
+#    Updated: 2025/03/19 16:42:16 by ndelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME := minishell
 
 SRC := main.c \
        gen/ft_gen.c \
+       gen/ft_dup_std.c\
        tokenize/begin.c \
        tokenize/ft_split_quote.c \
        tokenize/first_sort.c \

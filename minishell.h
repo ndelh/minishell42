@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/17 17:00:28 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:54:30 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ typedef enum type_e
 	INFILE,
 	OUTFILE,
 	HEREDOC,
-	APPEND
+	APPEND,
+	PIPE
 }	t_type;
 
 typedef struct s_token
@@ -70,9 +71,12 @@ typedef struct s_data
 	t_env		*my_env;
 	t_token		*token_list;
 	t_cmd		*cmd_list;
+	int			standard_in;
+	int			standard_out;
 }	t_data;
 
 void	ft_gen(t_data **data, char **envp);
+void	ft_dup_std(t_data *data);
 //utils 
 void	ft_free_tab(char **tab);
 void	ft_print_tab(char **tab);

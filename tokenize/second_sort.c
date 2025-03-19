@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:18:24 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/01 17:25:21 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:46:26 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	gen_pipe_list(t_token **old_list)
 	cursor = (*old_list);
 	while (cursor)
 	{
-		if (cursor->type != UNKNOW ||!ft_strchr(cursor->piece, '|'))
+		if (cursor->type != UNKNOW || !ft_strchr(cursor->piece, '|'))
 			cursor = cursor->next;
 		else
 		{

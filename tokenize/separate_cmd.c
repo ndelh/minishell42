@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:53:24 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:14:04 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:17:20 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	remove_pipe(t_token *node)
 	temp = ft_substr(node->piece, 1, ft_strlen(node->piece) - 1);
 	free(node->piece);
 	node->piece = temp;
+	node->type = PIPE;
 }
 
 void	create_cmd_list(t_data *data, t_token *to_shatter)
@@ -55,7 +56,7 @@ void	create_cmd_list(t_data *data, t_token *to_shatter)
 	ft_add_last_cmd(&data->cmd_list, to_add);
 	while (to_shatter)
 	{
-		if (*(to_shatter->piece) == '|')
+		if (!to_shatter->type && *(to_shatter->piece) == '|')
 		{
 			to_shatter->previous->next = NULL;
 			to_shatter->previous = NULL;

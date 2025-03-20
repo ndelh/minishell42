@@ -19,7 +19,7 @@ static int	check_nature(t_data *data, t_cmd *cmd, char *cmd_path)
 
 	st_buff.st_mode = -1;
 	stat(cmd_path, &st_buff);
-	if (S_ISDIR(st_buff.st_mode))
+	if (**(cmd->cmd_arg) && S_ISDIR(st_buff.st_mode))
 		isdir_error(data, cmd);
 	if (!access(cmd_path, X_OK))
 		return (0);
@@ -59,6 +59,7 @@ char	**set_path(t_data *data)
 
 	envlst = data->my_env;
 	path = NULL;
+	ft_free_tab(data->envpath);
 	while (envlst && ft_strncmp("PATH", envlst->name, 4))
 		envlst = envlst->next;
 	if (envlst)

@@ -60,6 +60,7 @@ typedef struct s_cmd
 	char			*cmd_path;
 	pid_t			pid;
 	int				buildin;
+	int				pfd[2];
 	t_token			*current_cmd;
 	t_token			*rdir_list;
 }	t_cmd;
@@ -102,7 +103,7 @@ char	*sanitize(char *s);
 void	closer(int count, ...);
 void	waiter(t_data *data, t_cmd *cmd);
 void	secured_dup2(t_data *data, int fd1, int fd2);
-void	secured_pipe(t_data *data, int pfd[2]);
+void	secured_pipe(t_data *data, t_cmd *cmd);
 pid_t	secured_fork(t_data *data);
 //tokenize
 int		is_incomplete(char *s);

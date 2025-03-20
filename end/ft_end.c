@@ -26,5 +26,6 @@ void	ft_end(t_data *data)
 	close_fds(data);
 	if (data->cmd_list)
 		free_cmd_list(data->cmd_list);
+	ft_free_tab(data->envpath);
 	free(data);
 }

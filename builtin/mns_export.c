@@ -21,7 +21,7 @@ static void	ft_printenv(t_env *env)
 				to_print = tmp;
 			tmp = tmp->next;
 		}
-		if (!ft_strcmp(to_print->name, "_"))
+		if (!ft_strcmp(to_print->name, "_"))//issue, will print the '=' even when there's no value to print.
 			printf("declare -x %s=\"%s\"", to_print->name, to_print->content);
 		printed = to_print->name;
 		tmp = env;
@@ -81,7 +81,8 @@ static void	add_arg_1(t_env *envlst, char *arg)
 	t_env	new;
 	int		len;
 
-	if (!ft_isvalid(arg) || (*arg == '_' &&  !ft_isalnum(*arg + 1)))
+	if (!ft_isvalid(arg) || 
+	(*arg == '_' &&  (*(arg + 1) == '=' || *(arg + 1) == '\0')))
 		return ;
 	len = arg - ft_strchr(arg, '=');
 	if (arg[len - 2] == '+')

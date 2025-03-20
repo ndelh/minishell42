@@ -33,7 +33,7 @@ void	check_access(t_data *data, t_cmd *cmd)
 	int		i;
 
 	i = -1;
-	while (data->envpath[++i])
+	while (data->envpath && data->envpath[++i])
 	{
 		cmd_path = ft_vastrjoin(3, data->envpath[i], "/", cmd->cmd_arg[0]);
 		if (!check_nature(data, cmd, cmd_path))
@@ -67,12 +67,11 @@ char	**set_path(t_data *data)
 	return (path);
 }
 
+//calls the right builtin fct.
 void	call_builtin(t_data *data, t_cmd *cmd)//not detected yet
 {
 	if (ft_strcmp(cmd->cmd_arg[0], "export"))
 		ft_export(data, cmd);
-	else
-		return ;
 	if (ft_strcmp(cmd->cmd_arg[0], "unset"))
 		exec_unset(cmd->cmd_arg, data);
 }

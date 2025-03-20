@@ -69,7 +69,7 @@ $(OBJDIR)/%.o: %.c
 	@$(CC) $(CFLAGS) -c -o $@ $^
 
 $(LIB) :
-	@make -C lib/libft
+	@make bonus -C lib/libft
 
 clean :
 	@rm -rf $(OBJDIR) 

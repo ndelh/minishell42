@@ -72,6 +72,6 @@ void	call_builtin(t_data *data, t_cmd *cmd)
 		ft_export(data, cmd);
 	else
 		return ;
-	// if (cmd->cmd_arg[0] == unset)
-	// 	unset();
+	if (ft_strcmp(cmd->cmd_arg[0], "unset"))
+		exec_unset(cmd->cmd_arg, data);
 }

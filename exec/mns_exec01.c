@@ -6,7 +6,7 @@ static void	call_or_exec(t_data *data, t_cmd *cmd)
 		call_builtin(data, cmd);
 	else
 	{
-		execve(cmd->cmd_path, cmd->cmd_arg, NULL);//put actual envp instead of NULL
+		execve(cmd->cmd_path, cmd->cmd_arg, data->envp);
 		perror("execve failed");
 		ft_end(data);
 		exit(127);

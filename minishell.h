@@ -155,5 +155,6 @@ char	**set_path(t_data *data);
 void	call_builtin(t_data *data, t_cmd *cmd);
 //builtins
 int		ft_export(t_data *data, t_cmd *cmd);
+void	exec_unset(char **exe, t_data *data);
 
 #endif

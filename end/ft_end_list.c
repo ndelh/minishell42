@@ -35,8 +35,6 @@ void	free_token_list(t_token *to_free, int i)
 		temp = to_free->next;
 		if (i)
 		{
-			printf("len piece%zu\n", ft_strlen(to_free->piece));
-			
 			printf("%s\n", to_free->piece);
 			printf("%d\n", to_free->type);
 			if (to_free->type == HEREDOC)

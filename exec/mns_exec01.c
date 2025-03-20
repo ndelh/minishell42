@@ -1,5 +1,18 @@
 #include "../minishell.h"
 
+static void	call_or_exec(t_data *data, t_cmd *cmd)
+{
+	if (cmd->buildin)
+		call_builtin(data, cmd);
+	else
+	{
+		execve(cmd->cmd_path, cmd->cmd_arg, NULL);//put actual envp instead of NULL
+		perror("execve failed");
+		ft_end(data);
+		exit(127);
+	}
+}
+
 //checks list of redirs in cmd block. Opens them.
 static void	open_files(t_data *data, t_cmd *cmd)
 {
@@ -44,10 +57,7 @@ static void	exec_cmd(t_data *data, t_cmd *cmd, int pfd[2], int prev)
 		close(rdir_list->fd);
 		rdir_list = rdir_list->next;
 	}
-	execve(cmd->cmd_path, cmd->cmd_arg, NULL);//put actual envp instead of NULL
-	perror("execve failed");
-	ft_end(data);
-	exit(127);
+	call_or_exec(data, cmd);
 }
 
 //forks and executes each cmd.

@@ -65,3 +65,13 @@ char	**set_path(t_data *data)
 		path = ft_split(envlst->content, ':');
 	return (path);
 }
+
+void	call_builtin(t_data *data, t_cmd *cmd)
+{
+	if (ft_strcmp(cmd->cmd_arg[0], "export"))
+		ft_export(data, cmd);
+	else
+		return ;
+	// if (cmd->cmd_arg[0] == unset)
+	// 	unset();
+}

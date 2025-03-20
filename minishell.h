@@ -89,6 +89,9 @@ void	print_complex_tab(char **s, int i);
 void	ft_add_last(t_token **list, t_token *to_add);
 void	ft_go_last(t_token **list);
 int		tab_len(char **tab);
+t_env	*env_lstnew(char *name, char *content);
+t_env	*env_lstlast(t_env *lst);
+void	env_lstadd_back(t_env **lst, t_env *new);
 char	*sanitize(char *s);
 void	closer(int count, ...);
 void	waiter(t_data *data, t_cmd *cmd);
@@ -143,5 +146,8 @@ void	sig_handler(int sig);
 void	start_exec(t_data *data);
 void	check_access(t_data *data, t_cmd *cmd);
 char	**set_path(t_data *data);
+void	call_builtin(t_data *data, t_cmd *cmd);
+//builtins
+int		ft_export(t_data *data, t_cmd *cmd);
 
 #endif

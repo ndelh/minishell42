@@ -38,10 +38,12 @@ SRC := main.c \
        end/ft_end.c \
        end/ft_end_list.c \
        utils/mns_utils01.c \
+       utils/mns_lstfct01.c \
        utils/mns_error01.c \
        gen/mns_sig_init.c \
        exec/mns_exec01.c \
-       exec/mns_exec02.c
+       exec/mns_exec02.c \
+       builtin/mns_export.c
 
 CC := cc
 
@@ -59,19 +61,19 @@ $(NAME) : $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $(NAME) -lreadline
 
 $(OBJDIR)/%.o: %.c
-	mkdir -p $(@D)
-	$(CC) $(CFLAGS) -c -o $@ $^
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c -o $@ $^
 
 $(LIB) :
-	make -C lib/libft
+	@make -C lib/libft
 
 clean :
-	rm -rf $(OBJDIR) 
-	make -C lib/libft clean
+	@rm -rf $(OBJDIR) 
+	@make -C lib/libft clean
 
 fclean : clean 
-	rm -f $(NAME)
-	make -C lib/libft fclean
+	@rm -f $(NAME)
+	@make -C lib/libft fclean
 
 re : fclean all
 

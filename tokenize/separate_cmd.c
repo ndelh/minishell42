@@ -55,7 +55,7 @@ void	create_cmd_list(t_data *data, t_token *to_shatter)
 	ft_add_last_cmd(&data->cmd_list, to_add);
 	while (to_shatter)
 	{
-		if (*(to_shatter->piece) == '|')
+		if (!to_shatter->type && *(to_shatter->piece) == '|')
 		{
 			to_shatter->previous->next = NULL;
 			to_shatter->previous = NULL;

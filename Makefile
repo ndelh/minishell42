@@ -6,7 +6,7 @@
 #    By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/03/19 16:42:16 by ndelhota         ###   ########.fr        #
+#    Updated: 2025/03/20 10:12:17 by ndelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME := minishell
 SRC := main.c \
        gen/ft_gen.c \
        gen/ft_dup_std.c\
+       gen/convert_list_to_envp.c \
        tokenize/begin.c \
        tokenize/ft_split_quote.c \
        tokenize/first_sort.c \
@@ -36,6 +37,8 @@ SRC := main.c \
        tokenize/tokenize_utils.c \
        tokenize/create_here_doc.c \
        utils/tab_utils.c \
+       utils/list_utils.c \
+       builtin/unset.c \
        end/ft_end.c \
        end/ft_end_list.c \
 

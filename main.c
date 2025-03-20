@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:29:19 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/18 17:18:31 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/20 09:47:43 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int ac, char **argv, char **envp)
 			data->cmd_list = NULL;
 			free(line);
 		}
+		ft_free_tab(data->envp);
 		ft_end(data);
 	}
 }

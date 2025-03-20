@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:22:49 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/17 16:59:09 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/20 10:15:06 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*gen_name(void)
 		to_ret = gen_name();
 	}
 	close(fd);
-	temp = ft_strjoin("/var/tmp/", to_ret);
+	temp = ft_strjoin("/tmp/", to_ret);
 	free(to_ret);
 	return (temp);
 }
@@ -40,14 +40,22 @@ char	*gen_name(void)
 void	fill_heredoc(int fd, char *limiter, t_env *my_env)
 {
 	char	*line;
+	int		nb;
 
 	line = readline(">");
-	while (ft_strncmp(line, limiter, ft_strlen(line + 1)))
+	nb = 1;
+	while (line != NULL && ft_strncmp(line, limiter, ft_strlen(line + 1)))
 	{
 		line = gen_expand_line(line, my_env);
 		ft_putendl_fd(line, fd);
 		free(line);
+		nb++;
 		line = readline(">");
+	}
+	if (line == NULL)
+	{
+		printf("warning :here-document at line %d ", nb);
+		printf("delimited by end-of_file (wanted '%s')\n", limiter);
 	}
 	free(line);
 }

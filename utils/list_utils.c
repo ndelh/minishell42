@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_end.c                                           :+:      :+:    :+:   */
+/*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 11:08:15 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/19 20:38:17 by ndelhota         ###   ########.fr       */
+/*   Created: 2025/03/20 10:07:20 by ndelhota          #+#    #+#             */
+/*   Updated: 2025/03/20 10:11:09 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	close_fds(t_data *data)
+t_env	*go_to_env_node(t_env *list, char *s)
 {
-	if (data->standard_out != -1)
-		close(data->standard_out);
-	if (data->standard_in != -1)
-		close(data->standard_in);
-}
-
-void	ft_end(t_data *data)
-{
-	free_env_list(data->my_env);
-	close_fds(data);
-	if (data->cmd_list)
-		free_cmd_list(data->cmd_list);
-	free(data);
+	while (list && !ft_strncmp(s, list->name, ft_strlen(s) + 1))
+		list = list->next;
+	return (list);
 }

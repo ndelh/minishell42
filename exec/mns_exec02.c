@@ -66,7 +66,7 @@ char	**set_path(t_data *data)
 	return (path);
 }
 
-void	call_builtin(t_data *data, t_cmd *cmd)
+void	call_builtin(t_data *data, t_cmd *cmd)//not detected yet
 {
 	if (ft_strcmp(cmd->cmd_arg[0], "export"))
 		ft_export(data, cmd);

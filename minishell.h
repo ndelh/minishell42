@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/20 09:47:32 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:43:40 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ typedef struct s_cmd
 	char			*cmd_path;
 	pid_t			pid;
 	int				buildin;
+	int				pfd[2];
 	t_token			*current_cmd;
 	t_token			*rdir_list;
+	int				h_expand;
 }	t_cmd;
 
 typedef struct s_env
@@ -84,6 +86,7 @@ typedef struct s_data
 	int			standard_out;
 }	t_data;
 
+int		primal_parse(char *s);
 void	ft_gen(t_data **data, char **envp);
 void	ft_dup_std(t_data *data);
 char	**convert_envp(t_env *my_env);
@@ -94,7 +97,7 @@ void	free_complex_tab(char **s, int i);
 void	print_complex_tab(char **s, int i);
 void	ft_add_last(t_token **list, t_token *to_add);
 void	ft_go_last(t_token **list);
-int		tab_len(char **tab);
+int		tab_len(char **_stab);
 t_env	*env_lstnew(char *name, char *content);
 t_env	*env_lstlast(t_env *lst);
 void	env_lstadd_back(t_env **lst, t_env *new);
@@ -136,6 +139,7 @@ void	multiple_complex_line(t_token *list, t_cmd *cmd, int *i);
 void	one_complex_line(t_token **list, t_cmd *cmd, int *i);
 void	convert_redir_list(t_cmd *cmd);
 void	change_hdoc(t_cmd *cmd, t_data *data);
+void	is_builtin(t_cmd *list);
 //end
 void	free_token_list(t_token *to_free, int i);
 void	free_env_list(t_env *env);

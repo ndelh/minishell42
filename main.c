@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:29:19 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/20 09:47:43 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:46:23 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ int	main(int ac, char **argv, char **envp)
 			line = readline("minishell > ");
 			if (line == NULL)
 				break ;
-			add_history(line);
-			ft_tokenize(data, line);
-			start_exec(data);
-			free_cmd_list(data->cmd_list);
-			data->cmd_list = NULL;
+			if (primal_parse(line))
+			{
+				add_history(line);
+				ft_tokenize(data, line);
+				start_exec(data);
+				free_cmd_list(data->cmd_list);
+				data->cmd_list = NULL;
+			}
 			free(line);
 		}
 		ft_free_tab(data->envp);

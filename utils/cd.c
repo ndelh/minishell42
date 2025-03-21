@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 12:28:14 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/20 12:59:36 by ndelhota         ###   ########.fr       */
+/*   Created: 2025/03/20 15:34:28 by ndelhota          #+#    #+#             */
+/*   Updated: 2025/03/20 15:55:29 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-size_t	ft_strlen(const char *str)
+#include "../minishell.h"
+
+void	go_cd(char *s, t_env *list)
+
+void	exec_cd(char **args, t_data *data)
 {
-	size_t	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
+	if (tab_len(args == 2))
+		go_cd(args[1], data->my_env);
+	if (tab_len(args) > 2)
+		ft_putendl("cd :to_many->args", 2);
+	if (tab_len(args) == 1)
+		ft_putendl("cd :to_few_args", 2);
 }

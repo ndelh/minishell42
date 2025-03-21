@@ -1,0 +1,13 @@
+builtin
+end
+exec
+gen
+lib
+main.c
+Makefile
+minishell
+minishell.h
+obj
+out
+tokenize
+utils

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:04:53 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/18 17:17:25 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/20 18:43:09 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_tokenize(t_data *data, char *line)
 	sort_redir_exe(data->cmd_list);
 	expand_in_list(data->cmd_list, data);
 	convert_cmd_list(data->cmd_list);
+	is_builtin(data->cmd_list);
 	convert_redir_list(data->cmd_list);
 	change_hdoc(data->cmd_list, data);
 }

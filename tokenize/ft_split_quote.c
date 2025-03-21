@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:42:28 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/10 11:29:47 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:06:54 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	skip_single(char **s)
 {
 	(*s)++;
-	while (**s != '\'')
+	while (**s && **s != '\'')
 	{
 		(*s)++;
 	}
@@ -25,7 +25,7 @@ void	skip_single(char **s)
 void	skip_double(char **s)
 {
 	(*s)++;
-	while (**s != '\"')
+	while (**s && **s != '\"')
 		(*s)++;
 	(*s)++;
 }

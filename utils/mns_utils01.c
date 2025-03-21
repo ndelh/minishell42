@@ -47,9 +47,9 @@ void	secured_dup2(t_data *data, int fd1, int fd2)
 	}
 }
 
-void	secured_pipe(t_data *data, int pfd[2])
+void	secured_pipe(t_data *data, t_cmd *cmd)
 {
-	if (pipe(pfd) == -1)
+	if (pipe(cmd->pfd) == -1)
 	{
 		perror("pipe creation failed");
 		ft_end(data);

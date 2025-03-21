@@ -1,17 +1,14 @@
 #include "../minishell.h"
 
 //prints env new->contents in ascii order.
-static void	ft_printenv(t_env *env)
+static void	ft_printenv(t_env *env, char *printed, int len)
 {
 	t_env	*tmp;
 	t_env	*to_print;
-	char	*printed;
-	int		len;
 
 	tmp = env;
 	to_print = tmp;
-	printed = "";
-	len = ft_lstsize((void *)env);//needs check if the cast works in this situation
+	// len = ft_lstsize((void *)env);//needs check if the cast works in this situation
 	while (len--)
 	{
 		while (tmp)
@@ -21,12 +18,16 @@ static void	ft_printenv(t_env *env)
 				to_print = tmp;
 			tmp = tmp->next;
 		}
-		if (!ft_strcmp(to_print->name, "_"))
-			printf("declare -x %s=\"%s\"", to_print->name, to_print->content);
+		if (ft_strcmp(to_print->name, "_"))
+		{
+			printf("declare -x %s", to_print->name);
+			if (to_print->content)
+				printf("=\"%s\"", to_print->content);
+			write(1, "\n", 1);
+		}
 		printed = to_print->name;
 		tmp = env;
 	}
-	//_=/usr/bin/env not displayed (_=137)
 }
 
 //checks if arg is valid.
@@ -81,7 +82,8 @@ static void	add_arg_1(t_env *envlst, char *arg)
 	t_env	new;
 	int		len;
 
-	if (!ft_isvalid(arg) || (*arg == '_' &&  !ft_isalnum(*arg + 1)))
+	if (!ft_isvalid(arg) || 
+	(*arg == '_' &&  (*(arg + 1) == '=' || *(arg + 1) == '\0')))
 		return ;
 	len = arg - ft_strchr(arg, '=');
 	if (arg[len - 2] == '+')
@@ -94,13 +96,13 @@ static void	add_arg_1(t_env *envlst, char *arg)
 
 //checks args. no args: display sorted env. valid args: add to env.
 //returns 0 on success, number of names it failed to add in env upon failure.
-int	ft_export(t_data *data, t_cmd *cmd)
+int	mns_export(t_data *data, t_cmd *cmd)
 {
 	int			ret;//==number of names export failed to add in env.
 
 	ret = 0;
 	if (!cmd->cmd_arg[1])
-		ft_printenv(data->my_env);
+		ft_printenv(data->my_env, "", ft_lstsize((void *)data->my_env));
 	while (++cmd->cmd_arg)
 	{
 		add_arg_1(data->my_env, *(cmd->cmd_arg));

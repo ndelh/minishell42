@@ -35,8 +35,9 @@ static void	open_files(t_data *data, t_cmd *cmd)
 	}
 }
 
-//redirects stdin and stdout in pipes or in redis, then execs cmd.
-static void	exec_cmd(t_data *data, t_cmd *cmd, int pfd[2], int prev)
+//redirects stdin and stdout in pipes or in redis,
+//then execs cmd or calls builtin.
+static void	exec_cmd(t_data *data, t_cmd *cmd, int prev)
 {
 	t_token	*rdir_list;
 
@@ -44,8 +45,8 @@ static void	exec_cmd(t_data *data, t_cmd *cmd, int pfd[2], int prev)
 	if (cmd->previous)
 		secured_dup2(data, prev, 0);
 	if (cmd->next)
-		secured_dup2(data, pfd[1], 1);
-	closer(3, prev, pfd[0], pfd[1]);
+		secured_dup2(data, cmd->pfd[1], 1);
+	closer(3, prev, cmd->pfd[0], cmd->pfd[1]);
 	while (rdir_list)
 	{
 		if (rdir_list->type == 4 || rdir_list->type == 6)
@@ -61,25 +62,25 @@ static void	exec_cmd(t_data *data, t_cmd *cmd, int pfd[2], int prev)
 }
 
 //forks and executes each cmd.
+//Then waits for each child in creation order.
 static void	handle_pipes(t_data *data, t_cmd *cmd)
 {
-	int		pfd[2];
 	int		prev;
 
 	prev = -1;
 	while (cmd)
 	{
-		secured_pipe(data, pfd);
+		secured_pipe(data, cmd);
 		cmd->pid = secured_fork(data);
 		if (!cmd->pid)
 		{
 			open_files(data, cmd);
 			check_access(data, cmd);
-			exec_cmd(data, cmd, pfd, prev);
+			exec_cmd(data, cmd, prev);
 		}
-		close(prev);
-		prev = dup(pfd[0]);
-		closer(2, pfd[0], pfd[1]);
+		closer(1, prev);
+		prev = dup(cmd->pfd[0]);
+		closer(2, cmd->pfd[0], cmd->pfd[1]);
 		cmd = cmd->next;
 	}
 	close(prev);
@@ -93,11 +94,11 @@ void	start_exec(t_data *data)
 
 	data->envpath = set_path(data);
 	cmd = data->cmd_list;
-	if (cmd->next || !cmd->buildin)
+	if (cmd->cmd_arg && (cmd->next || !cmd->buildin))
 		handle_pipes(data, cmd);
-	else
+	else if (cmd->cmd_arg)
 	{
 		open_files(data, cmd);
-		exec_cmd(data, cmd, NULL, 0);
+		exec_cmd(data, cmd, 0);
 	}
 }

@@ -29,7 +29,7 @@ int	main(int ac, char **argv, char **envp)
 		{
 			line = readline("minishell > ");
 			if (line == NULL)
-				break ;
+				mns_exit(data, NULL);
 			if (primal_parse(line))
 			{
 				add_history(line);

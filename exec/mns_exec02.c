@@ -19,8 +19,11 @@ static int	check_nature(t_data *data, t_cmd *cmd, char *cmd_path)
 
 	st_buff.st_mode = -1;
 	stat(cmd_path, &st_buff);
-	if (S_ISDIR(st_buff.st_mode))
+	if (**(cmd->cmd_arg) && S_ISDIR(st_buff.st_mode))
+	{
+		free(cmd_path);
 		isdir_error(data, cmd);
+	}
 	if (!access(cmd_path, X_OK))
 		return (0);
 	return (-1);
@@ -33,7 +36,7 @@ void	check_access(t_data *data, t_cmd *cmd)
 	int		i;
 
 	i = -1;
-	while (data->envpath[++i])
+	while (data->envpath && data->envpath[++i])
 	{
 		cmd_path = ft_vastrjoin(3, data->envpath[i], "/", cmd->cmd_arg[0]);
 		if (!check_nature(data, cmd, cmd_path))
@@ -59,6 +62,7 @@ char	**set_path(t_data *data)
 
 	envlst = data->my_env;
 	path = NULL;
+	ft_free_tab(data->envpath);
 	while (envlst && ft_strncmp("PATH", envlst->name, 4))
 		envlst = envlst->next;
 	if (envlst)
@@ -66,12 +70,15 @@ char	**set_path(t_data *data)
 	return (path);
 }
 
-void	call_builtin(t_data *data, t_cmd *cmd)
+//calls the right builtin fct.
+void	call_builtin(t_data *data, t_cmd *cmd)//not detected yet
 {
-	if (ft_strcmp(cmd->cmd_arg[0], "export"))
-		ft_export(data, cmd);
-	else
-		return ;
-	if (ft_strcmp(cmd->cmd_arg[0], "unset"))
+	if (ft_strncmp(cmd->cmd_arg[0], "export", 6))
+		mns_export(data, cmd);
+	else if (ft_strncmp(cmd->cmd_arg[0], "unset", 5))
 		exec_unset(cmd->cmd_arg, data);
+	else if (ft_strncmp(cmd->cmd_arg[0], "echo", 4))
+		mns_echo(cmd);
+	else if (ft_strncmp(cmd->cmd_arg[0], "exit", 4))
+		mns_exit(data, cmd);
 }

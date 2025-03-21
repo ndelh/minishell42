@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/20 18:43:40 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/21 16:47:35 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	print_complex_tab(char **s, int i);
 void	ft_add_last(t_token **list, t_token *to_add);
 void	ft_go_last(t_token **list);
 int		tab_len(char **_stab);
+t_env	*go_to_env_node(t_env *list, char *s);
 t_env	*env_lstnew(char *name, char *content);
 t_env	*env_lstlast(t_env *lst);
 void	env_lstadd_back(t_env **lst, t_env *new);
@@ -159,6 +160,9 @@ char	**set_path(t_data *data);
 void	call_builtin(t_data *data, t_cmd *cmd);
 //builtins
 int		mns_export(t_data *data, t_cmd *cmd);
+char	*get_pwd(t_data *data);
+void	exec_cd(char **tab, t_data *data);
+void	exec_pwd(t_data *data);
 void	exec_unset(char **exe, t_data *data);
 void	mns_env(t_data *data);
 void	mns_exit(t_data *data, t_cmd *cmd);

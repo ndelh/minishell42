@@ -6,7 +6,7 @@
 #    By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/03/20 18:33:36 by ndelhota         ###   ########.fr        #
+#    Updated: 2025/03/21 16:22:32 by ndelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ SRC := main.c \
        builtin/mns_env.c \
        builtin/mns_exit.c \
        builtin/mns_echo.c \
+       builtin/cd.c \
+       builtin/pwd.c \
        end/ft_end.c \
        end/ft_end_list.c \
        utils/mns_utils01.c \

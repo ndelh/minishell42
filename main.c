@@ -40,7 +40,6 @@ int	main(int ac, char **argv, char **envp)
 			}
 			free(line);
 		}
-		ft_free_tab(data->envp);
 		ft_end(data);
 	}
 	return (g_status % 255);

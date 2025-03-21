@@ -38,7 +38,11 @@ SRC := main.c \
        tokenize/create_here_doc.c \
        utils/tab_utils.c \
        utils/list_utils.c \
+       builtin/mns_export.c \
        builtin/unset.c \
+       builtin/mns_env.c \
+       builtin/mns_exit.c \
+       builtin/mns_echo.c \
        end/ft_end.c \
        end/ft_end_list.c \
        utils/mns_utils01.c \
@@ -46,8 +50,7 @@ SRC := main.c \
        utils/mns_error01.c \
        gen/mns_sig_init.c \
        exec/mns_exec01.c \
-       exec/mns_exec02.c \
-       builtin/mns_export.c
+       exec/mns_exec02.c
 
 CC := cc
 

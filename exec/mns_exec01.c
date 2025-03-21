@@ -35,7 +35,8 @@ static void	open_files(t_data *data, t_cmd *cmd)
 	}
 }
 
-//redirects stdin and stdout in pipes or in redis, then execs cmd.
+//redirects stdin and stdout in pipes or in redis,
+//then execs cmd or calls builtin.
 static void	exec_cmd(t_data *data, t_cmd *cmd, int prev)
 {
 	t_token	*rdir_list;
@@ -61,6 +62,7 @@ static void	exec_cmd(t_data *data, t_cmd *cmd, int prev)
 }
 
 //forks and executes each cmd.
+//Then waits for each child in creation order.
 static void	handle_pipes(t_data *data, t_cmd *cmd)
 {
 	int		prev;

@@ -155,7 +155,10 @@ void	check_access(t_data *data, t_cmd *cmd);
 char	**set_path(t_data *data);
 void	call_builtin(t_data *data, t_cmd *cmd);
 //builtins
-int		ft_export(t_data *data, t_cmd *cmd);
+int		mns_export(t_data *data, t_cmd *cmd);
 void	exec_unset(char **exe, t_data *data);
+void	mns_env(t_data *data);
+void	mns_exit(t_data *data, t_cmd *cmd);
+void	mns_echo(t_cmd *cmd);
 
 #endif

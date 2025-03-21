@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:25:24 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:15:35 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:31:11 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_replace(char *s, t_env *env)
 
 	to_ret = NULL;
 	s++;
+	if (*s == '?')
+	       to_ret = ft_itoa(g_status % 255);	
 	while (env)
 	{
 		if (!ft_strncmp(s, env->name, ft_strlen(s) + 1))

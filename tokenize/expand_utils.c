@@ -4,9 +4,9 @@
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                     	                           +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:21:53 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:12:58 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/21 18:27:47 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ int	check_expand(char *s)
 void	skip_expand(char **s)
 {
 	(*s)++;
+	if (**s && **s == '?')
+	{
+		*s += 1;
+		return ;
+	}
 	if (!**s || !ft_isalpha(**s))
 		return ;
 	(*s)++;
@@ -83,7 +88,7 @@ char	**isolate_expand(char *s, int i)
 	while (j < i)
 	{
 		move_cursor(&cursor);
-		to_ret[j] = ft_substr(s, 0, strlen(s) - strlen(cursor));
+		to_ret[j] = ft_substr(s, 0, ft_strlen(s) - ft_strlen(cursor));
 		s = cursor;
 		j++;
 	}

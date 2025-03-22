@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:51:41 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 18:14:28 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/22 18:21:24 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	redir_alone(char *s)
 {
-	while (*s == 32)
+	while (is_space(*s))
 		s++;
 	if (*s == '<' || *s == '>')
 		s++;
 	if (*s == '<' || *s == '>')
 		s++;
-	while (*s == 32)
+	while (is_space(*s))
 		s++;
 	if (*s)
 		return (0);
@@ -33,7 +33,7 @@ int	is_incomplete(char *s)
 		return (0);
 	while (*s)
 		s++;
-	if (*(s - 1) != ' ')
+	if (!is_space(*(s - 1)))
 		return (1);
 	else
 		return (0);
@@ -48,7 +48,7 @@ char	**shatter_incomplete_start(char *s)
 	cursor = s;
 	while (*cursor)
 		cursor++;
-	while (*(cursor - 1) != ' ')
+	while (!is_space(*(cursor - 1)))
 		cursor--;
 	to_ret[0] = ft_substr(s, 0, ft_strlen(s)- ft_strlen(cursor));
 	to_ret[1] = ft_substr(cursor, 0, ft_strlen(cursor));
@@ -78,7 +78,7 @@ t_token	*arrange_head(t_token *head, t_token *old_p, t_token *old_n)
 {
 	t_token	*to_ret;
 
-	if (head->type != UNKNOW || !ft_strchr(head->piece, ' '))
+	if (head->type != UNKNOW || !space_strchr(head->piece))
 		return (NULL);
 	to_ret = fracture_incomplete_head(head);
 	free(head->piece);

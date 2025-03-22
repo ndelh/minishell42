@@ -6,7 +6,7 @@
 #    By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/03/21 16:22:32 by ndelhota         ###   ########.fr        #
+#    Updated: 2025/03/22 17:31:40 by ndelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,8 @@ SRC := main.c \
        utils/mns_utils01.c \
        utils/mns_lstfct01.c \
        utils/mns_error01.c \
+       utils/split_w_space.c \
+       utils/space_strchr.c \
        gen/mns_sig_init.c \
        exec/mns_exec01.c \
        exec/mns_exec02.c

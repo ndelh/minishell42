@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 16:09:31 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/18 18:45:37 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/22 18:45:48 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ void	one_complex_line(t_token **list, t_cmd *cmd, int *i)
 	stoppage = (*list)->block_end->next;
 	len = (global_len(*list, stoppage) + 1);
 	cmd->cmd_arg[*i] = ft_calloc(1, len);
-	while (*list != stoppage)
+	while (1)
 	{
-		printf("list piece%s\n", (*list)->piece);
 		ft_strlcat(cmd->cmd_arg[*i], (*list)->piece, len);
+		if ((*list)->next == stoppage)
+			break ;
 		*list = (*list)->next;
 	}
 	(*i)++;
@@ -48,7 +49,7 @@ void	multiple_complex_line(t_token *list, t_cmd *cmd, int *i)
 	char	**split_space;
 
 	j = 0;
-	split_space = ft_split(list->piece, ' ');
+	split_space = split_w_space(list->piece);
 	while (split_space[j])
 	{
 		cmd->cmd_arg[*i] = split_space[j];

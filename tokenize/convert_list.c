@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 16:12:55 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/19 16:22:35 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/22 18:04:00 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	split_count(char *s)
 		s++;
 	while (*s)
 	{
-		while (*s && *s == ' ')
+		while (*s && is_space(*s))
 			s++;
-		if (*s && *s != ' ')
+		if (*s && !is_space(*s))
 			count++;
-		while (*s && *s != ' ')
+		while (*s && !is_space(*s))
 			s++;
 	}
 	return (count);
@@ -46,7 +46,7 @@ int	line_needed(t_token *list)
 			i++;
 		}
 		else if (list->type == D_QUOTE || list->type == S_QUOTE
-			|| !ft_strchr(list->piece, ' '))
+			|| !space_strchr(list->piece))
 			i++;
 		else
 			i += split_count(list->piece);
@@ -69,7 +69,7 @@ void	gen_cmd_tab(t_cmd *cmd, t_token *list)
 		if (list->block_end)
 			one_complex_line(&list, cmd, &i);
 		else if (list->type == D_QUOTE || list->type == S_QUOTE
-			|| !ft_strchr(list->piece, ' '))
+			|| !space_strchr(list->piece))
 		{
 			cmd->cmd_arg[i] = ft_strdup(list->piece);
 			i++;

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:04:35 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:13:33 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/22 18:15:46 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	**shatter_end(char *s)
 
 	to_ret = malloc(sizeof(char *) * 2);
 	cursor = s;
-	while (*cursor == ' ')
+	while (is_space(*cursor))
 		cursor++;
-	while (*cursor != ' ')
+	while (!is_space(*cursor))
 		cursor++;
 	to_ret[0] = ft_substr(s, 0, ft_strlen(s)- ft_strlen(cursor));
 	to_ret[1] = ft_substr(cursor, 0, ft_strlen(cursor));
@@ -52,7 +52,7 @@ void	arrange_tail(t_token **cursor, t_token *old_p, t_token *old_n)
 	t_token	*modify;
 
 	modify = *cursor;
-	if (ft_strchr(modify->piece, ' ') && modify->type == UNKNOW)
+	if (space_strchr(modify->piece) && modify->type == UNKNOW)
 	{
 		modify = fracture_tail(modify);
 		modify->previous = old_p;

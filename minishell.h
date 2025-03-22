@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/21 16:47:35 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/22 18:02:08 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		primal_parse(char *s);
 void	ft_gen(t_data **data, char **envp);
 void	ft_dup_std(t_data *data);
 char	**convert_envp(t_env *my_env);
-//utils 
+//utils
 void	ft_free_tab(char **tab);
 void	ft_print_tab(char **tab);
 void	free_complex_tab(char **s, int i);
@@ -98,11 +98,14 @@ void	print_complex_tab(char **s, int i);
 void	ft_add_last(t_token **list, t_token *to_add);
 void	ft_go_last(t_token **list);
 int		tab_len(char **_stab);
+int		is_space(char c);
 t_env	*go_to_env_node(t_env *list, char *s);
 t_env	*env_lstnew(char *name, char *content);
 t_env	*env_lstlast(t_env *lst);
 void	env_lstadd_back(t_env **lst, t_env *new);
 char	*sanitize(char *s);
+char	**split_w_space(char *s);
+char	*space_strchr(char *s);
 void	closer(int count, ...);
 void	waiter(t_data *data, t_cmd *cmd);
 void	secured_dup2(t_data *data, int fd1, int fd2);

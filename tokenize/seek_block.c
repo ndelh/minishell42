@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:46:21 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 18:23:59 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/22 18:12:21 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	go_next_list(t_token *list)
 {
-	if (list->type == UNKNOW && ft_strchr(list->piece, ' '))
+	if (list->type == UNKNOW && space_strchr(list->piece))
 		return (0);
 	if (list->next->type == REDIR)
 		return (0);
@@ -33,7 +33,7 @@ t_token	*seek_end_of_block(t_token *list)
 		list = list->next;
 		found = list;
 	}
-	if (found && ft_strchr(found->piece, ' '))
+	if (found && space_strchr(found->piece))
 		arrange_tail(&found, found->previous, found->next);
 	return (found);
 }

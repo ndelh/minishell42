@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/23 17:51:42 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/23 18:36:36 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_token
 	char			*piece;
 	int				fd;
 	t_type			type;
+	int				h_no_expand;
 	struct s_token	*block_end;
 
 }	t_token;
@@ -120,6 +121,7 @@ int		check_expand(char *s);
 int		redir_alone(char *s);
 int		global_len(t_token *list, t_token *stoppage);
 void	replace_expand(char **tab, t_env *env);
+void	expand_not_needed(t_token *list);
 void	free_complex_tab(char **tab, int i);
 void	ft_tokenize(t_data *data, char *line);
 void	create_cmd_list(t_data *data, t_token *to_shatter);

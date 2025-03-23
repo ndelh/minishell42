@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:22:49 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/20 10:15:06 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/23 18:47:42 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,17 @@ char	*gen_name(void)
 	return (temp);
 }
 
-void	fill_heredoc(int fd, char *limiter, t_env *my_env)
+void	fill_heredoc(int fd, t_token *list, t_env *my_env)
 {
 	char	*line;
 	int		nb;
 
 	line = readline(">");
 	nb = 1;
-	while (line != NULL && ft_strncmp(line, limiter, ft_strlen(line + 1)))
+	while (line != NULL && ft_strncmp(line, list->piece, ft_strlen(line + 1)))
 	{
-		line = gen_expand_line(line, my_env);
+		if (!list->h_no_expand)
+			line = gen_expand_line(line, my_env);
 		ft_putendl_fd(line, fd);
 		free(line);
 		nb++;
@@ -55,7 +56,7 @@ void	fill_heredoc(int fd, char *limiter, t_env *my_env)
 	if (line == NULL)
 	{
 		printf("warning :here-document at line %d ", nb);
-		printf("delimited by end-of_file (wanted '%s')\n", limiter);
+		printf("delimited by end-of_file (wanted '%s')\n", list->piece);
 	}
 	free(line);
 }
@@ -67,7 +68,7 @@ void	adjust_here_doc(t_token *list, t_env *my_env)
 
 	name = gen_name();
 	fd = open(name, O_WRONLY | O_CREAT, 0666);
-	fill_heredoc(fd, list->piece, my_env);
+	fill_heredoc(fd, list, my_env);
 	close(fd);
 	free(list->piece);
 	list->piece = name;

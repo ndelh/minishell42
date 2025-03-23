@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:29:38 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 18:58:25 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/23 18:35:06 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,18 @@ void	attribute_rdir_type(t_token *node)
 	char	*cursor;
 
 	cursor = node->piece;
-	while (*cursor == 32)
+	while (is_space(*cursor))
 		cursor++;
 	if (*cursor == '<')
 	{
-		if (*(cursor + 1) == '<')
+		if (*(cursor + 1) && *(cursor + 1) == '<')
 			node->type = HEREDOC;
 		else
 			node->type = INFILE;
 	}
 	if (*cursor == '>')
 	{
-		if (*(cursor + 1) == '>')
+		if (*(cursor + 1) && *(cursor + 1) == '>')
 			node->type = APPEND;
 		else
 			node->type = OUTFILE;

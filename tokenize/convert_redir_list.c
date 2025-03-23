@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:50:26 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:17:46 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/23 18:42:25 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_token	*merge_block(t_token *list)
 	to_ret = malloc(sizeof(t_token));
 	ft_memset(to_ret, 0, sizeof(t_token));
 	to_ret->type = list->type;
+	to_ret->h_no_expand = list->h_no_expand;
 	ft_relink(to_ret, list);
 	i = global_len(list, list->block_end->next) + 1;
 	to_ret->piece = ft_calloc(1, i);
@@ -64,6 +65,8 @@ void	reassemble_redir(t_token **list)
 	{
 		if (cursor->block_end)
 		{
+			if (cursor->type == HEREDOC)
+				expand_not_needed(cursor);
 			new_node = merge_block(cursor);
 			if (!new_node->previous)
 				*list = new_node;

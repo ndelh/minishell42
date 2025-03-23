@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   new_main.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 09:29:19 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/20 16:46:23 by ndelhota         ###   ########.fr       */
+/*   Created: 2025/03/23 14:55:46 by ndelhota          #+#    #+#             */
+/*   Updated: 2025/03/23 17:42:40 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,42 @@
 
 int	g_status;
 
-int	main(int ac, char **argv, char **envp)
+void	read_loop(t_data *data)
 {
 	char	*line;
+	char	*display;
+
+	display = NULL;
+	while (1)
+	{
+		ft_prompt(&display, data);
+		line = readline(display);
+		ft_prompt(&display, data);
+		if (line == NULL)
+			mns_exit(data, NULL);
+		if (primal_parse(line))
+		{
+			add_history(line);
+			ft_tokenize(data, line);
+			start_exec(data);
+			free_cmd_list(data->cmd_list);
+			data->cmd_list = NULL;
+		}
+		free(line);
+	}
+}
+
+int	main(int ac, char **argv, char **envp)
+{
 	t_data	*data;
 
-	data = NULL;
 	argv = NULL;
-	g_status = 0;//$? will expand to this var.
-	if (ac == 1)
-	{
-		ft_gen(&data, envp);
-		while (1)
-		{
-			line = readline("minishell > ");
-			if (line == NULL)
-				mns_exit(data, NULL);
-			if (primal_parse(line))
-			{
-				add_history(line);
-				ft_tokenize(data, line);
-				start_exec(data);
-				free_cmd_list(data->cmd_list);
-				data->cmd_list = NULL;
-			}
-			free(line);
-		}
-		ft_end(data);
-	}
+	data = NULL;
+	if (ac != 1)
+		return (g_status % 255);
+	ft_gen(&data, envp);
+	read_loop(data);
+	ft_free_tab(data->envp);
+	ft_end(data);
 	return (g_status % 255);
 }

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/22 18:02:08 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/23 17:51:42 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	ft_gen(t_data **data, char **envp);
 void	ft_dup_std(t_data *data);
 char	**convert_envp(t_env *my_env);
 //utils
+void	ft_prompt(char **display, t_data *data);
 void	ft_free_tab(char **tab);
 void	ft_print_tab(char **tab);
 void	free_complex_tab(char **s, int i);

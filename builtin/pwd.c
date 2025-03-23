@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 15:50:53 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/21 16:07:04 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/23 15:27:45 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_pwd(t_data *data)
 	{
 		free(to_ret);
 		perror("pwd");
-		ft_end(data);
+		to_ret = NULL;
 	}
 	return (to_ret);
 }

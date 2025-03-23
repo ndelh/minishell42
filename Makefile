@@ -6,7 +6,7 @@
 #    By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/03/22 17:31:40 by ndelhota         ###   ########.fr        #
+#    Updated: 2025/03/23 18:05:03 by ndelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC := main.c \
        utils/tab_utils.c \
        utils/list_utils.c \
        utils/primal_parsing.c \
+       utils/prompt.c \
        builtin/mns_export.c \
        builtin/unset.c \
        builtin/mns_env.c \

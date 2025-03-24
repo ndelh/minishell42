@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:53:24 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/19 16:17:20 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:29:40 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_add_last_cmd(t_cmd **list, t_cmd *to_add)
 {
 	static t_cmd	*cursor;
 
+	if (!to_add)
+		return ;
 	if (!*list || !list)
 	{
 		*list = to_add;

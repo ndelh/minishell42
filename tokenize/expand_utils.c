@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 18:13:17 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/22 18:13:21 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:30:35 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ char	**isolate_expand(char *s, int i)
 	char	*cursor;
 
 	to_ret = malloc(sizeof(char *) * (i + 1));
+	if (!to_ret)
+		return (NULL);
 	j = 0;
 	cursor = s;
 	while (j < i)

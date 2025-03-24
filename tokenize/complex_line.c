@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 16:09:31 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/22 18:45:48 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:17:18 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ void	one_complex_line(t_token **list, t_cmd *cmd, int *i)
 	(*i)++;
 }
 
-void	multiple_complex_line(t_token *list, t_cmd *cmd, int *i)
+void	multiple_complex_line(t_token *list, t_cmd *cmd, int *i, t_data *data)
 {
 	int		j;
 	char	**split_space;
 
 	j = 0;
 	split_space = split_w_space(list->piece);
+	check_alloc(split_space, data);
 	while (split_space[j])
 	{
 		cmd->cmd_arg[*i] = split_space[j];

@@ -6,13 +6,13 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:29:38 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/23 18:35:06 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:38:12 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*gen_expand_line(char *s, t_env *env)
+char	*gen_expand_line(char *s, t_env *env, t_token *list)
 {
 	char	**to_join;
 	char	*to_ret;
@@ -22,7 +22,9 @@ char	*gen_expand_line(char *s, t_env *env)
 		return (NULL);
 	i = count_expand_split(s);
 	to_join = isolate_expand(s, i);
-	replace_expand(to_join, env);
+	if (!to_join)
+		return (NULL);
+	replace_expand(to_join, env, list);
 	to_ret = ft_mend_line(to_join, i);
 	free_complex_tab(to_join, i);
 	return (to_ret);
@@ -37,7 +39,7 @@ void	replace_piece(t_token *list, t_data *data)
 	{
 		if (list->type != S_QUOTE && check_expand(list->piece))
 		{
-			temp = gen_expand_line(list->piece, data->my_env);
+			temp = gen_expand_line(list->piece, data->my_env, list);
 			free(list->piece);
 			list->piece = temp;
 		}
@@ -83,7 +85,7 @@ void	replace_piece_redir(t_token *list, t_data *data)
 		if (list->type != HEREDOC && list->type != S_QUOTE
 			&& check_expand(list->piece))
 		{
-			temp = gen_expand_line(list->piece, data->my_env);
+			temp = gen_expand_line(list->piece, data->my_env, list);
 			free(list->piece);
 			list->piece = temp;
 		}

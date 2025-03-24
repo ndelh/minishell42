@@ -48,5 +48,7 @@ char	**convert_envp(t_env *my_env)
 
 	size = envp(my_env);
 	to_ret = malloc(sizeof(t_env *) * (size + 1));
+	if (!to_ret)
+		return (NULL);
 	fill_ret(to_ret);
 }

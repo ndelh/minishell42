@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:44:26 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/20 09:49:30 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:02:12 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_env	*ft_gen_env_list(char **envp)
 void	ft_gen(t_data **data, char **envp)
 {
 	*data = malloc(sizeof(t_data));
+	check_alloc(*data, *data);
 	signals_init();
 	ft_memset(*data, 0, sizeof(t_data));
 	(*data)->my_env = ft_gen_env_list(envp);

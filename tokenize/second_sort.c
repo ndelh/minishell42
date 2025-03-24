@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:18:24 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/22 18:09:48 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:25:19 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_token	*ft_create_insert(char *pipe)
 	t_token	*to_insert;
 
 	to_insert = malloc(sizeof(t_token));
+	if (!to_insert)
+		return (NULL);
 	ft_memset(to_insert, 0, sizeof(t_token));
 	to_insert->piece = pipe;
 	return (to_insert);

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 15:59:34 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/22 17:03:36 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:22:12 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,16 @@ void	move_all(char **s, char **cursor)
 		(*cursor)++;
 }
 
+void	rectify_error(char **tab, int j)
+{
+	while (j <= 0)
+	{
+		free(tab[j]);
+		j--;
+	}
+	free(tab);
+}
+
 char	**split_w_space(char *s)
 {
 	int		count;
@@ -64,7 +74,10 @@ char	**split_w_space(char *s)
 		move_all(&s, &cursor);
 		split[j] = ft_substr(s, 0, ft_strlen(s) - ft_strlen(cursor));
 		if (!split[j])
+		{
+			rectify_error(split, j);
 			return (NULL);
+		}
 		s = cursor;
 		j++;
 	}

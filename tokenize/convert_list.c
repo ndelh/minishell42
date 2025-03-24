@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 16:12:55 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/22 18:04:00 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:16:06 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	line_needed(t_token *list)
 	return (i);
 }
 
-void	gen_cmd_tab(t_cmd *cmd, t_token *list)
+void	gen_cmd_tab(t_cmd *cmd, t_token *list, t_data *data)
 {
 	int	i;
 
@@ -75,7 +75,7 @@ void	gen_cmd_tab(t_cmd *cmd, t_token *list)
 			i++;
 		}
 		else
-			multiple_complex_line(list, cmd, &i);
+			multiple_complex_line(list, cmd, &i, data);
 		if (list)
 			list = list->next;
 	}
@@ -99,12 +99,12 @@ void	adjust_cmd(t_token **list)
 	}
 }
 
-void	convert_cmd_list(t_cmd *cmd)
+void	convert_cmd_list(t_cmd *cmd, t_data *data)
 {
 	while (cmd)
 	{
 		adjust_cmd(&cmd->current_cmd);
-		gen_cmd_tab(cmd, cmd->current_cmd);
+		gen_cmd_tab(cmd, cmd->current_cmd, data);
 		cmd = cmd->next;
 	}
 }

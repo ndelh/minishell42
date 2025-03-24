@@ -6,13 +6,33 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:25:24 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/22 18:13:58 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:10:35 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_replace(char *s, t_env *env)
+char	*split_replace(char *s)
+{
+	char	*to_ret;
+	char	**split;
+	int		i;
+
+	split = split_w_space(s);
+	if (!split || !*split)
+		return (NULL);
+	i = 1;
+	to_ret = *split;
+	while (split[i])
+	{
+		to_ret = join_with_space(to_ret, split[i]);
+		i++;
+	}
+	free(split);
+	return (to_ret);
+}
+
+char	*ft_replace(char *s, t_env *env, t_token *list)
 {
 	char	*to_ret;
 
@@ -24,14 +44,17 @@ char	*ft_replace(char *s, t_env *env)
 	{
 		if (!ft_strncmp(s, env->name, ft_strlen(s) + 1))
 		{
-			to_ret = ft_strdup(env->content);
+			if (list && list->type == D_QUOTE)
+				to_ret = ft_strdup(env->content);
+			else
+				to_ret = split_replace(env->content);
 		}
 		env = env->next;
 	}
 	return (to_ret);
 }
 
-void	replace_expand(char **tab, t_env *env)
+void	replace_expand(char **tab, t_env *env, t_token *list)
 {
 	char	*modified;
 
@@ -45,7 +68,7 @@ void	replace_expand(char **tab, t_env *env)
 		}
 		else if (check_expand(*tab))
 		{
-			modified = ft_replace(*tab, env);
+			modified = ft_replace(*tab, env, list);
 			free(*tab);
 			*tab = modified;
 		}

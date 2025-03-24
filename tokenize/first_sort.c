@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:54:00 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/16 15:09:20 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:26:50 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_add_last(t_token **list, t_token *to_add)
 {
 	static t_token	*cursor;
 
+	if (!to_add)
+		return ;
 	if (!*list || !list)
 	{
 		*list = to_add;

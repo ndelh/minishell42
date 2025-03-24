@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/23 18:36:36 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:04:50 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ t_env	*env_lstnew(char *name, char *content);
 t_env	*env_lstlast(t_env *lst);
 void	env_lstadd_back(t_env **lst, t_env *new);
 char	*sanitize(char *s);
+char	*join_with_space(char *s1, char *s2);
 char	**split_w_space(char *s);
 char	*space_strchr(char *s);
 void	closer(int count, ...);
@@ -120,7 +121,7 @@ int		count_expand_split(char *s);
 int		check_expand(char *s);
 int		redir_alone(char *s);
 int		global_len(t_token *list, t_token *stoppage);
-void	replace_expand(char **tab, t_env *env);
+void	replace_expand(char **tab, t_env *env, t_token *list);
 void	expand_not_needed(t_token *list);
 void	free_complex_tab(char **tab, int i);
 void	ft_tokenize(t_data *data, char *line);
@@ -129,7 +130,7 @@ char	**split_quote(char *s);
 char	*ft_mend_line(char **tab, int i);
 char	**isolate_expand(char *s, int i);
 char	**split_at_char(char *s, char c);
-char	*gen_expand_line(char *s, t_env *env);
+char	*gen_expand_line(char *s, t_env *env, t_token *list);
 void	first_sort(t_data *data, char **first_split);
 void	gen_pipe_list(t_token **oldlist);
 void	gen_redirection_line(t_token **oldlist);
@@ -141,8 +142,8 @@ void	sort_redir_exe(t_cmd *list);
 void	arrange_tail(t_token **cursor, t_token *old_p, t_token *old_n);
 char	**split_at_redir(char *s);
 void	expand_in_list(t_cmd *cmd, t_data *data);
-void	convert_cmd_list(t_cmd *cmd);
-void	multiple_complex_line(t_token *list, t_cmd *cmd, int *i);
+void	convert_cmd_list(t_cmd *cmd, t_data *data);
+void	multiple_complex_line(t_token *list, t_cmd *cmd, int *i, t_data *data);
 void	one_complex_line(t_token **list, t_cmd *cmd, int *i);
 void	convert_redir_list(t_cmd *cmd);
 void	change_hdoc(t_cmd *cmd, t_data *data);
@@ -152,6 +153,7 @@ void	free_token_list(t_token *to_free, int i);
 void	free_env_list(t_env *env);
 void	free_cmd_list(t_cmd *to_free);
 void	ft_end(t_data *data);
+void	check_alloc(void *alloc, t_data *data);
 //error management
 void	redir_error(t_data *data, t_cmd *cmd, t_token *redirlst);
 void	isdir_error(t_data *data, t_cmd *cmd);

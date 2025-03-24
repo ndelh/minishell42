@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 18:54:49 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/23 18:37:18 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 12:23:37 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	expand_not_needed(t_token *list)
 {
-	t_token *stoppage;
+	t_token	*stoppage;
 	t_token	*cursor;
 
 	cursor = list;

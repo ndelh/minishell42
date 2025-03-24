@@ -6,11 +6,21 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 11:08:15 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/19 20:38:17 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:46:35 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	check_alloc(void *alloc, t_data *data)
+{
+	if (!alloc)
+	{
+		perror("allocation failed:");
+		ft_end(data);
+		exit (1);
+	}
+}
 
 void	close_fds(t_data *data)
 {

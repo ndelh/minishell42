@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:22:49 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/23 18:47:42 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:41:30 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	fill_heredoc(int fd, t_token *list, t_env *my_env)
 	while (line != NULL && ft_strncmp(line, list->piece, ft_strlen(line + 1)))
 	{
 		if (!list->h_no_expand)
-			line = gen_expand_line(line, my_env);
+			line = gen_expand_line(line, my_env, NULL);
 		ft_putendl_fd(line, fd);
 		free(line);
 		nb++;

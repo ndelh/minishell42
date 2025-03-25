@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 16:12:55 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/24 12:16:06 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/25 11:56:48 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	split_count(char *s)
 	count = 0;
 	if (!s || !*s)
 		return (0);
-	if (*s == '|')
-		s++;
 	while (*s)
 	{
 		while (*s && is_space(*s))

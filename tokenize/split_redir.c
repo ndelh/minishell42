@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:30:58 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/20 14:24:41 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:03:09 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	skip_redir(char **s)
 	(*s)++;
 	if (**s == *(*s - 1))
 		(*s)++;
-	while (**s && **s == ' ')
+	while (**s && is_space(**s))
 		(*s)++;
-	while (**s && (**s != ' ' && **s != '<' && **s != '>' ))
+	while (**s && (!is_space(**s) && **s != '<' && **s != '>' ))
 		(*s)++;
-	if (**s && **s == 32)
+	if (**s && is_space(**s))
 		(*s)++;
 }
 
@@ -37,7 +37,7 @@ int	count_redir(char *s)
 			count++;
 			skip_redir(&s);
 		}
-		while (*s == 32)
+		while (is_space(*s))
 			s++;
 		if (*s && *s != '<' && *s != '>')
 			count++;
@@ -79,6 +79,8 @@ char	**split_at_redir(char *s)
 	i = 0;
 	nb = count_redir(s);
 	to_ret = malloc(sizeof(char *) * (nb + 1));
+	if (!to_ret)
+		return (NULL);
 	cursor = to_ret;
 	while (i < nb)
 	{

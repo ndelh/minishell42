@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 11:25:24 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/24 14:10:35 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:21:41 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_replace(char *s, t_env *env, t_token *list)
 		to_ret = ft_itoa(g_status % 255);
 	while (env)
 	{
-		if (!ft_strncmp(s, env->name, ft_strlen(s) + 1))
+		if (!ft_strcmp(s, env->name))
 		{
 			if (list && list->type == D_QUOTE)
 				to_ret = ft_strdup(env->content);

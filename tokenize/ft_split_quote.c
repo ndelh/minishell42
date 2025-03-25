@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:42:28 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/20 16:06:54 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:17:58 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ char	**split_quote(char *s)
 	i = 0;
 	nb = word_numb(s);
 	to_ret = (char **)malloc(sizeof(char *) * (nb + 1));
+	if (!to_ret)
+		return (NULL);
 	while (i < nb)
 	{
 		to_ret[i] = ft_dup(&s);

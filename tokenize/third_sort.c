@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/02 15:14:03 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/10 09:25:09 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:07:34 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ void	split_rline(t_token **to_frag)
 	char	**frag_result;
 
 	frag_result = split_at_redir((*to_frag)->piece);
+	if (!frag_result)
+		return ;
 	new_list = NULL;
 	gen_new_chain(&new_list, frag_result);
+	if (!new_list)
+		return ;
 	free((*to_frag)->piece);
 	free(*to_frag);
 	*to_frag = new_list;

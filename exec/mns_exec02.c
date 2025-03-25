@@ -25,7 +25,9 @@ static int	check_nature(t_data *data, t_cmd *cmd, char *cmd_path)
 		isdir_error(data, cmd);
 	}
 	if (!access(cmd_path, X_OK))
+	{
 		return (0);
+	}
 	return (-1);
 }
 

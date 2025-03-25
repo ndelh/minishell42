@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 14:04:35 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/22 18:15:46 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:42:23 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	**shatter_end(char *s)
 	char	**to_ret;
 
 	to_ret = malloc(sizeof(char *) * 2);
+	if (!to_ret)
+		return (NULL);
 	cursor = s;
 	while (is_space(*cursor))
 		cursor++;
@@ -35,8 +37,16 @@ t_token	*fracture_tail(t_token *to_frac)
 	char	**shattered;
 
 	shattered = shatter_end(to_frac->piece);
+	if (!shattered)
+		return (NULL);
 	node_a = malloc(sizeof(t_token));
 	node_b = malloc(sizeof(t_token));
+	if (!node_a || !node_b)
+	{
+		free(node_a);
+		free(node_b);
+		return (NULL);
+	}
 	ft_memset(node_a, 0, sizeof(t_token));
 	ft_memset(node_b, 0, sizeof (t_token));
 	node_a->piece = *shattered;
@@ -55,6 +65,11 @@ void	arrange_tail(t_token **cursor, t_token *old_p, t_token *old_n)
 	if (space_strchr(modify->piece) && modify->type == UNKNOW)
 	{
 		modify = fracture_tail(modify);
+		if (!modify)
+		{
+			perror("failed alloc");
+			return ;
+		}
 		modify->previous = old_p;
 		modify->next->next = old_n;
 		if (old_n)

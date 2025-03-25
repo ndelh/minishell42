@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:36:08 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/18 17:16:38 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:59:06 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ char	**split_at_char(char *s, char c)
 	i = 0;
 	n = count_char(s, c);
 	to_ret = malloc(sizeof(char *) * (n + 1));
+	if (!to_ret)
+		return (NULL);
 	while (i < n)
 	{
 		to_ret[i] = ft_dup_charac(&s, c);

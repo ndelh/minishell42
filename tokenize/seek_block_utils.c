@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 19:51:41 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/22 18:21:24 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:33:58 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	redir_alone(char *s)
 {
-	while (is_space(*s))
+	while (*s && is_space(*s))
 		s++;
-	if (*s == '<' || *s == '>')
+	if (*s && (*s == '<' || *s == '>'))
 		s++;
-	if (*s == '<' || *s == '>')
+	if (*s && *s == *(s - 1))
 		s++;
-	while (is_space(*s))
+	while (*s && is_space(*s))
 		s++;
 	if (*s)
 		return (0);
@@ -45,6 +45,8 @@ char	**shatter_incomplete_start(char *s)
 	char	**to_ret;
 
 	to_ret = malloc(sizeof(char *) * 2);
+	if (!to_ret)
+		return (NULL);
 	cursor = s;
 	while (*cursor)
 		cursor++;
@@ -64,6 +66,13 @@ t_token	*fracture_incomplete_head(t_token *to_frac)
 	shattered = shatter_incomplete_start(to_frac->piece);
 	node_a = malloc(sizeof(t_token));
 	node_b = malloc(sizeof(t_token));
+	if (!node_a || !node_b || !shattered)
+	{
+		free(node_a);
+		free(node_b);
+		free(shattered);
+		return (NULL);
+	}
 	ft_memset(node_a, 0, sizeof(t_token));
 	ft_memset(node_b, 0, sizeof(t_token));
 	node_a->piece = *shattered;
@@ -81,6 +90,8 @@ t_token	*arrange_head(t_token *head, t_token *old_p, t_token *old_n)
 	if (head->type != UNKNOW || !space_strchr(head->piece))
 		return (NULL);
 	to_ret = fracture_incomplete_head(head);
+	if (!to_ret)
+		return (NULL);
 	free(head->piece);
 	free(head);
 	to_ret->previous = old_p;

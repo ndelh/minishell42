@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:53:24 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/24 12:29:40 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:57:26 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_cmd	*create_cmd_node(t_token *to_shatter)
 	t_cmd	*cmd_list;
 
 	cmd_list = malloc(sizeof(t_cmd));
+	if (!cmd_list)
+		return (NULL);
 	ft_memset(cmd_list, 0, sizeof(t_cmd));
 	cmd_list->current_cmd = to_shatter;
 	return (cmd_list);

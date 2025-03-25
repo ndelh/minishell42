@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:40:59 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/20 16:42:36 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:22:48 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_end_pipe(char *s)
 	if (test == 0)
 	{
 		s--;
-		while (*s == 32 || (*s >= 9 && *s <= 13))
+		while (is_space(*s) || (*s >= 9 && *s <= 13))
 			s--;
 		if (*s != '|')
 			test = 1;
@@ -38,10 +38,16 @@ int	check_end_pipe(char *s)
 
 int	check_incomplete_redir(char *s)
 {
+	char	a;
+	
+	if (*s == '<')
+		a = '>';
+	else
+		a = '<';
 	s++;
 	if (*s == *(s - 1))
 		s++;
-	while (*s && (*s == 32 || (*s >= 9 && *s <= 13)))
+	while (*s && (is_space(*s) && *s != a))
 		s++;
 	if (!*s || *s == '|' || *s == '<' || *s == '>')
 	{

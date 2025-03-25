@@ -7,7 +7,7 @@ void	mns_echo(t_cmd *cmd)
 
 	i = 1;
 	n = 0;
-	if (!ft_strncmp(cmd->cmd_arg[1], "-n", 2))
+	if (cmd->cmd_arg[1] && !ft_strncmp(cmd->cmd_arg[1], "-n", 2))
 	{
 		i++;
 		n++;

@@ -26,11 +26,18 @@ void	sig_handler(int sig)
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);
-		g_status = 130;
-		// exit(130);//temp for test
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		g_signal = sig;
 	}
 	if (sig == SIGQUIT)
-		g_status = 131;//temp for test
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		write(1,"  \b\b", 4);
+		g_signal = sig;
+	}
 }
 
 //initialize signals for ^C(SIGINT(2)) and ^\(SIGQUIT(3)).

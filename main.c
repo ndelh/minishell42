@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	g_status;
+int	g_signal;
 
 void	read_loop(t_data *data)
 {
@@ -22,11 +22,14 @@ void	read_loop(t_data *data)
 	display = NULL;
 	while (1)
 	{
+		g_signal = 0;
 		ft_prompt(&display, data);
 		line = readline(display);
 		ft_prompt(&display, data);
 		if (line == NULL)
 			mns_exit(data, NULL);
+		if (g_signal == SIGINT)
+			data->exit = 130;//$? will expand to this var.
 		if (primal_parse(line))
 		{
 			add_history(line);

@@ -40,6 +40,8 @@ void	free_token_list(t_token *to_free, int i)
 			if (to_free->type == HEREDOC)
 				unlink(to_free->piece);
 		}
+		if (to_free->fd > 2)
+			close(to_free->fd);
 		free(to_free->piece);
 		free(to_free);
 		to_free = temp;

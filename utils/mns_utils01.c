@@ -10,7 +10,7 @@ void	closer(int count, ...)
 	while (count--)
 	{
 		fd = va_arg(arg, int);
-		if (fd != -1)
+		if (fd > 2)
 			close(fd);
 	}
 	va_end(arg);
@@ -19,25 +19,37 @@ void	closer(int count, ...)
 void	waiter(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid;
+	int		w_status;
 	int		i = 1;//tmp for test
 
 	while (cmd)
 	{
-		pid = waitpid(cmd->pid, &g_status, 0);
+		pid = waitpid(cmd->pid, &w_status, 0);
 		if (pid == -1)
 		{
 			perror("waitpid failed");
 			ft_end(data);
 			exit(EXIT_FAILURE);
 		}
-		printf("child %d exit code: %d\n", i++, g_status % 255);//tmp for test
+		if (WTERMSIG(w_status) == SIGQUIT)
+		{
+			data->exit = 131;
+			// sig_handler(SIGQUIT);
+		}
+		if (WTERMSIG(w_status) == SIGINT)
+		{
+			data->exit = 130;
+		}
+		else
+			data->exit = w_status;
+		printf("child %d wait code: %d\n", i++, w_status % 255);//tmp for test
 		cmd = cmd->next;
 	}
 }
 
 void	secured_dup2(t_data *data, int fd1, int fd2)
 {
-	if (fd1 == -1 || fd2 == -1)
+	if (fd1 == -1 || fd2 == -1 || fd1 == fd2)
 		return ;
 	if (dup2(fd1, fd2) == -1)
 	{

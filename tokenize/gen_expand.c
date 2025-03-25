@@ -32,14 +32,14 @@ char	*split_replace(char *s)
 	return (to_ret);
 }
 
-char	*ft_replace(char *s, t_env *env, t_token *list)
+char	*ft_replace(t_data *data, char *s, t_env *env, t_token *list)
 {
 	char	*to_ret;
 
 	to_ret = NULL;
 	s++;
 	if (*s == '?')
-		to_ret = ft_itoa(g_status % 255);
+		to_ret = ft_itoa(data->exit % 255);
 	while (env)
 	{
 		if (!ft_strcmp(s, env->name))
@@ -54,7 +54,7 @@ char	*ft_replace(char *s, t_env *env, t_token *list)
 	return (to_ret);
 }
 
-void	replace_expand(char **tab, t_env *env, t_token *list)
+void	replace_expand(t_data *data, char **tab, t_env *env, t_token *list)
 {
 	char	*modified;
 
@@ -68,7 +68,7 @@ void	replace_expand(char **tab, t_env *env, t_token *list)
 		}
 		else if (check_expand(*tab))
 		{
-			modified = ft_replace(*tab, env, list);
+			modified = ft_replace(data, *tab, env, list);
 			free(*tab);
 			*tab = modified;
 		}

@@ -49,10 +49,10 @@ int	main(int ac, char **argv, char **envp)
 	argv = NULL;
 	data = NULL;
 	if (ac != 1)
-		return (g_status % 255);
+		return (0);
 	ft_gen(&data, envp);
 	read_loop(data);
 	ft_free_tab(data->envp);
 	ft_end(data);
-	return (g_status % 255);
+	return (data->exit % 255);
 }

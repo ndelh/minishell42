@@ -37,7 +37,7 @@ char	*gen_name(void)
 	return (temp);
 }
 
-void	fill_heredoc(int fd, t_token *list, t_env *my_env)
+void	fill_heredoc(t_data *data, int fd, t_token *list, t_env *my_env)
 {
 	char	*line;
 	int		nb;
@@ -47,7 +47,7 @@ void	fill_heredoc(int fd, t_token *list, t_env *my_env)
 	while (line != NULL && ft_strcmp(line, list->piece))
 	{
 		if (!list->h_no_expand)
-			line = gen_expand_line(line, my_env, NULL);
+			line = gen_expand_line(data, line, my_env, NULL);
 		ft_putendl_fd(line, fd);
 		free(line);
 		nb++;
@@ -61,26 +61,26 @@ void	fill_heredoc(int fd, t_token *list, t_env *my_env)
 	free(line);
 }
 
-void	adjust_here_doc(t_token *list, t_env *my_env)
+void	adjust_here_doc(t_data *data, t_token *list, t_env *my_env)
 {
 	char	*name;
 	int		fd;
 
 	name = gen_name();
 	fd = open(name, O_WRONLY | O_CREAT, 0666);
-	fill_heredoc(fd, list, my_env);
+	fill_heredoc(data, fd, list, my_env);
 	close(fd);
 	free(list->piece);
 	list->piece = name;
 }
 
-void	run_redir_list(t_token *list, t_env *my_env)
+void	run_redir_list(t_data *data, t_token *list, t_env *my_env)
 {
 	while (list)
 	{
 		if (list->type == HEREDOC)
 		{
-			adjust_here_doc(list, my_env);
+			adjust_here_doc(data, list, my_env);
 		}
 		list = list->next;
 	}
@@ -91,7 +91,7 @@ void	change_hdoc(t_cmd *cmd, t_data *data)
 	while (cmd)
 	{
 		if (cmd->rdir_list)
-			run_redir_list(cmd->rdir_list, data->my_env);
+			run_redir_list(data, cmd->rdir_list, data->my_env);
 		cmd = cmd->next;
 	}
 }

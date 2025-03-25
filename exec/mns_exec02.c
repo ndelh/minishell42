@@ -26,7 +26,6 @@ static int	check_nature(t_data *data, t_cmd *cmd, char *cmd_path)
 	}
 	if (**(cmd->cmd_arg) && !access(cmd_path, X_OK))//band-aid. why cans access(X_OK) a "" arg?
 		return (0);
-	}
 	return (-1);
 }
 

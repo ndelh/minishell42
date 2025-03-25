@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-char	*gen_expand_line(char *s, t_env *env, t_token *list)
+char	*gen_expand_line(t_data *data, char *s, t_env *env, t_token *list)
 {
 	char	**to_join;
 	char	*to_ret;
@@ -24,7 +24,7 @@ char	*gen_expand_line(char *s, t_env *env, t_token *list)
 	to_join = isolate_expand(s, i);
 	if (!to_join)
 		return (NULL);
-	replace_expand(to_join, env, list);
+	replace_expand(data, to_join, env, list);
 	to_ret = ft_mend_line(to_join, i);
 	free_complex_tab(to_join, i);
 	return (to_ret);
@@ -39,7 +39,7 @@ void	replace_piece(t_token *list, t_data *data)
 	{
 		if (list->type != S_QUOTE && check_expand(list->piece))
 		{
-			temp = gen_expand_line(list->piece, data->my_env, list);
+			temp = gen_expand_line(data, list->piece, data->my_env, list);
 			free(list->piece);
 			list->piece = temp;
 		}
@@ -85,7 +85,7 @@ void	replace_piece_redir(t_token *list, t_data *data)
 		if (list->type != HEREDOC && list->type != S_QUOTE
 			&& check_expand(list->piece))
 		{
-			temp = gen_expand_line(list->piece, data->my_env, list);
+			temp = gen_expand_line(data, list->piece, data->my_env, list);
 			free(list->piece);
 			list->piece = temp;
 		}

@@ -25,7 +25,7 @@
 # include <sys/stat.h>
 # include <signal.h>
 
-extern int	g_status;
+extern int	g_signal;
 
 typedef enum type_e
 {
@@ -84,6 +84,7 @@ typedef struct s_data
 	char		**envp;
 	int			standard_in;
 	int			standard_out;
+	int			exit;
 }	t_data;
 
 int		primal_parse(char *s);
@@ -98,7 +99,7 @@ void	print_complex_tab(char **s, int i);
 void	ft_add_last(t_token **list, t_token *to_add);
 void	ft_go_last(t_token **list);
 int		tab_len(char **_stab);
-t_env	*env_lstnew(char *name, char *content);
+t_env	*env_lstnew(char *name, char *content, int status);
 t_env	*env_lstlast(t_env *lst);
 void	env_lstadd_back(t_env **lst, t_env *new);
 char	*sanitize(char *s);
@@ -161,7 +162,7 @@ void	call_builtin(t_data *data, t_cmd *cmd);
 int		mns_export(t_data *data, t_cmd *cmd);
 void	exec_unset(char **exe, t_data *data);
 void	mns_env(t_data *data);
-void	mns_exit(t_data *data, t_cmd *cmd);
+int		mns_exit(t_data *data, t_cmd *cmd);
 void	mns_echo(t_cmd *cmd);
 
 #endif

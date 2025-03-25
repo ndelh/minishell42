@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	g_status;
+int	g_signal;
 
 int	main(int ac, char **argv, char **envp)
 {
@@ -21,7 +21,7 @@ int	main(int ac, char **argv, char **envp)
 
 	data = NULL;
 	argv = NULL;
-	g_status = 0;//$? will expand to this var.
+	g_signal = 0;
 	if (ac == 1)
 	{
 		ft_gen(&data, envp);
@@ -30,6 +30,8 @@ int	main(int ac, char **argv, char **envp)
 			line = readline("minishell > ");
 			if (line == NULL)
 				mns_exit(data, NULL);
+			if (g_signal == SIGINT)
+				data->exit = 130;//$? will expand to this var.
 			if (primal_parse(line))
 			{
 				add_history(line);
@@ -39,9 +41,9 @@ int	main(int ac, char **argv, char **envp)
 				data->cmd_list = NULL;
 			}
 			free(line);
+			g_signal = 0;
 		}
-		ft_free_tab(data->envp);
 		ft_end(data);
 	}
-	return (g_status % 255);
+	return (data->exit % 255);
 }

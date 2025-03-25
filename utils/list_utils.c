@@ -14,7 +14,7 @@
 
 t_env	*go_to_env_node(t_env *list, char *s)
 {
-	while (list && !ft_strncmp(s, list->name, ft_strlen(s) + 1))
+	while (list && ft_strncmp(s, list->name, ft_strlen(s) + 1))
 		list = list->next;
 	return (list);
 }

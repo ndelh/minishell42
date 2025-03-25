@@ -3,7 +3,16 @@
 static void	call_or_exec(t_data *data, t_cmd *cmd)
 {
 	if (cmd->buildin)
+	{
 		call_builtin(data, cmd);
+		secured_dup2(data, data->standard_in, 0);
+		secured_dup2(data, data->standard_out, 1);
+		if (cmd->previous || cmd->next)
+		{
+			ft_end(data);
+			exit(0);
+		}
+	}
 	else
 	{
 		execve(cmd->cmd_path, cmd->cmd_arg, data->envp);
@@ -47,7 +56,7 @@ static void	exec_cmd(t_data *data, t_cmd *cmd, int prev)
 	if (cmd->next)
 		secured_dup2(data, cmd->pfd[1], 1);
 	closer(3, prev, cmd->pfd[0], cmd->pfd[1]);
-	while (rdir_list)
+	while (rdir_list)//weird behaviour w/ builtins
 	{
 		if (rdir_list->type == 4 || rdir_list->type == 6)
 			secured_dup2(data, rdir_list->fd, 0);

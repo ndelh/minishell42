@@ -4,13 +4,15 @@
 void	redir_error(t_data *data, t_cmd *cmd, t_token *rdir_list)
 {
 	perror(rdir_list->piece);
+	free_token_list(cmd->rdir_list, 0);
+	cmd->rdir_list = NULL;
 	if (!cmd->pid)
 	{
 		closer(2, cmd->pfd[0], cmd->pfd[1]);
 		ft_end(data);
 		exit(1);
 	}
-	g_status = 1;
+	data->exit = 1;
 }
 
 //if cmd is a dir, displays right error and return
@@ -18,24 +20,28 @@ void	isdir_error(t_data *data, t_cmd *cmd)
 {
 	errno = EISDIR;
 	perror(cmd->cmd_arg[0]);
+	free_token_list(cmd->rdir_list, 0);
+	cmd->rdir_list = NULL;
 	if (!cmd->pid)
 	{
 		closer(2, cmd->pfd[0], cmd->pfd[1]);
 		ft_end(data);
 		exit(126);
 	}
-	g_status = 126;
+	data->exit = 126;
 }
 
 //if cmd not found, displays the right error and return
 void	fct_error(t_data *data, t_cmd *cmd)
 {
 	perror(cmd->cmd_arg[0]);
+	free_token_list(cmd->rdir_list, 0);
+	cmd->rdir_list = NULL;
 	if (!cmd->pid)
 	{
 		closer(2, cmd->pfd[0], cmd->pfd[1]);
 		ft_end(data);
 		exit(127);
 	}
-	g_status = 127;
+	data->exit = 127;
 }

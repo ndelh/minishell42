@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-t_env	*env_lstnew(char *name, char *content)
+t_env	*env_lstnew(char *name, char *content, int status)
 {
 	t_env	*new_node;
 
@@ -9,7 +9,7 @@ t_env	*env_lstnew(char *name, char *content)
 		return (NULL);
 	new_node->name = name;
 	new_node->content = content;
-	new_node->status = 0;
+	new_node->status = status;
 	new_node->next = NULL;
 	new_node->previous = NULL;
 	return (new_node);

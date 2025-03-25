@@ -34,8 +34,11 @@ void	fill_ret(char **tab, t_env *list)
 		len = ft_strlen(list->name) + ft_strlen(list->content) + 2;
 		*tab = ft_calloc(sizeof(char), len);
 		ft_strlcat(*tab, list->name, len);
-		ft_strlcat(*tab, "=", len);
-		ft_strlcat(*tab, list->content, len);
+		if (list->content)
+		{
+			ft_strlcat(*tab, "=", len);
+			ft_strlcat(*tab, list->content, len);
+		}
 		list = list->next;
 		tab++;
 	}

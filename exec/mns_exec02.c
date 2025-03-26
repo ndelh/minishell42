@@ -62,6 +62,7 @@ static void	call_builtin(t_data *data, t_cmd *cmd)
 		mns_exit(data, cmd);
 }
 
+//will differentiate between builtins and other cmds
 void	call_or_exec(t_data *data, t_cmd *cmd)
 {
 	if (cmd->buildin || !cmd->cmd_arg)

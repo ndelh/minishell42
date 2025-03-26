@@ -1,7 +1,7 @@
 #include "../minishell.h"
 
 //sets the args for execve if absolute path is given.
-static void	abs_path(t_cmd *cmd)
+void	abs_path(t_cmd *cmd)
 {
 	char	*tmp;
 	int		len;
@@ -13,7 +13,7 @@ static void	abs_path(t_cmd *cmd)
 }
 
 //takes a char* and returns: 0 for an X_OK file, 1 for a dir, -1 for error.
-static int	check_nature(t_data *data, t_cmd *cmd, char *cmd_path)
+int	check_nature(t_data *data, t_cmd *cmd, char *cmd_path)
 {
 	struct stat	st_buff;
 
@@ -27,37 +27,6 @@ static int	check_nature(t_data *data, t_cmd *cmd, char *cmd_path)
 	if (**(cmd->cmd_arg) && !access(cmd_path, X_OK))//band-aid. why cans access(X_OK) a "" arg?
 		return (0);
 	return (-1);
-}
-
-//checks if the first arg of cmd->cmd_arg exists, and it's nature.
-void	check_access(t_data *data, t_cmd *cmd)
-{
-	char	*cmd_path;
-	char	*tmp;
-	int		i;
-
-	if (cmd->buildin)
-		return ;
-	i = -1;
-	while (data->envpath && data->envpath[++i])
-	{
-		// cmd_path = ft_vastrjoin(3, data->envpath[i], "/", cmd->cmd_arg[0]);
-		tmp = ft_strjoin(data->envpath[i], "/");
-		cmd_path = ft_strjoin(tmp, cmd->cmd_arg[0]);
-		free(tmp);
-		if (!check_nature(data, cmd, cmd_path))
-		{
-			cmd->cmd_path = cmd_path;
-			return ;
-		}
-		free(cmd_path);
-	}
-	if (!check_nature(data, cmd, cmd->cmd_arg[0]))
-	{
-		abs_path(cmd);
-		return ;
-	}
-	fct_error(data, cmd);
 }
 
 //finds PATH in env, puts it in a char** for easy use.
@@ -77,8 +46,10 @@ char	**set_path(t_data *data)
 }
 
 //calls the right builtin fct.
-void	call_builtin(t_data *data, t_cmd *cmd)//not detected yet
+static void	call_builtin(t_data *data, t_cmd *cmd)
 {
+	if (!cmd->cmd_arg)
+		return ;
 	if (!ft_strncmp(cmd->cmd_arg[0], "export", 6))
 		mns_export(data, cmd);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "unset", 5))
@@ -89,4 +60,31 @@ void	call_builtin(t_data *data, t_cmd *cmd)//not detected yet
 		mns_echo(cmd);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "exit", 4))
 		mns_exit(data, cmd);
+}
+
+void	call_or_exec(t_data *data, t_cmd *cmd)
+{
+	if (cmd->buildin || !cmd->cmd_arg)
+	{
+		call_builtin(data, cmd);
+		secured_dup2(data, data->standard_in, 0);
+		secured_dup2(data, data->standard_out, 1);
+		if (cmd->previous || cmd->next)
+		{
+			ft_end(data);
+			exit(0);
+		}
+	}
+	else if (cmd->cmd_arg)
+	{
+		execve(cmd->cmd_path, cmd->cmd_arg, data->envp);
+		perror("execve failed");
+		ft_end(data);
+		exit(127);
+	}
+	else
+	{
+		ft_end(data);
+		exit(0);
+	}
 }

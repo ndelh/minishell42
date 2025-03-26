@@ -1,27 +1,5 @@
 #include "../minishell.h"
 
-static void	call_or_exec(t_data *data, t_cmd *cmd)
-{
-	if (cmd->buildin)
-	{
-		call_builtin(data, cmd);
-		secured_dup2(data, data->standard_in, 0);
-		secured_dup2(data, data->standard_out, 1);
-		if (cmd->previous || cmd->next)
-		{
-			ft_end(data);
-			exit(0);
-		}
-	}
-	else
-	{
-		execve(cmd->cmd_path, cmd->cmd_arg, data->envp);
-		perror("execve failed");
-		ft_end(data);
-		exit(127);
-	}
-}
-
 //checks list of redirs in cmd block. Opens them.
 static void	open_files(t_data *data, t_cmd *cmd)
 {
@@ -44,6 +22,37 @@ static void	open_files(t_data *data, t_cmd *cmd)
 	}
 }
 
+//checks if the first arg of cmd->cmd_arg exists, and it's nature.
+static void	check_access(t_data *data, t_cmd *cmd)
+{
+	char	*cmd_path;
+	// char	*tmp;
+	int		i;
+
+	if (!cmd->cmd_arg || cmd->buildin)
+		return ;
+	i = -1;
+	while (data->envpath && data->envpath[++i])
+	{
+		cmd_path = ft_vastrjoin(3, data->envpath[i], "/", cmd->cmd_arg[0]);
+		// tmp = ft_strjoin(data->envpath[i], "/");
+		// cmd_path = ft_strjoin(tmp, cmd->cmd_arg[0]);
+		// free(tmp);
+		if (!check_nature(data, cmd, cmd_path))
+		{
+			cmd->cmd_path = cmd_path;
+			return ;
+		}
+		free(cmd_path);
+	}
+	if (!check_nature(data, cmd, cmd->cmd_arg[0]))
+	{
+		abs_path(cmd);
+		return ;
+	}
+	fct_error(data, cmd);
+}
+
 //redirects stdin and stdout in pipes or in redis,
 //then execs cmd or calls builtin.
 static void	exec_cmd(t_data *data, t_cmd *cmd, int prev)
@@ -56,7 +65,7 @@ static void	exec_cmd(t_data *data, t_cmd *cmd, int prev)
 	if (cmd->next)
 		secured_dup2(data, cmd->pfd[1], 1);
 	closer(3, prev, cmd->pfd[0], cmd->pfd[1]);
-	while (rdir_list)//weird behaviour w/ builtins
+	while (rdir_list)//weird behaviour w/ no pipe builtins
 	{
 		if (rdir_list->type == 4 || rdir_list->type == 6)
 			secured_dup2(data, rdir_list->fd, 0);
@@ -103,11 +112,11 @@ void	start_exec(t_data *data)
 
 	data->envpath = set_path(data);
 	cmd = data->cmd_list;
-	if (cmd->cmd_arg && (cmd->next || !cmd->buildin))
-		handle_pipes(data, cmd);
-	else if (cmd->cmd_arg)
+	if (!cmd->next && (cmd->buildin || !cmd->cmd_arg))
 	{
 		open_files(data, cmd);
 		exec_cmd(data, cmd, 0);
 	}
+	else
+		handle_pipes(data, cmd);
 }

@@ -164,9 +164,10 @@ void	signals_init(void);
 void	sig_handler(int sig);
 //exec
 void	start_exec(t_data *data);
-void	check_access(t_data *data, t_cmd *cmd);
 char	**set_path(t_data *data);
-void	call_builtin(t_data *data, t_cmd *cmd);
+void	abs_path(t_cmd *cmd);
+int		check_nature(t_data *data, t_cmd *cmd, char *cmd_path);
+void	call_or_exec(t_data *data, t_cmd *cmd);
 //builtins
 int		mns_export(t_data *data, t_cmd *cmd);
 char	*get_pwd(t_data *data);

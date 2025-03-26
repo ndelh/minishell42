@@ -69,20 +69,16 @@ void	call_or_exec(t_data *data, t_cmd *cmd)
 		call_builtin(data, cmd);
 		secured_dup2(data, data->standard_in, 0);
 		secured_dup2(data, data->standard_out, 1);
-		if (cmd->previous || cmd->next)
-		{
-			ft_end(data);
-			exit(0);
-		}
+		data->exit = 0;
 	}
-	else if (cmd->cmd_arg)
+	else
 	{
 		execve(cmd->cmd_path, cmd->cmd_arg, data->envp);
 		perror("execve failed");
 		ft_end(data);
 		exit(127);
 	}
-	else
+	if (cmd->previous || cmd->next)
 	{
 		ft_end(data);
 		exit(0);

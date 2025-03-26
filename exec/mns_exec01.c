@@ -26,7 +26,6 @@ static void	open_files(t_data *data, t_cmd *cmd)
 static void	check_access(t_data *data, t_cmd *cmd)
 {
 	char	*cmd_path;
-	// char	*tmp;
 	int		i;
 
 	if (!cmd->cmd_arg || cmd->buildin)
@@ -35,9 +34,6 @@ static void	check_access(t_data *data, t_cmd *cmd)
 	while (data->envpath && data->envpath[++i])
 	{
 		cmd_path = ft_vastrjoin(3, data->envpath[i], "/", cmd->cmd_arg[0]);
-		// tmp = ft_strjoin(data->envpath[i], "/");
-		// cmd_path = ft_strjoin(tmp, cmd->cmd_arg[0]);
-		// free(tmp);
 		if (!check_nature(data, cmd, cmd_path))
 		{
 			cmd->cmd_path = cmd_path;

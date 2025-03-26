@@ -31,15 +31,8 @@ void	waiter(t_data *data, t_cmd *cmd)
 			ft_end(data);
 			exit(EXIT_FAILURE);
 		}
-		if (WTERMSIG(w_status) == SIGQUIT)
-		{
-			data->exit = 131;
-			// sig_handler(SIGQUIT);
-		}
-		if (WTERMSIG(w_status) == SIGINT)
-		{
-			data->exit = 130;
-		}
+		if (WIFSIGNALED(w_status))
+			data->exit = 128 + WTERMSIG(w_status);
 		else
 			data->exit = w_status;
 		printf("child %d wait code: %d\n", i++, w_status % 255);//tmp for test
@@ -81,5 +74,7 @@ pid_t	secured_fork(t_data *data)
 		ft_end(data);
 		exit(EXIT_FAILURE);
 	}
+	if (!ret)
+		signals_init(1);
 	return (ret);
 }

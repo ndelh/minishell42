@@ -29,7 +29,7 @@ void	read_loop(t_data *data)
 		if (line == NULL)
 			mns_exit(data, NULL);
 		if (g_signal == SIGINT)
-			data->exit = 130;//$? will expand to this var.
+			data->exit = 130;
 		if (primal_parse(line))
 		{
 			add_history(line);

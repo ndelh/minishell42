@@ -40,6 +40,8 @@ char	*refine_before_user(t_env *node, char *prompt)
 
 void	move_cursor_prompt(char **username, char **cursor)
 {
+	if (!*username || !*cursor)
+		return ;
 	while ((**username && **cursor) && (**cursor == **username))
 	{
 		(*cursor)++;
@@ -59,7 +61,7 @@ void	refine_prompt(char **prompt, t_data *data)
 		username = node->content;
 		cursor = ft_strnstr(*prompt, username, ft_strlen(*prompt));
 		move_cursor_prompt(&username, &cursor);
-		if (*cursor)
+		if (cursor && *cursor)
 			*prompt = refine_after_user(cursor, node, *prompt);
 		else
 			*prompt = refine_before_user(node, *prompt);

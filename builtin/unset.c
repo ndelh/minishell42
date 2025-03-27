@@ -35,7 +35,7 @@ void	ft_unset(t_env **my_env, char *s)
 	t_env	*next;
 
 	cursor = *my_env;
-	while (cursor && ft_strncmp(cursor->name, s, strlen(s + 1)))
+	while (cursor && ft_strcmp(cursor->name, s))
 		cursor = cursor->next;
 	if (cursor)
 	{
@@ -48,7 +48,7 @@ void	ft_unset(t_env **my_env, char *s)
 			*my_env = next;
 		relink_env(previous, next);
 	}
-	printf("%s\n", (*my_env)->name);
+	// printf("%s\n", (*my_env)->name);
 }
 
 void	exec_unset(char **exe, t_data *data)

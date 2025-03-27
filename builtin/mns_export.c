@@ -82,9 +82,13 @@ static void	add_arg_2(t_env *envlst, char *arg, t_env *new, int len)
 			tmp->content = new->content;
 			return ;
 		}
+		if (!tmp->next)
+		{
+			env_lstadd_back(&envlst, env_lstnew(new->name, new->content, new->status));
+			tmp->next->previous = tmp;
+		}
 		tmp = tmp->next;
 	}
-	env_lstadd_back(&envlst, env_lstnew(new->name, new->content, new->status));
 }
 
 //adds valid arg to env. '_' new->content will not be modified.
@@ -120,8 +124,8 @@ static void	add_arg_1(t_data *data, t_env *envlst, char *arg)
 //returns 0 on success, number of names it failed to add in env upon failure.
 int	mns_export(t_data *data, t_cmd *cmd)
 {
-	int	i;
-	int	ret;//==number of names export failed to add in env.
+	int		i;
+	int		ret;//==number of names export failed to add in env.
 
 	ret = 0;
 	i = 1;

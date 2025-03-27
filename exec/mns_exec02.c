@@ -21,10 +21,11 @@ int	check_nature(t_data *data, t_cmd *cmd, char *cmd_path)
 	stat(cmd_path, &st_buff);
 	if (**(cmd->cmd_arg) && S_ISDIR(st_buff.st_mode))
 	{
-		free(cmd_path);
+		if (cmd->cmd_arg[0] != cmd_path)
+			free(cmd_path);
 		isdir_error(data, cmd);
 	}
-	if (**(cmd->cmd_arg) && !access(cmd_path, X_OK))//band-aid. why cans access(X_OK) a "" arg?
+	if (**(cmd->cmd_arg) && !access(cmd_path, X_OK))//band-aid. why can access(X_OK) a "" arg?
 		return (0);
 	return (-1);
 }
@@ -58,6 +59,10 @@ static void	call_builtin(t_data *data, t_cmd *cmd)
 		mns_env(data);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "echo", 4))
 		mns_echo(cmd);
+	else if (!ft_strncmp(cmd->cmd_arg[0], "cd", 4))
+		exec_cd(cmd->cmd_arg, data);
+	else if (!ft_strncmp(cmd->cmd_arg[0], "pwd", 4))
+		exec_pwd(data);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "exit", 4))
 		mns_exit(data, cmd);
 }
@@ -65,21 +70,21 @@ static void	call_builtin(t_data *data, t_cmd *cmd)
 //will differentiate between builtins and other cmds
 void	call_or_exec(t_data *data, t_cmd *cmd)
 {
-	if (cmd->buildin || !cmd->cmd_arg)
+	if (cmd->buildin)
 	{
 		call_builtin(data, cmd);
 		secured_dup2(data, data->standard_in, 0);
 		secured_dup2(data, data->standard_out, 1);
 		data->exit = 0;
 	}
-	else
+	else if (cmd->cmd_arg && cmd->cmd_arg[0])
 	{
 		execve(cmd->cmd_path, cmd->cmd_arg, data->envp);
 		perror("execve failed");
 		ft_end(data);
 		exit(127);
 	}
-	if (cmd->previous || cmd->next)
+	if (cmd->pid == 1)
 	{
 		ft_end(data);
 		exit(0);

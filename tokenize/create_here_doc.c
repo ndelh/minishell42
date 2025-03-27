@@ -46,6 +46,7 @@ void	fill_heredoc(t_data *data, int fd, t_token *list, t_env *my_env)
 	nb = 1;
 	while (line != NULL && ft_strcmp(line, list->piece))
 	{
+		// signals_init(1);
 		if (!list->h_no_expand)
 			line = gen_expand_line(data, line, my_env, NULL);
 		ft_putendl_fd(line, fd);
@@ -58,6 +59,7 @@ void	fill_heredoc(t_data *data, int fd, t_token *list, t_env *my_env)
 		printf("warning :here-document at line %d ", nb);
 		printf("delimited by end-of_file (wanted '%s')\n", list->piece);
 	}
+	// signals_init(0);
 	free(line);
 }
 

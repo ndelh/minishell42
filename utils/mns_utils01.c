@@ -16,6 +16,8 @@ void	closer(int count, ...)
 	va_end(arg);
 }
 
+//waits for children in order of creation.
+//gets wait statuses and set data->exit accordingly.
 void	waiter(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid;
@@ -38,6 +40,8 @@ void	waiter(t_data *data, t_cmd *cmd)
 		printf("child %d wait code: %d\n", i++, w_status % 255);//tmp for test
 		cmd = cmd->next;
 	}
+	if (data->exit == 131)
+		write(1, "Quit\n", 5);
 }
 
 void	secured_dup2(t_data *data, int fd1, int fd2)
@@ -75,6 +79,9 @@ pid_t	secured_fork(t_data *data)
 		exit(EXIT_FAILURE);
 	}
 	if (!ret)
+	{
 		signals_init(1);
+		ret = 1;
+	}
 	return (ret);
 }

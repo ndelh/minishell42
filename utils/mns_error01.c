@@ -6,7 +6,7 @@ void	redir_error(t_data *data, t_cmd *cmd, t_token *rdir_list)
 	perror(rdir_list->piece);
 	free_token_list(cmd->rdir_list, 0);
 	cmd->rdir_list = NULL;
-	if (!cmd->pid)
+	if (cmd->pid == 1)
 	{
 		closer(2, cmd->pfd[0], cmd->pfd[1]);
 		ft_end(data);
@@ -22,7 +22,7 @@ void	isdir_error(t_data *data, t_cmd *cmd)
 	perror(cmd->cmd_arg[0]);
 	free_token_list(cmd->rdir_list, 0);
 	cmd->rdir_list = NULL;
-	if (!cmd->pid)
+	if (cmd->pid == 1)
 	{
 		closer(2, cmd->pfd[0], cmd->pfd[1]);
 		ft_end(data);
@@ -37,7 +37,7 @@ void	fct_error(t_data *data, t_cmd *cmd)
 	perror(cmd->cmd_arg[0]);
 	free_token_list(cmd->rdir_list, 0);
 	cmd->rdir_list = NULL;
-	if (!cmd->pid)
+	if (cmd->pid == 1)
 	{
 		closer(2, cmd->pfd[0], cmd->pfd[1]);
 		ft_end(data);

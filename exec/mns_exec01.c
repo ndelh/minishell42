@@ -86,7 +86,7 @@ static void	handle_pipes(t_data *data, t_cmd *cmd)
 	{
 		secured_pipe(data, cmd);
 		cmd->pid = secured_fork(data);
-		if (!cmd->pid)
+		if (cmd->pid == 1)
 		{
 			open_files(data, cmd);
 			check_access(data, cmd);
@@ -97,7 +97,7 @@ static void	handle_pipes(t_data *data, t_cmd *cmd)
 		closer(2, cmd->pfd[0], cmd->pfd[1]);
 		cmd = cmd->next;
 	}
-	close(prev);
+	closer(1, prev);
 	waiter(data, data->cmd_list);
 }
 
@@ -108,7 +108,7 @@ void	start_exec(t_data *data)
 
 	data->envpath = set_path(data);
 	cmd = data->cmd_list;
-	if (!cmd->next && (cmd->buildin || !cmd->cmd_arg))
+	if (!cmd->next && cmd->buildin)
 	{
 		open_files(data, cmd);
 		exec_cmd(data, cmd, 0);

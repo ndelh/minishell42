@@ -38,6 +38,8 @@ void	read_loop(t_data *data)
 			free_cmd_list(data->cmd_list);
 			data->cmd_list = NULL;
 		}
+		else
+			data->exit = 2;
 		free(line);
 	}
 }

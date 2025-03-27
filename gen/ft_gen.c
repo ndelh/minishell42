@@ -70,7 +70,7 @@ void	ft_gen(t_data **data, char **envp)
 {
 	*data = malloc(sizeof(t_data));
 	check_alloc(*data, *data);
-	signals_init(0);
+	// signals_init(0);
 	ft_memset(*data, 0, sizeof(t_data));
 	(*data)->my_env = ft_gen_env_list(envp);
 	(*data)->envp = convert_envp((*data)->my_env);

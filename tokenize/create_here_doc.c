@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:22:49 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/25 12:10:52 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/29 14:46:00 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ char	*gen_name(void)
 	char	*temp;
 	int		fd;
 
-	to_ret = malloc(sizeof(char) * 16);
+	to_ret = malloc(sizeof(char) * 10);
 	if (!to_ret)
 		exit (0);
 	fd = open("/dev/urandom", O_RDONLY);
 	if (fd == -1)
 		return (0);
-	read(fd, to_ret, 15);
-	to_ret[15] = 0;
+	read(fd, to_ret, 29);
+	to_ret[9] = 0;
 	if (ft_strchr(to_ret, '/'))
 	{
 		free(to_ret);
@@ -42,11 +42,11 @@ void	fill_heredoc(t_data *data, int fd, t_token *list, t_env *my_env)
 	char	*line;
 	int		nb;
 
+	signals_init(2);
 	line = readline(">");
 	nb = 1;
-	while (line != NULL && ft_strcmp(line, list->piece))
+	while (line != NULL && ft_strcmp(line, list->piece) && g_signal != SIGINT)
 	{
-		// signals_init(1);
 		if (!list->h_no_expand)
 			line = gen_expand_line(data, line, my_env, NULL);
 		ft_putendl_fd(line, fd);
@@ -54,13 +54,12 @@ void	fill_heredoc(t_data *data, int fd, t_token *list, t_env *my_env)
 		nb++;
 		line = readline(">");
 	}
-	if (line == NULL)
-	{
-		printf("warning :here-document at line %d ", nb);
-		printf("delimited by end-of_file (wanted '%s')\n", list->piece);
-	}
-	// signals_init(0);
+	if (line == NULL && g_signal != SIGINT)
+		print_eof(nb, list->piece);
+	if (g_signal == SIGINT)
+		secured_dup2(data, data->standard_in, STDIN_FILENO);
 	free(line);
+	signals_init(0);
 }
 
 void	adjust_here_doc(t_data *data, t_token *list, t_env *my_env)
@@ -78,12 +77,11 @@ void	adjust_here_doc(t_data *data, t_token *list, t_env *my_env)
 
 void	run_redir_list(t_data *data, t_token *list, t_env *my_env)
 {
+	g_signal = 0;
 	while (list)
 	{
-		if (list->type == HEREDOC)
-		{
+		if (list->type == HEREDOC && g_signal != SIGINT)
 			adjust_here_doc(data, list, my_env);
-		}
 		list = list->next;
 	}
 }

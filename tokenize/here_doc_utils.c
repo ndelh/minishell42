@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dup_std.c                                       :+:      :+:    :+:   */
+/*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 16:30:07 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/27 18:54:31 by ndelhota         ###   ########.fr       */
+/*   Created: 2025/03/27 18:33:34 by ndelhota          #+#    #+#             */
+/*   Updated: 2025/03/27 20:43:24 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_dup_std(t_data *data)
+void	print_eof(int nb, char *limiter)
 {
-	data->standard_out = -1;
-	data->standard_in = dup(STDIN_FILENO);
-	if (data->standard_in == -1)
-	{
-		perror("stock [0]");
-		ft_end(data);
-	}
-	data->standard_out = dup(STDOUT_FILENO);
-	if (data->standard_out == -1)
-	{
-		perror("stock [1]");
-		ft_end(data);
-	}
+	printf("warning : here_document at line %d ", nb);
+	printf("delimited by end of file (wanted '%s')\n", limiter);
 }
+

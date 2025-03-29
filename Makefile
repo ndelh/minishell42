@@ -6,7 +6,7 @@
 #    By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/03/23 18:05:03 by ndelhota         ###   ########.fr        #
+#    Updated: 2025/03/27 18:45:19 by ndelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC := main.c \
        tokenize/convert_redir_list.c \
        tokenize/tokenize_utils.c \
        tokenize/create_here_doc.c \
+       tokenize/here_doc_utils.c \
        tokenize/is_builtin.c \
        utils/tab_utils.c \
        utils/list_utils.c \

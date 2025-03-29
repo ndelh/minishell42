@@ -6,12 +6,18 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 13:04:53 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/24 12:12:43 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/29 14:46:32 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+
+void	ft_return_rl(t_data *data)
+{
+	free_cmd_list(data->cmd_list);
+	data->cmd_list = NULL;
+}
 void	ft_tokenize(t_data *data, char *line)
 {
 	char	**first_split;
@@ -28,4 +34,10 @@ void	ft_tokenize(t_data *data, char *line)
 	is_builtin(data->cmd_list);
 	convert_redir_list(data->cmd_list);
 	change_hdoc(data->cmd_list, data);
+	if (g_signal == SIGINT)
+	{
+		ft_return_rl(data);
+		g_signal = 0;
+		data->exit = 130;
+	}
 }

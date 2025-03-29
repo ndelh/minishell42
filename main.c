@@ -6,13 +6,28 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:55:46 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/23 19:01:38 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/27 19:39:20 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_signal;
+
+void	tokenize_exec(t_data *data, char *line)
+{
+		if (primal_parse(line))
+		{
+			add_history(line);
+			ft_tokenize(data, line);
+			if (data->cmd_list)
+				start_exec(data);
+			free_cmd_list(data->cmd_list);
+			data->cmd_list = NULL;
+		}
+		else
+			data->exit = 2;
+}
 
 void	read_loop(t_data *data)
 {
@@ -30,16 +45,7 @@ void	read_loop(t_data *data)
 			mns_exit(data, NULL);
 		if (g_signal == SIGINT)
 			data->exit = 130;
-		if (primal_parse(line))
-		{
-			add_history(line);
-			ft_tokenize(data, line);
-			start_exec(data);
-			free_cmd_list(data->cmd_list);
-			data->cmd_list = NULL;
-		}
-		else
-			data->exit = 2;
+		tokenize_exec(data, line);
 		free(line);
 	}
 }

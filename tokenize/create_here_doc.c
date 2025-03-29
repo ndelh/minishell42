@@ -24,7 +24,7 @@ char	*gen_name(void)
 	fd = open("/dev/urandom", O_RDONLY);
 	if (fd == -1)
 		return (0);
-	read(fd, to_ret, 29);
+	read(fd, to_ret, 9);
 	to_ret[9] = 0;
 	if (ft_strchr(to_ret, '/'))
 	{

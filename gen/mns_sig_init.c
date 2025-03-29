@@ -1,5 +1,14 @@
 #include "../minishell.h"
 
+void	sig_hdoc_handler(int sig)
+{
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	g_signal = sig;
+	close(STDIN_FILENO);
+}
+
 void	sigint_handler(int sig)
 {
 	write(1, "\n", 1);
@@ -17,7 +26,7 @@ void	signals_init(int child)
 
 	ft_memset(&sa_int, 0, sizeof(struct sigaction));
 	ft_memset(&sa_quit, 0, sizeof(struct sigaction));
-	if (child)
+	if (child == 1)
 	{
 		sa_int.sa_handler = SIG_DFL;
 		sa_quit.sa_handler = SIG_DFL;
@@ -25,6 +34,11 @@ void	signals_init(int child)
 	else
 	{
 		sa_int.sa_handler = &sigint_handler;
+		sa_quit.sa_handler = SIG_IGN;
+	}
+	if (child == 2)
+	{
+		sa_int.sa_handler = &sig_hdoc_handler;
 		sa_quit.sa_handler = SIG_IGN;
 	}
 	sa_int.sa_flags = SA_RESTART;

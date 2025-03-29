@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/24 14:04:50 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/03/27 20:52:35 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ void	one_complex_line(t_token **list, t_cmd *cmd, int *i);
 void	convert_redir_list(t_cmd *cmd);
 void	change_hdoc(t_cmd *cmd, t_data *data);
 void	is_builtin(t_cmd *list);
+void	print_eof(int nb, char *limiter);
 //end
 void	free_token_list(t_token *to_free, int i);
 void	free_env_list(t_env *env);

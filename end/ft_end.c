@@ -33,7 +33,7 @@ void	close_fds(t_data *data)
 void	ft_end(t_data *data)
 {
 	free_env_list(data->my_env);
-	close_fds(data);
+	closer(2, data->standard_in, data->standard_out);
 	if (data->cmd_list)
 		free_cmd_list(data->cmd_list);
 	ft_free_tab(data->envpath);

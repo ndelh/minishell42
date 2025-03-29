@@ -162,7 +162,7 @@ void	isdir_error(t_data *data, t_cmd *cmd);
 void	fct_error(t_data *data, t_cmd *cmd);
 void	export_error(t_data *data, char *arg);
 //signals
-void	signals_init(int child);
+void	signals_init(int type);
 void	sig_handler(int sig);
 //exec
 void	start_exec(t_data *data);

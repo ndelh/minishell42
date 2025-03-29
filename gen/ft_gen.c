@@ -74,6 +74,5 @@ void	ft_gen(t_data **data, char **envp)
 	ft_memset(*data, 0, sizeof(t_data));
 	ft_dup_std(*data);
 	(*data)->my_env = ft_gen_env_list(envp);
-	ft_dup_std(*data);
 	(*data)->envp = convert_envp((*data)->my_env);
 }

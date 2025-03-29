@@ -16,6 +16,7 @@ SRC := main.c \
        gen/ft_gen.c \
        gen/ft_dup_std.c\
        gen/convert_list_to_envp.c \
+       gen/mns_sig_init.c \
        tokenize/begin.c \
        tokenize/ft_split_quote.c \
        tokenize/first_sort.c \
@@ -56,7 +57,6 @@ SRC := main.c \
        utils/mns_error01.c \
        utils/split_w_space.c \
        utils/space_strchr.c \
-       gen/mns_sig_init.c \
        exec/mns_exec01.c \
        exec/mns_exec02.c
 
@@ -73,7 +73,7 @@ LIB := lib/libft/libft.a \
 all : $(LIB) $(OBJ) $(NAME)
 
 $(NAME) : $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $(NAME) -lreadline
+	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $(NAME) -lreadline
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(@D)

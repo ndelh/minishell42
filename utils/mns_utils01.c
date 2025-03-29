@@ -22,7 +22,6 @@ void	waiter(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid;
 	int		w_status;
-	int		i = 1;//tmp for test
 
 	while (cmd)
 	{
@@ -37,7 +36,6 @@ void	waiter(t_data *data, t_cmd *cmd)
 			data->exit = 128 + WTERMSIG(w_status);
 		else
 			data->exit = w_status;
-		printf("child %d wait code: %d\n", i++, w_status % 255);//tmp for test
 		cmd = cmd->next;
 	}
 	if (data->exit == 131)

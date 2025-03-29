@@ -60,8 +60,10 @@ static void	exec_cmd(t_data *data, t_cmd *cmd, int prev)
 		secured_dup2(data, prev, 0);
 	if (cmd->next)
 		secured_dup2(data, cmd->pfd[1], 1);
-	closer(3, prev, cmd->pfd[0], cmd->pfd[1]);
-	while (rdir_list)//weird behaviour w/ no pipe builtins
+	if (cmd->pid == 1)
+		closer(5, prev, cmd->pfd[0], cmd->pfd[1],
+			data->standard_in, data->standard_out);
+	while (rdir_list)
 	{
 		if (rdir_list->type == 4 || rdir_list->type == 6)
 			secured_dup2(data, rdir_list->fd, 0);

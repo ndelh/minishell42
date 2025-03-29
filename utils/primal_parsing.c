@@ -39,7 +39,7 @@ int	check_end_pipe(char *s)
 int	check_incomplete_redir(char *s)
 {
 	char	a;
-	
+
 	if (*s == '<')
 		a = '>';
 	else

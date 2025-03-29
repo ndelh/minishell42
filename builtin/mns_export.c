@@ -32,7 +32,7 @@ static void	ft_printenv(t_env *env, t_env *tmp, char *printed, int len)
 //checks if arg is valid.
 static int	ft_isvalid(t_data *data, char *arg)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (!arg || !*arg)
 		return (0);
@@ -90,8 +90,8 @@ static void	add_arg_1(t_data *data, t_env *envlst, char *arg)
 	t_env	new;
 	int		len;
 
-	if (!ft_isvalid(data, arg) || (*arg == '_' && (*(arg + 1) == '=' 
-			|| *(arg + 1) == '\0' || *(arg + 1) == '+')))
+	if (!ft_isvalid(data, arg) || (*arg == '_' && (*(arg + 1) == '='
+				|| *(arg + 1) == '\0' || *(arg + 1) == '+')))
 		return ;
 	if (ft_strchr(arg, '='))
 	{
@@ -118,7 +118,7 @@ static void	add_arg_1(t_data *data, t_env *envlst, char *arg)
 int	mns_export(t_data *data, t_cmd *cmd)
 {
 	int		i;
-	int		ret;//==number of names export failed to add in env.
+	int		ret;
 
 	ret = 0;
 	i = 1;

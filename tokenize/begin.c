@@ -17,6 +17,8 @@ void	ft_return_rl(t_data *data)
 {
 	free_cmd_list(data->cmd_list);
 	data->cmd_list = NULL;
+	g_signal = 0;
+	data->exit = 130;
 }
 void	ft_tokenize(t_data *data, char *line)
 {
@@ -35,9 +37,5 @@ void	ft_tokenize(t_data *data, char *line)
 	convert_redir_list(data->cmd_list);
 	change_hdoc(data->cmd_list, data);
 	if (g_signal == SIGINT)
-	{
 		ft_return_rl(data);
-		g_signal = 0;
-		data->exit = 130;
-	}
 }

@@ -16,17 +16,17 @@ int	g_signal;
 
 void	tokenize_exec(t_data *data, char *line)
 {
-		if (primal_parse(line))
-		{
-			add_history(line);
-			ft_tokenize(data, line);
-			if (data->cmd_list)
-				start_exec(data);
-			free_cmd_list(data->cmd_list);
-			data->cmd_list = NULL;
-		}
-		else
-			data->exit = 2;
+	if (primal_parse(line))
+	{
+		add_history(line);
+		ft_tokenize(data, line);
+		if (data->cmd_list)
+			start_exec(data);
+		free_cmd_list(data->cmd_list);
+		data->cmd_list = NULL;
+	}
+	else
+		data->exit = 2;
 }
 
 void	read_loop(t_data *data)
@@ -37,7 +37,6 @@ void	read_loop(t_data *data)
 	display = NULL;
 	while (1)
 	{
-		g_signal = 0;
 		ft_prompt(&display, data);
 		line = readline(display);
 		ft_prompt(&display, data);
@@ -46,6 +45,7 @@ void	read_loop(t_data *data)
 		if (g_signal == SIGINT)
 			data->exit = 130;
 		tokenize_exec(data, line);
+		g_signal = 0;
 		free(line);
 	}
 }

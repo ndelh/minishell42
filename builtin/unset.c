@@ -48,7 +48,6 @@ void	ft_unset(t_env **my_env, char *s)
 			*my_env = next;
 		relink_env(previous, next);
 	}
-	// printf("%s\n", (*my_env)->name);
 }
 
 void	exec_unset(char **exe, t_data *data)

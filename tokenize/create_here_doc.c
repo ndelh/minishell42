@@ -77,7 +77,6 @@ void	adjust_here_doc(t_data *data, t_token *list, t_env *my_env)
 
 void	run_redir_list(t_data *data, t_token *list, t_env *my_env)
 {
-	g_signal = 0;
 	while (list)
 	{
 		if (list->type == HEREDOC && g_signal != SIGINT)

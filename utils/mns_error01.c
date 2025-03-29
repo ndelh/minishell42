@@ -45,3 +45,11 @@ void	fct_error(t_data *data, t_cmd *cmd)
 	}
 	data->exit = 127;
 }
+
+void	export_error(t_data *data, char *arg)
+{
+	ft_putstr_fd("export: `", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd("': not a valid identifier\n", 2);
+	data->exit = 1;
+}

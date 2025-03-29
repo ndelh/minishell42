@@ -73,8 +73,8 @@ void	call_or_exec(t_data *data, t_cmd *cmd)
 	if (cmd->buildin)
 	{
 		call_builtin(data, cmd);
-		secured_dup2(data, data->standard_in, 0);
-		secured_dup2(data, data->standard_out, 1);
+		secured_dup2(data, data->standard_in, STDIN_FILENO);
+		secured_dup2(data, data->standard_out, STDOUT_FILENO);
 		data->exit = 0;
 	}
 	else if (cmd->cmd_arg && cmd->cmd_arg[0])

@@ -38,9 +38,7 @@ static int	ft_isvalid(t_data *data, char *arg)
 		return (0);
 	if (!ft_isalpha(*arg) && *arg != '_')
 	{
-		errno = EINVAL;//not the right error
-		perror(arg);//export: 'arg': not a valid identifier;
-		data->exit = 1;
+		export_error(data, arg);
 		return (0);
 	}
 	tmp = arg;
@@ -48,8 +46,7 @@ static int	ft_isvalid(t_data *data, char *arg)
 	{
 		if (!ft_isalnum(*tmp) && *tmp != '_')
 		{
-			errno = EINVAL;//not the right error
-			perror(arg);//export: 'arg': not a valid identifier;
+			export_error(data, arg);
 			return (0);
 		}
 		tmp++;
@@ -82,13 +79,9 @@ static void	add_arg_2(t_env *envlst, char *arg, t_env *new, int len)
 			tmp->content = new->content;
 			return ;
 		}
-		if (!tmp->next)
-		{
-			env_lstadd_back(&envlst, env_lstnew(new->name, new->content, new->status));
-			tmp->next->previous = tmp;
-		}
 		tmp = tmp->next;
 	}
+	env_lstadd_back(&envlst, env_lstnew(new->name, new->content, new->status));
 }
 
 //adds valid arg to env. '_' new->content will not be modified.

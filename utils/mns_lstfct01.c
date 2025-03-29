@@ -37,4 +37,5 @@ void	env_lstadd_back(t_env **lst, t_env *new)
 	}
 	tmp = env_lstlast(*lst);
 	tmp->next = new;
+	new->previous = tmp;
 }

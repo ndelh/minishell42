@@ -159,6 +159,7 @@ void	check_alloc(void *alloc, t_data *data);
 void	redir_error(t_data *data, t_cmd *cmd, t_token *redirlst);
 void	isdir_error(t_data *data, t_cmd *cmd);
 void	fct_error(t_data *data, t_cmd *cmd);
+void	export_error(t_data *data, char *arg);
 //signals
 void	signals_init(int child);
 void	sig_handler(int sig);

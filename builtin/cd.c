@@ -53,7 +53,7 @@ void	exec_cd(char **tab, t_data *data)
 		return ;
 	if (tab_len(tab) > 2)
 	{
-		ft_putendl_fd("too_many_args\n", 2);
+		ft_putstr_fd("too_many_args\n", 2);
 		return ;
 	}
 	tab++;

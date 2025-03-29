@@ -10,7 +10,7 @@ void	mns_echo(t_cmd *cmd)
 	if (cmd->cmd_arg[1] && !ft_strncmp(cmd->cmd_arg[1], "-n", 2))
 	{
 		i++;
-		n++;
+		n = 1;
 	}
 	while (cmd->cmd_arg[i])
 	{

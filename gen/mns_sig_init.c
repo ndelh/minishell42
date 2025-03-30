@@ -3,9 +3,6 @@
 void	sigint_handler(int sig)
 {
 	write(1, "^C", 2);
-	// rl_on_new_line();
-	// rl_replace_line("", 0);
-	// rl_redisplay();
 	g_signal = sig;
 	close(STDIN_FILENO);
 }

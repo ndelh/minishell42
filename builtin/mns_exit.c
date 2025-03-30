@@ -13,6 +13,8 @@ int	ft_isdigit_str(char *str)
 	return (2048);
 }
 
+//will exit process with last exit code,
+//or given numeric argument.
 int	mns_exit(t_data *data, t_cmd *cmd)
 {
 	int	ret;

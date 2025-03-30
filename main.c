@@ -25,7 +25,7 @@ void	tokenize_exec(t_data *data, char *line)
 		free_cmd_list(data->cmd_list);
 		data->cmd_list = NULL;
 	}
-	else
+	else if (line && *line)
 		data->exit = 2;
 }
 
@@ -40,10 +40,13 @@ void	read_loop(t_data *data)
 		ft_prompt(&display, data);
 		line = readline(display);
 		ft_prompt(&display, data);
-		if (line == NULL)
-			mns_exit(data, NULL);
 		if (g_signal == SIGINT)
+		{
 			data->exit = 130;
+			secured_dup2(data, data->standard_in, STDIN_FILENO);
+		}
+		if (line == NULL && g_signal != 2)
+			mns_exit(data, NULL);	
 		tokenize_exec(data, line);
 		g_signal = 0;
 		free(line);

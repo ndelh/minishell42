@@ -18,3 +18,27 @@ void	print_eof(int nb, char *limiter)
 	printf("delimited by end of file (wanted '%s')\n", limiter);
 }
 
+char	*gen_name(void)
+{
+	char	*to_ret;
+	char	*temp;
+	int		fd;
+
+	to_ret = malloc(sizeof(char) * 10);
+	if (!to_ret)
+		exit (0);
+	fd = open("/dev/urandom", O_RDONLY);
+	if (fd == -1)
+		return (0);
+	read(fd, to_ret, 9);
+	to_ret[9] = 0;
+	if (ft_strchr(to_ret, '/'))
+	{
+		free(to_ret);
+		to_ret = gen_name();
+	}
+	close(fd);
+	temp = ft_strjoin("/tmp/", to_ret);
+	free(to_ret);
+	return (temp);
+}

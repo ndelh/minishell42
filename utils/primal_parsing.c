@@ -76,7 +76,7 @@ int	check_closed_quote(char **s)
 
 int	primal_parse(char *s)
 {
-	if (!*s || !check_end_pipe(s))
+	if (!s || !*s || !check_end_pipe(s))
 		return (0);
 	while (*s)
 	{

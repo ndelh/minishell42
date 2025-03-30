@@ -38,6 +38,7 @@ void	waiter(t_data *data, t_cmd *cmd)
 			data->exit = w_status;
 		cmd = cmd->next;
 	}
+	signals_init(0);
 	if (data->exit == 131)
 		write(1, "Quit\n", 5);
 }
@@ -81,5 +82,7 @@ pid_t	secured_fork(t_data *data)
 		signals_init(1);
 		ret = 1;
 	}
+	else
+		signals_init(2);
 	return (ret);
 }

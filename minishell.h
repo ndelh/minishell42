@@ -148,6 +148,7 @@ void	multiple_complex_line(t_token *list, t_cmd *cmd, int *i, t_data *data);
 void	one_complex_line(t_token **list, t_cmd *cmd, int *i);
 void	convert_redir_list(t_cmd *cmd);
 void	change_hdoc(t_cmd *cmd, t_data *data);
+char	*gen_name(void);
 void	is_builtin(t_cmd *list);
 void	print_eof(int nb, char *limiter);
 //end

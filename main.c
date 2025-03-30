@@ -59,6 +59,7 @@ int	main(int ac, char **argv, char **envp)
 
 	argv = NULL;
 	data = NULL;
+	rl_catch_signals = 0;
 	if (ac != 1)
 		return (0);
 	ft_gen(&data, envp);

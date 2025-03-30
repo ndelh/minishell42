@@ -2,7 +2,7 @@
 
 void	sigint_handler(int sig)
 {
-	// write(1, "\n", 1);
+	write(1, "^C", 2);
 	// rl_on_new_line();
 	// rl_replace_line("", 0);
 	// rl_redisplay();
@@ -19,7 +19,6 @@ void	signals_init(int type)
 
 	ft_memset(&sa_int, 0, sizeof(struct sigaction));
 	ft_memset(&sa_quit, 0, sizeof(struct sigaction));
-	sigaddset(&sa_int.sa_mask, SIGINT);
 	if (type == 0)
 	{
 		sa_int.sa_handler = &sigint_handler;

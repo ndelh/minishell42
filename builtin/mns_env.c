@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+//prints env.
 void	mns_env(t_data *data)
 {
 	t_env	*envlst;

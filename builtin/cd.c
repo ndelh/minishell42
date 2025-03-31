@@ -15,7 +15,7 @@
 void	fetch_node(t_env **pwd, t_env **old_pwd, t_data *data, char *s)
 {
 	*pwd = go_to_env_node(data->my_env, "PWD");
-	*old_pwd = go_to_env_node(data->my_env, "PWD");
+	*old_pwd = go_to_env_node(data->my_env, "OLDPWD");
 	if (*old_pwd)
 	{
 		free((*old_pwd)->content);
@@ -38,11 +38,9 @@ void	fetch_cd(char *s, t_data *data)
 
 	pwd = NULL;
 	old_pwd = NULL;
-	if (chdir(s))
-	{
-		current_pwd = get_pwd(data);
+	current_pwd = get_pwd(data);
+	if (!chdir(s))
 		fetch_node(&pwd, &old_pwd, data, current_pwd);
-	}
 	else
 		perror("chdir");
 }

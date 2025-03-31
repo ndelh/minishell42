@@ -19,8 +19,9 @@ int	envp_size(t_env *list)
 	count = 0;
 	while (list)
 	{
+		if (list->status)
+			count++;
 		list = list->next;
-		count++;
 	}
 	return (count);
 }
@@ -31,16 +32,16 @@ void	fill_ret(char **tab, t_env *list)
 
 	while (list)
 	{
-		len = ft_strlen(list->name) + ft_strlen(list->content) + 2;
-		*tab = ft_calloc(sizeof(char), len);
-		ft_strlcat(*tab, list->name, len);
-		if (list->content)
+		if (list->status)
 		{
+			len = ft_strlen(list->name) + ft_strlen(list->content) + 2;
+			*tab = ft_calloc(sizeof(char), len);
+			ft_strlcat(*tab, list->name, len);
 			ft_strlcat(*tab, "=", len);
 			ft_strlcat(*tab, list->content, len);
+			tab++;
 		}
 		list = list->next;
-		tab++;
 	}
 	*tab = NULL;
 }
@@ -51,7 +52,7 @@ char	**convert_envp(t_env *my_env)
 	int		size;
 
 	size = envp_size(my_env);
-	to_ret = malloc(sizeof(t_env *) * (size + 1));
+	to_ret = malloc(sizeof(char *) * (size + 1));
 	fill_ret(to_ret, my_env);
 	return (to_ret);
 }

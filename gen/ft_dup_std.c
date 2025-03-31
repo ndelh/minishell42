@@ -19,12 +19,12 @@ void	ft_dup_std(t_data *data)
 	if (data->standard_in == -1)
 	{
 		perror("stock [0]");
-		ft_end(data);
+		mns_exit(data, NULL);
 	}
 	data->standard_out = dup(STDOUT_FILENO);
 	if (data->standard_out == -1)
 	{
 		perror("stock [1]");
-		ft_end(data);
+		mns_exit(data, NULL);
 	}
 }

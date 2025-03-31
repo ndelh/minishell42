@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mns_lstfct01.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agamay <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/31 17:31:59 by agamay            #+#    #+#             */
+/*   Updated: 2025/03/31 17:32:02 by agamay           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 t_env	*env_lstnew(char *name, char *content, int status)
@@ -28,7 +40,7 @@ void	env_lstadd_back(t_env **lst, t_env *new)
 {
 	t_env	*tmp;
 
-	if (!lst)
+	if (!lst || !new)
 		return ;
 	if (!*lst)
 	{

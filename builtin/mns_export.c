@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mns_export.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agamay <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/31 16:46:33 by agamay            #+#    #+#             */
+/*   Updated: 2025/03/31 16:46:36 by agamay           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 //prints env new->contents in ascii order.
@@ -56,7 +68,7 @@ static int	ft_isvalid(t_data *data, char *arg)
 
 //checks if name already exists. 
 //If yes, changes or cats new->content. else, addback.
-static void	add_arg_2(t_env *envlst, char *arg, t_env *new, int len)
+static int	add_arg_2(t_env *envlst, char *arg, t_env *new, int len)
 {
 	t_env	*tmp;
 	char	*old_content;
@@ -73,26 +85,26 @@ static void	add_arg_2(t_env *envlst, char *arg, t_env *new, int len)
 				tmp->content = ft_strjoin(tmp->content, new->content);
 				free(old_content);
 				free(new->content);
-				return ;
+				return (0);
 			}
 			free(tmp->content);
 			tmp->content = new->content;
-			return ;
+			tmp->status = 1;
+			return (0);
 		}
 		tmp = tmp->next;
 	}
-	env_lstadd_back(&envlst, env_lstnew(new->name, new->content, new->status));
+	return (1);
 }
 
 //adds valid arg to env. '_' new->content will not be modified.
-static void	add_arg_1(t_data *data, t_env *envlst, char *arg)
+static t_env	*add_arg_1(t_data *data, t_env *envlst, char *arg, t_env new)
 {
-	t_env	new;
 	int		len;
 
 	if (!ft_isvalid(data, arg) || (*arg == '_' && (*(arg + 1) == '='
 				|| *(arg + 1) == '\0' || *(arg + 1) == '+')))
-		return ;
+		return (NULL);
 	if (ft_strchr(arg, '='))
 	{
 		len = ft_strchr(arg, '=') - arg;
@@ -110,23 +122,28 @@ static void	add_arg_1(t_data *data, t_env *envlst, char *arg)
 		new.status = 0;
 		new.content = NULL;
 	}
-	add_arg_2(envlst, arg, &new, len);
+	if (add_arg_2(envlst, arg, &new, len))
+		return (env_lstnew(new.name, new.content, new.status));
+	return (NULL);
 }
 
 //checks args. no args: display sorted env. valid args: add to env.
 //returns 0 on success, number of names it failed to add in env upon failure.
 int	mns_export(t_data *data, t_cmd *cmd)
 {
+	t_env	new;
 	int		i;
 	int		ret;
 
 	ret = 0;
 	i = 1;
+	ft_memset(&new, 0, sizeof(t_env));
 	if (!cmd->cmd_arg[1])
 		ft_printenv(data->my_env, data->my_env, "",
 			ft_lstsize((void *)data->my_env));
 	while (cmd->cmd_arg[i])
-		add_arg_1(data, data->my_env, cmd->cmd_arg[i++]);
+		env_lstadd_back(&(data->my_env),
+			add_arg_1(data, data->my_env, cmd->cmd_arg[i++], new));
 	ft_free_tab(data->envp);
 	data->envp = convert_envp(data->my_env);
 	return (ret);

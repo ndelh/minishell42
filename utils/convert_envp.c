@@ -22,6 +22,7 @@ int	envp_size(t_env *list)
 		list++;
 		count++;
 	}
+	printf("env line %d\n", count);
 	return (count);
 }
 
@@ -46,7 +47,7 @@ char	**convert_envp(t_env *my_env)
 	char	**to_ret;
 	int		size;
 
-	size = envp(my_env);
+	size = envp_size(my_env);
 	to_ret = malloc(sizeof(t_env *) * (size + 1));
 	if (!to_ret)
 		return (NULL);

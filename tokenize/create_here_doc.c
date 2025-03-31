@@ -12,30 +12,30 @@
 
 #include "../minishell.h"
 
-char    *gen_valid_name(t_data *data)
+char	*gen_valid_name(t_data *data)
 {
-    int        try;
-    int        fd;
-    char    *to_ret;
+	int		try;
+	int		fd;
+	char	*to_ret;
 
-    try = 0;
-    to_ret = NULL;
-    while (try < 1000)
-    {
-        to_ret = gen_name();
-        if (!to_ret)
-            mns_exit(data, NULL);
-        fd = open(to_ret, O_CREAT | O_WRONLY, 0666);
-        if (fd != -1)
-        {
-            close(fd);
-            return (to_ret);
-        }
-        free(to_ret);
-        to_ret = NULL ;
-        try++;
-    }
-    mns_exit(data, NULL);
+	try = 0;
+	to_ret = NULL;
+	while (try < 1000)
+	{
+		to_ret = gen_name();
+		if (!to_ret)
+			mns_exit(data, NULL);
+		fd = open(to_ret, O_CREAT | O_WRONLY, 0666);
+		if (fd != -1)
+		{
+			close(fd);
+			return (to_ret);
+		}
+		free(to_ret);
+		to_ret = NULL ;
+		try++;
+	}
+	mns_exit(data, NULL);
 	return (NULL);
 }
 

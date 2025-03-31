@@ -1,4 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mns_sig_init.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agamay <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/31 16:12:04 by agamay            #+#    #+#             */
+/*   Updated: 2025/03/31 16:12:21 by agamay           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
+
+void	sigint_wait(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+}
 
 void	sigint_handler(int sig)
 {
@@ -28,7 +46,7 @@ void	signals_init(int type)
 	}
 	else if (type == 2)
 	{
-		sa_int.sa_handler = SIG_IGN;
+		sa_int.sa_handler = &sigint_wait;
 		sa_quit.sa_handler = SIG_IGN;
 	}
 	sa_int.sa_flags = SA_RESTART;

@@ -22,7 +22,6 @@ int	is_build(char **s)
 		|| !ft_strcmp(*s, "minishell")
 		|| !ft_strcmp(*s, "exit"))
 		return (1);
-	printf("no build\n");
 	return (0);
 }
 

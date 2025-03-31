@@ -20,7 +20,7 @@ void	print_eof(int nb, char *limiter)
 
 void	modulate_line(t_data *data, char **line, t_env *my_env)
 {
-	char*to_ret;
+	char	*to_ret;
 
 	to_ret = gen_expand_line(data, *line, my_env, NULL);
 	free(*line);

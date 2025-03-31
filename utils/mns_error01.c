@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mns_error01.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agamay <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/31 17:31:50 by agamay            #+#    #+#             */
+/*   Updated: 2025/03/31 17:31:52 by agamay           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 //if open==-1, displays right error and return
 void	redir_error(t_data *data, t_cmd *cmd, t_token *rdir_list)
 {
 	perror(rdir_list->piece);
-	free_token_list(cmd->rdir_list, 0);
+	free_token_list(cmd->rdir_list);
 	cmd->rdir_list = NULL;
 	if (cmd->pid == 1)
 	{
@@ -20,7 +32,7 @@ void	isdir_error(t_data *data, t_cmd *cmd)
 {
 	errno = EISDIR;
 	perror(cmd->cmd_arg[0]);
-	free_token_list(cmd->rdir_list, 0);
+	free_token_list(cmd->rdir_list);
 	cmd->rdir_list = NULL;
 	if (cmd->pid == 1)
 	{
@@ -35,7 +47,7 @@ void	isdir_error(t_data *data, t_cmd *cmd)
 void	fct_error(t_data *data, t_cmd *cmd)
 {
 	perror(cmd->cmd_arg[0]);
-	free_token_list(cmd->rdir_list, 0);
+	free_token_list(cmd->rdir_list);
 	cmd->rdir_list = NULL;
 	if (cmd->pid == 1)
 	{

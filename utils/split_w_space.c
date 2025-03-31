@@ -65,7 +65,6 @@ char	**split_w_space(char *s)
 
 	j = 0;
 	count = count_w(s);
-	printf("count : %d\n", count);
 	split = malloc(sizeof(char *) * (count + 1));
 	if (!split)
 		return (NULL);

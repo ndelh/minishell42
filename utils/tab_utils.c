@@ -46,7 +46,6 @@ void	print_complex_tab(char **s, int i)
 	j = 0;
 	while (j < i)
 	{
-		printf("line number :%d %s\n", j, *s);
 		j++;
 		s++;
 	}

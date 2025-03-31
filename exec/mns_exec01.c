@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mns_exec01.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: agamay <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/31 16:21:42 by agamay            #+#    #+#             */
+/*   Updated: 2025/03/31 16:22:11 by agamay           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 //checks list of redirs in cmd block. Opens them.
-static void	open_files(t_data *data, t_cmd *cmd)
+static void	open_files(t_data *data, t_cmd *cmd, int prev)
 {
 	t_token	*rdir_list;
 
@@ -17,13 +29,16 @@ static void	open_files(t_data *data, t_cmd *cmd)
 			rdir_list->fd = open (rdir_list->piece,
 					O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (rdir_list->fd == -1)
+		{
+			closer(1, prev);
 			redir_error(data, cmd, rdir_list);
+		}
 		rdir_list = rdir_list->next;
 	}
 }
 
 //checks if the first arg of cmd->cmd_arg exists, and it's nature.
-static void	check_access(t_data *data, t_cmd *cmd)
+static void	check_access(t_data *data, t_cmd *cmd, int prev)
 {
 	char	*cmd_path;
 	int		i;
@@ -46,6 +61,7 @@ static void	check_access(t_data *data, t_cmd *cmd)
 		abs_path(cmd);
 		return ;
 	}
+	closer(1, prev);
 	fct_error(data, cmd);
 }
 
@@ -60,9 +76,9 @@ static void	exec_cmd(t_data *data, t_cmd *cmd, int prev)
 		secured_dup2(data, prev, 0);
 	if (cmd->next)
 		secured_dup2(data, cmd->pfd[1], 1);
-	if (cmd->pid == 1)
-		closer(5, prev, cmd->pfd[0], cmd->pfd[1],
-			data->standard_in, data->standard_out);
+	closer(3, prev, cmd->pfd[0], cmd->pfd[1]);
+	if (!cmd->buildin)
+		closer(2, data->standard_in, data->standard_out);
 	while (rdir_list)
 	{
 		if (rdir_list->type == 4 || rdir_list->type == 6)
@@ -90,8 +106,8 @@ static void	handle_pipes(t_data *data, t_cmd *cmd)
 		cmd->pid = secured_fork(data);
 		if (cmd->pid == 1)
 		{
-			open_files(data, cmd);
-			check_access(data, cmd);
+			open_files(data, cmd, prev);
+			check_access(data, cmd, prev);
 			exec_cmd(data, cmd, prev);
 		}
 		closer(1, prev);
@@ -112,7 +128,7 @@ void	start_exec(t_data *data)
 	cmd = data->cmd_list;
 	if (!cmd->next && cmd->buildin)
 	{
-		open_files(data, cmd);
+		open_files(data, cmd, -1);
 		exec_cmd(data, cmd, 0);
 	}
 	else

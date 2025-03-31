@@ -12,7 +12,6 @@
 
 #include "../minishell.h"
 
-
 void	ft_return_rl(t_data *data)
 {
 	free_cmd_list(data->cmd_list);
@@ -20,6 +19,7 @@ void	ft_return_rl(t_data *data)
 	g_signal = 0;
 	data->exit = 130;
 }
+
 void	ft_tokenize(t_data *data, char *line)
 {
 	char	**first_split;

@@ -153,7 +153,7 @@ void	modulate_line(t_data *data, char **line, t_env *my_env);
 void	is_builtin(t_cmd *list);
 void	print_eof(int nb, char *limiter);
 //end
-void	free_token_list(t_token *to_free, int i);
+void	free_token_list(t_token *to_free);
 void	free_env_list(t_env *env);
 void	free_cmd_list(t_cmd *to_free);
 void	ft_end(t_data *data);

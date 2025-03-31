@@ -70,17 +70,10 @@ void	adjust_here_doc(t_data *data, t_cmd *cmd, t_token *list)
 
 	my_env = data->my_env;
 	name = gen_valid_name(data);
-	cmd->pid = secured_fork(data);
-	if (cmd->pid == 1)
-	{
-		fd = open(name, O_WRONLY | O_CREAT, 0666);
-		free(name);
-		fill_heredoc(data, fd, list, my_env);
-		close(fd);
-		ft_end(data);
-		printf("______hello_______\n");
-		exit(0);
-	}
+	fd = open(name, O_WRONLY | O_CREAT, 0666);
+	free(name);
+	fill_heredoc(data, fd, list, my_env);
+	close(fd);
 	free(list->piece);
 	list->piece = name;
 	waiter(data, cmd);

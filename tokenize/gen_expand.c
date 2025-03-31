@@ -42,7 +42,7 @@ char	*ft_replace(t_data *data, char *s, t_env *env, t_token *list)
 		to_ret = ft_itoa(data->exit % 255);
 	while (env)
 	{
-		if (!ft_strcmp(s, env->name))
+		if (!ft_strcmp(s, env->name) && env->status == 1)
 		{
 			if (list && list->type == D_QUOTE)
 				to_ret = ft_strdup(env->content);

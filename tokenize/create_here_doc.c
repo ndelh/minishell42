@@ -62,7 +62,7 @@ void	fill_heredoc(t_data *data, int fd, t_token *list, t_env *my_env)
 	free(line);
 }
 
-void	adjust_here_doc(t_data *data, t_cmd *cmd, t_token *list)
+void	adjust_here_doc(t_data *data, t_token *list)
 {
 	char	*name;
 	int		fd;
@@ -71,12 +71,10 @@ void	adjust_here_doc(t_data *data, t_cmd *cmd, t_token *list)
 	my_env = data->my_env;
 	name = gen_valid_name(data);
 	fd = open(name, O_WRONLY | O_CREAT, 0666);
-	free(name);
 	fill_heredoc(data, fd, list, my_env);
 	close(fd);
 	free(list->piece);
 	list->piece = name;
-	waiter(data, cmd);
 }
 
 void	run_redir_list(t_data *data, t_cmd *cmd)
@@ -87,7 +85,7 @@ void	run_redir_list(t_data *data, t_cmd *cmd)
 	while (list)
 	{
 		if (list->type == HEREDOC && g_signal != SIGINT)
-			adjust_here_doc(data, cmd, list);
+			adjust_here_doc(data, list);
 		list = list->next;
 	}
 }

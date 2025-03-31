@@ -25,14 +25,15 @@ int	check_expand(char *s)
 void	skip_expand(char **s)
 {
 	(*s)++;
-	if (**s && **s == '?')
+	if (**s && (**s == '?' || ft_isdigit(**s)))
 	{
 		(*s)++;
 		return ;
 	}
+	if (**s && **s == '_')
+		(*s)++;
 	if (!**s || !ft_isalpha(**s))
 		return ;
-	(*s)++;
 	while (**s && ft_isalnum(**s))
 		(*s)++;
 }

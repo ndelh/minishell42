@@ -44,13 +44,12 @@ void	fill_heredoc(t_data *data, int fd, t_token *list, t_env *my_env)
 	char	*line;
 	int		nb;
 
-	signals_init(2);
 	line = readline(">");
 	nb = 1;
 	while (line != NULL && ft_strcmp(line, list->piece) && g_signal != SIGINT)
 	{
 		if (!list->h_no_expand)
-			line = gen_expand_line(data, line, my_env, NULL);
+			modulate_line(data, &line, my_env);
 		ft_putendl_fd(line, fd);
 		free(line);
 		nb++;
@@ -74,12 +73,12 @@ void	adjust_here_doc(t_data *data, t_cmd *cmd, t_token *list)
 	cmd->pid = secured_fork(data);
 	if (cmd->pid == 1)
 	{
-		// signals_init(2);
 		fd = open(name, O_WRONLY | O_CREAT, 0666);
 		free(name);
 		fill_heredoc(data, fd, list, my_env);
 		close(fd);
 		ft_end(data);
+		printf("______hello_______\n");
 		exit(0);
 	}
 	free(list->piece);

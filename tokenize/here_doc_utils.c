@@ -18,6 +18,15 @@ void	print_eof(int nb, char *limiter)
 	printf("delimited by end of file (wanted '%s')\n", limiter);
 }
 
+void	modulate_line(t_data *data, char **line, t_env *my_env)
+{
+	char*to_ret;
+
+	to_ret = gen_expand_line(data, *line, my_env, NULL);
+	free(*line);
+	*line = to_ret;
+}
+
 char	*gen_name(void)
 {
 	char	*to_ret;

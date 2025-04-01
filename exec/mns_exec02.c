@@ -59,24 +59,28 @@ char	**set_path(t_data *data)
 }
 
 //calls the right builtin fct.
-static void	call_builtin(t_data *data, t_cmd *cmd)
+static int	call_builtin(t_data *data, t_cmd *cmd)
 {
+	int	ret;
+
+	ret = 0;
 	if (!cmd->cmd_arg)
-		return ;
+		return (0);
 	if (!ft_strncmp(cmd->cmd_arg[0], "export", 6))
-		mns_export(data, cmd);
+		ret = mns_export(data, cmd);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "unset", 5))
-		exec_unset(cmd->cmd_arg, data);
+		ret = exec_unset(cmd->cmd_arg, data);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "env", 3))
-		mns_env(data);
+		ret = mns_env(data, cmd);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "echo", 4))
-		mns_echo(cmd);
+		ret = mns_echo(cmd);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "cd", 4))
-		exec_cd(cmd->cmd_arg, data);
+		ret = exec_cd(cmd->cmd_arg, data);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "pwd", 4))
-		exec_pwd(data);
+		ret = exec_pwd(data);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "exit", 4))
-		mns_exit(data, cmd);
+		ret = mns_exit(data, cmd);
+	return (ret);
 }
 
 //will differentiate between builtins and other cmds
@@ -84,10 +88,9 @@ void	call_or_exec(t_data *data, t_cmd *cmd)
 {
 	if (cmd->buildin)
 	{
-		call_builtin(data, cmd);
+		data->exit = call_builtin(data, cmd);
 		secured_dup2(data, data->standard_in, STDIN_FILENO);
 		secured_dup2(data, data->standard_out, STDOUT_FILENO);
-		data->exit = 0;
 	}
 	else if (cmd->cmd_arg && cmd->cmd_arg[0])
 	{

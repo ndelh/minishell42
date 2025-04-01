@@ -16,10 +16,9 @@ char	*get_pwd(t_data *data)
 {
 	char	*to_ret;
 
-	data = NULL;
 	to_ret = malloc(sizeof(char) * 4096);
 	if (!to_ret)
-		ft_end(data);
+		mns_exit(data, NULL);
 	if (!getcwd(to_ret, 4096))
 	{
 		free(to_ret);
@@ -29,11 +28,14 @@ char	*get_pwd(t_data *data)
 	return (to_ret);
 }
 
-void	exec_pwd(t_data *data)
+int	exec_pwd(t_data *data)
 {
 	char	*to_print;
 
 	to_print = get_pwd(data);
+	if (!to_print)
+		return (1);
 	printf("%s\n", to_print);
 	free(to_print);
+	return (0);
 }

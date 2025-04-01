@@ -43,7 +43,8 @@ SRC := main.c \
        utils/list_utils.c \
        utils/primal_parsing.c \
        utils/prompt.c \
-       builtin/mns_export.c \
+       builtin/mns_export01.c \
+       builtin/mns_export02.c \
        builtin/unset.c \
        builtin/mns_env.c \
        builtin/mns_exit.c \

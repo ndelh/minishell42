@@ -12,17 +12,51 @@
 
 #include "../minishell.h"
 
-int	ft_isdigit_str(char *str)
+int	ft_islong(char *str)
 {
-	if (!str)
-		return (0);
-	while (*str)
+	long long int	nb;
+	long long int	neg;
+
+	nb = 0;
+	neg = 1;
+	while ((*str == 32) || (*str <= 13 && *str >= 9))
+		str++;
+	if ((*str == '+') || (*str == '-'))
 	{
-		if (!(*str <= '9' && *str >= '0'))
+		if (*str == '-')
+			neg = -1;
+		str++;
+	}
+	while ((*str) && (*str >= '0' && (*str <= '9')))
+	{
+		nb = (nb * 10 + (*str - 48));
+		if (nb * neg > INT_MAX || nb * neg < INT_MIN)
 			return (0);
 		str++;
 	}
 	return (2048);
+}
+
+int	ft_isdigit_str(char *str)
+{
+	int		ret;
+	char	*tmp;
+
+	tmp = str;
+	if (!tmp)
+		return (0);
+	while (ft_isspace3(*tmp))
+		tmp++;
+	if (*tmp == '+' || *tmp == '-')
+		tmp++;
+	while (*tmp)
+	{
+		if (!(*tmp <= '9' && *tmp >= '0'))
+			return (0);
+		tmp++;
+	}
+	ret = ft_islong(str);
+	return (ret);
 }
 
 //will exit process with last exit code,

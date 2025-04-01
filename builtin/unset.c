@@ -50,7 +50,7 @@ void	ft_unset(t_env **my_env, char *s)
 	}
 }
 
-void	exec_unset(char **exe, t_data *data)
+int	exec_unset(char **exe, t_data *data)
 {
 	exe++;
 	while (*exe)
@@ -60,4 +60,5 @@ void	exec_unset(char **exe, t_data *data)
 	}
 	ft_free_tab(data->envp);
 	data->envp = convert_envp(data->my_env);
+	return (0);
 }

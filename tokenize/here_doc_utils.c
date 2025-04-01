@@ -14,8 +14,11 @@
 
 void	print_eof(int nb, char *limiter)
 {
-	printf("warning : here_document at line %d ", nb);
-	printf("delimited by end of file (wanted '%s')\n", limiter);
+	ft_putstr_fd("warning : here_document at line ", 2);
+	ft_putnbr_fd(nb, 2);
+	ft_putstr_fd(" delimited by end of file (wanted `", 2);
+	ft_putstr_fd(limiter, 2);
+	ft_putstr_fd("')\n", 2);
 }
 
 void	modulate_line(t_data *data, char **line, t_env *my_env)

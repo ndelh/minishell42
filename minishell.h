@@ -24,6 +24,7 @@
 # include <errno.h>
 # include <sys/stat.h>
 # include <signal.h>
+# include <limits.h>
 
 extern int	g_signal;
 
@@ -85,6 +86,7 @@ typedef struct s_data
 	char		**envp;
 	int			standard_in;
 	int			standard_out;
+	int			line_hdoc;
 	int			exit;
 }	t_data;
 
@@ -174,12 +176,14 @@ int		check_nature(t_data *data, t_cmd *cmd, char *cmd_path);
 void	call_or_exec(t_data *data, t_cmd *cmd);
 //builtins
 int		mns_export(t_data *data, t_cmd *cmd);
+void	exp_printenv(t_env *env, t_env *tmp, char *printed, int len);
+int		exp_isvalid(t_data *data, char *arg);
 char	*get_pwd(t_data *data);
-void	exec_cd(char **tab, t_data *data);
-void	exec_pwd(t_data *data);
-void	exec_unset(char **exe, t_data *data);
-void	mns_env(t_data *data);
+int		exec_cd(char **tab, t_data *data);
+int		exec_pwd(t_data *data);
+int		exec_unset(char **exe, t_data *data);
+int		mns_env(t_data *data, t_cmd *cmd);
 int		mns_exit(t_data *data, t_cmd *cmd);
-void	mns_echo(t_cmd *cmd);
+int		mns_echo(t_cmd *cmd);
 
 #endif

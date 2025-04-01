@@ -12,6 +12,26 @@
 
 #include "../minishell.h"
 
+int	check_succesive_pipe(char *s)
+{
+	while (*s)
+	{
+		if (*s == '|')
+		{
+			s++;
+			while (*s && ft_isspace3(*s))
+				s++;
+			if (*s && *s == '|')
+			{
+				printf("syntax error near unexpected token |\n");
+				return (0);
+			}
+		}
+		s++;
+	}
+	return (1);
+}
+
 int	check_end_pipe(char *s)
 {
 	int	test;
@@ -76,7 +96,7 @@ int	check_closed_quote(char **s)
 
 int	primal_parse(char *s)
 {
-	if (!s || !*s || !check_end_pipe(s))
+	if (!s || !*s || !check_end_pipe(s) || !check_succesive_pipe(s))
 		return (0);
 	while (*s)
 	{

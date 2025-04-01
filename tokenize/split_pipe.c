@@ -19,6 +19,8 @@ int	count_char(char *s, char a)
 	if (ft_strlen(s) == 1)
 		return (1);
 	count = 1;
+	if (*s && *s == a)
+		s++;
 	while (*s)
 	{
 		if (*s == a)

@@ -56,10 +56,11 @@ void	fill_heredoc(t_data *data, int fd, t_token *list, t_env *my_env)
 		line = readline(">");
 	}
 	if (line == NULL && g_signal != SIGINT)
-		print_eof(nb, list->piece);
+		print_eof(data->line_hdoc, list->piece);
 	if (g_signal == SIGINT)
 		secured_dup2(data, data->standard_in, STDIN_FILENO);
 	free(line);
+	data->line_hdoc += nb;
 }
 
 void	adjust_here_doc(t_data *data, t_token *list)
@@ -92,6 +93,7 @@ void	run_redir_list(t_data *data, t_cmd *cmd)
 
 void	change_hdoc(t_cmd *cmd, t_data *data)
 {
+	data->line_hdoc = 1;
 	while (cmd)
 	{
 		if (cmd->rdir_list)

@@ -30,7 +30,7 @@ void	fetch_node(t_env **pwd, t_env **old_pwd, t_data *data, char *s)
 	}
 }
 
-void	fetch_cd(char *s, t_data *data)
+static int	fetch_cd(char *s, t_data *data)
 {
 	t_env	*pwd;
 	t_env	*old_pwd;
@@ -42,18 +42,26 @@ void	fetch_cd(char *s, t_data *data)
 	if (!chdir(s))
 		fetch_node(&pwd, &old_pwd, data, current_pwd);
 	else
+	{
+		free(current_pwd);
 		perror("chdir");
+		return (1);
+	}
+	return (0);
 }
 
-void	exec_cd(char **tab, t_data *data)
+int	exec_cd(char **tab, t_data *data)
 {
+	int	ret;
+
 	if (tab_len(tab) == 1)
-		return ;
-	if (tab_len(tab) > 2)
+		return (1);
+	else if (tab_len(tab) > 2)
 	{
 		ft_putstr_fd("too_many_args\n", 2);
-		return ;
+		return (1);
 	}
 	tab++;
-	fetch_cd(*tab, data);
+	ret = fetch_cd(*tab, data);
+	return (ret);
 }

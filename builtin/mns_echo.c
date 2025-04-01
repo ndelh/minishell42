@@ -23,7 +23,7 @@ static int	is_flagvalid(char *arg)
 }
 
 //print given args with a \n. -n removes the \n.
-void	mns_echo(t_cmd *cmd)
+int	mns_echo(t_cmd *cmd)
 {
 	int	i;
 	int	n;
@@ -44,4 +44,5 @@ void	mns_echo(t_cmd *cmd)
 	}
 	if (!n)
 		write(1, "\n", 1);
+	return (0);
 }

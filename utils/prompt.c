@@ -80,6 +80,11 @@ void	ft_prompt(char **display, t_data *data)
 	else
 	{
 		to_merge = get_pwd(data);
+		if (!to_merge)
+		{
+			*display = ft_strdup("non_existing file please use cd > :");
+			return ;
+		}
 		if (data->my_env)
 			refine_prompt(&to_merge, data);
 		*display = ft_strjoin(to_merge, "$ ");

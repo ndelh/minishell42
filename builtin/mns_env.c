@@ -13,15 +13,18 @@
 #include "../minishell.h"
 
 //prints env.
-void	mns_env(t_data *data)
+int	mns_env(t_data *data, t_cmd *cmd)
 {
 	t_env	*envlst;
 
 	envlst = data->my_env;
+	if (cmd->cmd_arg[1])
+		return (1);
 	while (envlst)
 	{
 		if (envlst->status)
 			printf("%s=%s\n", envlst->name, envlst->content);
 		envlst = envlst->next;
 	}
+	return (0);
 }

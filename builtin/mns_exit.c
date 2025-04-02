@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int	ft_islong(char *str)
+static int	ft_islong(char *str)
 {
 	long long int	nb;
 	long long int	neg;
@@ -37,7 +37,7 @@ int	ft_islong(char *str)
 	return (2048);
 }
 
-int	ft_isdigit_str(char *str)
+static int	ft_isdigit_str(char *str)
 {
 	int		ret;
 	char	*tmp;
@@ -59,6 +59,21 @@ int	ft_isdigit_str(char *str)
 	return (ret);
 }
 
+static int	check_args(t_cmd *cmd, int ret, int *valid)
+{
+	if (cmd && cmd->cmd_arg && ft_isdigit_str(cmd->cmd_arg[1]))
+	{
+		ret = atoi(cmd->cmd_arg[1]);
+		*valid = 1;
+	}
+	else if (cmd && cmd->cmd_arg[1])
+	{
+		ft_putstr_fd("exit: numeric argument required\n", 2);
+		ret = 2;
+	}
+	return (ret);
+}
+
 //will exit process with last exit code,
 //or given numeric argument.
 int	mns_exit(t_data *data, t_cmd *cmd)
@@ -68,17 +83,9 @@ int	mns_exit(t_data *data, t_cmd *cmd)
 
 	valid = 0;
 	ret = data->exit;
+	ret = ret % 255;
 	write(1, "exit\n", 5);
-	if (cmd && cmd->cmd_arg && ft_isdigit_str(cmd->cmd_arg[1]))
-	{
-		ret = atoi(cmd->cmd_arg[1]);
-		valid = 1;
-	}
-	else if (cmd && cmd->cmd_arg[1])
-	{
-		ft_putstr_fd("exit: numeric argument required\n", 2);
-		ret = 2;
-	}
+	ret = check_args(cmd, ret, &valid);
 	if (cmd && cmd->cmd_arg && cmd->cmd_arg[valid + 1] && valid)
 	{
 		ft_putstr_fd("exit: too many arguments\n", 2);

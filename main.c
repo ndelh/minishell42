@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:55:46 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/27 19:39:20 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:10:40 by agamay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	g_signal;
 
 void	tokenize_exec(t_data *data, char *line)
 {
-	if (primal_parse(line))
+	if (primal_parse(line) && check_first_char(line))
 	{
 		add_history(line);
 		ft_tokenize(data, line);

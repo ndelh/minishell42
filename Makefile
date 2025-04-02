@@ -42,6 +42,7 @@ SRC := main.c \
        utils/tab_utils.c \
        utils/list_utils.c \
        utils/primal_parsing.c \
+       utils/parse_utils.c \
        utils/prompt.c \
        builtin/mns_export01.c \
        builtin/mns_export02.c \

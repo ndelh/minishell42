@@ -103,6 +103,7 @@ void	print_complex_tab(char **s, int i);
 void	ft_add_last(t_token **list, t_token *to_add);
 void	ft_go_last(t_token **list);
 int		tab_len(char **_stab);
+int		check_first_char(char *s);
 int		is_space(char c);
 t_env	*go_to_env_node(t_env *list, char *s);
 t_env	*env_lstnew(char *name, char *content, int status);

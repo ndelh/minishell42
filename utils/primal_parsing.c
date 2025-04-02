@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 16:40:59 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/25 13:22:48 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:18:11 by agamay           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	check_succesive_pipe(char *s)
 				s++;
 			if (*s && *s == '|')
 			{
-				printf("syntax error near unexpected token |\n");
+				ft_putendl_fd("syntax error near unexpected token `|'", 2);
 				return (0);
 			}
 		}
@@ -52,7 +52,7 @@ int	check_end_pipe(char *s)
 			test = 1;
 	}
 	if (test == 0)
-		printf("syntax error near unexpected token |\n");
+		ft_putendl_fd("syntax error near unexpected token `|'", 2);
 	return (test);
 }
 
@@ -71,7 +71,7 @@ int	check_incomplete_redir(char *s)
 		s++;
 	if (!*s || *s == '|' || *s == '<' || *s == '>')
 	{
-		printf("uncomplete redir\n");
+		ft_putendl_fd("incomplete redirection", 2);
 		return (0);
 	}
 	return (1);
@@ -87,7 +87,10 @@ int	check_closed_quote(char **s)
 		(*s)++;
 	if (!**s)
 	{
-		printf("unclosed quote : %c\n", a);
+		if (a == '\'')
+			ft_putendl_fd("unclosed quote: `'`", 2);
+		else
+			ft_putendl_fd("unclosed quote: `\"`", 2);
 		return (0);
 	}
 	(*s)++;

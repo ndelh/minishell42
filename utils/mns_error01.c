@@ -46,7 +46,13 @@ void	isdir_error(t_data *data, t_cmd *cmd)
 //if cmd not found, displays the right error and return
 void	fct_error(t_data *data, t_cmd *cmd)
 {
-	perror(cmd->cmd_arg[0]);
+	if (ft_strchr(cmd->cmd_arg[0], '/'))
+		perror(cmd->cmd_arg[0]);
+	else
+	{
+		ft_putstr_fd(cmd->cmd_arg[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
 	free_token_list(cmd->rdir_list);
 	cmd->rdir_list = NULL;
 	if (cmd->pid == 1)

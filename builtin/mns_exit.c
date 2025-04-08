@@ -93,6 +93,7 @@ int	mns_exit(t_data *data, t_cmd *cmd)
 		if (!cmd->pid)
 			return (ret);
 	}
+	rl_clear_history();
 	ft_end(data);
 	exit(ret % 256);
 }

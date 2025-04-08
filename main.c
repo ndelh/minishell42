@@ -46,10 +46,7 @@ void	read_loop(t_data *data)
 			secured_dup2(data, data->standard_in, STDIN_FILENO);
 		}
 		if (line == NULL && g_signal != 2)
-		{
-			rl_clear_history();
 			mns_exit(data, NULL);
-		}
 		tokenize_exec(data, line);
 		g_signal = 0;
 		free(line);

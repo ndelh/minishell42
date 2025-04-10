@@ -29,29 +29,20 @@ void	sigint_handler(int sig)
 //0 for interractive mode. 1 for children. 2 for waiting parent.
 void	signals_init(int type)
 {
-	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
-
-	ft_memset(&sa_int, 0, sizeof(struct sigaction));
-	ft_memset(&sa_quit, 0, sizeof(struct sigaction));
 	if (type == 0)
 	{
-		sa_int.sa_handler = &sigint_handler;
-		sa_quit.sa_handler = SIG_IGN;
+		signal(SIGINT, &sigint_handler);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (type == 1)
 	{
-		sa_int.sa_handler = SIG_DFL;
-		sa_quit.sa_handler = SIG_DFL;
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGPIPE, SIG_IGN);
 	}
 	else if (type == 2)
 	{
-		sa_int.sa_handler = &sigint_wait;
-		sa_quit.sa_handler = SIG_IGN;
+		signal(SIGINT, &sigint_wait);
+		signal(SIGQUIT, SIG_IGN);
 	}
-	sa_int.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa_int, 0))
-		perror("SIGINT init failed.");
-	if (sigaction(SIGQUIT, &sa_quit, 0))
-		perror("SIGQUIT init failed.");
 }

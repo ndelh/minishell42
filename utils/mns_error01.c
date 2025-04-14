@@ -40,6 +40,9 @@ void	isdir_error(t_data *data, t_cmd *cmd)
 		ft_end(data);
 		exit(126);
 	}
+	free_token_list(cmd->rdir_list);
+	ft_free_tab(cmd->cmd_arg);
+	free(cmd);
 	data->exit = 126;
 }
 

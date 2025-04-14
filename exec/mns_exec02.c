@@ -80,7 +80,7 @@ static int	call_builtin(t_data *data, t_cmd *cmd)
 		ret = exec_pwd(data);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "exit", 4))
 		ret = mns_exit(data, cmd);
-	else if (!ft_strncmp(cmd->cmd_arg[0], "minishell", 9))
+	else if (!ft_strncmp(cmd->cmd_arg[0], "./minishell", 11))
 		ret = mns_mns(data, cmd);
 	return (ret);
 }

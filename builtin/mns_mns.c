@@ -36,7 +36,7 @@ int	mns_mns(t_data *data, t_cmd *cmd)
 	if (cmd->pid == 1)
 	{
 		increment_mnslvl(data);
-		execve(cmd->cmd_path, cmd->cmd_arg, data->envp);
+		execve("./minishell", cmd->cmd_arg, data->envp);
 		perror("execve failed");
 		ft_end(data);
 		exit(127);

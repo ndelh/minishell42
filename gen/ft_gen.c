@@ -57,7 +57,6 @@ t_env	*ft_gen_env_list(char **envp)
 	t_env	*to_add;
 	char	*mnslvl_n;
 	char	*mnslvl_v;
-	int		lvl;
 
 	to_ret = NULL;
 	while (*envp)

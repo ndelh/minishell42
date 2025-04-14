@@ -13,7 +13,7 @@
 #include "../minishell.h"
 
 //checks list of redirs in cmd block. Opens them.
-static void	open_files(t_data *data, t_cmd *cmd, int prev)
+static int	open_files(t_data *data, t_cmd *cmd, int prev)
 {
 	t_token	*rdir_list;
 
@@ -32,9 +32,11 @@ static void	open_files(t_data *data, t_cmd *cmd, int prev)
 		{
 			closer(1, prev);
 			redir_error(data, cmd, rdir_list);
+			return (1);
 		}
 		rdir_list = rdir_list->next;
 	}
+	return (0);
 }
 
 //checks if the first arg of cmd->cmd_arg exists, and it's nature.
@@ -46,6 +48,11 @@ static void	check_access(t_data *data, t_cmd *cmd, int prev)
 	if (!cmd->cmd_arg || cmd->buildin)
 		return ;
 	i = -1;
+	if (!check_nature(data, cmd, cmd->cmd_arg[0]))
+	{
+		abs_path(cmd);
+		return ;
+	}
 	while (data->envpath && data->envpath[++i])
 	{
 		cmd_path = ft_vastrjoin(3, data->envpath[i], "/", cmd->cmd_arg[0]);
@@ -55,11 +62,6 @@ static void	check_access(t_data *data, t_cmd *cmd, int prev)
 			return ;
 		}
 		free(cmd_path);
-	}
-	if (!check_nature(data, cmd, cmd->cmd_arg[0]))
-	{
-		abs_path(cmd);
-		return ;
 	}
 	closer(1, prev);
 	fct_error(data, cmd);
@@ -128,8 +130,8 @@ void	start_exec(t_data *data)
 	cmd = data->cmd_list;
 	if (!cmd->next && cmd->buildin)
 	{
-		open_files(data, cmd, -1);
-		exec_cmd(data, cmd, 0);
+		if (!open_files(data, cmd, -1))
+			exec_cmd(data, cmd, 0);
 	}
 	else
 		handle_pipes(data, cmd);

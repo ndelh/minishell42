@@ -74,12 +74,14 @@ static int	call_builtin(t_data *data, t_cmd *cmd)
 		ret = mns_env(data, cmd);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "echo", 4))
 		ret = mns_echo(cmd);
-	else if (!ft_strncmp(cmd->cmd_arg[0], "cd", 4))
+	else if (!ft_strncmp(cmd->cmd_arg[0], "cd", 2))
 		ret = exec_cd(cmd->cmd_arg, data);
-	else if (!ft_strncmp(cmd->cmd_arg[0], "pwd", 4))
+	else if (!ft_strncmp(cmd->cmd_arg[0], "pwd", 3))
 		ret = exec_pwd(data);
 	else if (!ft_strncmp(cmd->cmd_arg[0], "exit", 4))
 		ret = mns_exit(data, cmd);
+	else if (!ft_strncmp(cmd->cmd_arg[0], "minishell", 9))
+		ret = mns_mns(data, cmd);
 	return (ret);
 }
 

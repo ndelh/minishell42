@@ -52,6 +52,7 @@ SRC := main.c \
        builtin/mns_echo.c \
        builtin/cd.c \
        builtin/pwd.c \
+       builtin/mns_mns.c \
        end/ft_end.c \
        end/ft_end_list.c \
        utils/mns_utils01.c \

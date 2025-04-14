@@ -12,13 +12,13 @@
 
 #include "../minishell.h"
 
-void	sigint_wait(int sig)
+static void	sigint_wait(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
 }
 
-void	sigint_handler(int sig)
+static void	sigint_handler(int sig)
 {
 	write(1, "^C", 2);
 	g_signal = sig;
@@ -41,8 +41,7 @@ void	signals_init(int type)
 		signal(SIGPIPE, SIG_IGN);
 	}
 	else if (type == 2)
-	{
 		signal(SIGINT, &sigint_wait);
-		signal(SIGQUIT, SIG_IGN);
-	}
+	else if (type == 3)
+		signal(SIGINT, SIG_IGN);
 }

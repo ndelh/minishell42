@@ -186,5 +186,6 @@ int		exec_unset(char **exe, t_data *data);
 int		mns_env(t_data *data, t_cmd *cmd);
 int		mns_exit(t_data *data, t_cmd *cmd);
 int		mns_echo(t_cmd *cmd);
+int		mns_mns(t_data *data, t_cmd *cmd);
 
 #endif

@@ -28,6 +28,7 @@ static void	increment_mnslvl(t_data *data)
 	data->envp = convert_envp(data->my_env);
 }
 
+//deals with sig for mns recursion
 int	mns_mns(t_data *data, t_cmd *cmd)
 {
 	if (cmd->pid != 1)

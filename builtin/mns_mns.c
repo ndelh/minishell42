@@ -12,18 +12,18 @@
 
 #include "../minishell.h"
 
-static void	increment_mnslvl(t_data *data)
+static void	increment_shlvl(t_data *data)
 {
-	t_env	*mnslvl;
+	t_env	*shlvl;
 	int		lvl;
 
-	mnslvl = go_to_env_node(data->my_env, "MNSLVL");
-	if (mnslvl)
+	shlvl = go_to_env_node(data->my_env, "SHLVL");
+	if (shlvl)
 	{
-		lvl = ft_atoi(mnslvl->content);
+		lvl = ft_atoi(shlvl->content);
 		lvl++;
-		free (mnslvl->content);
-		mnslvl->content = ft_itoa(lvl);
+		free (shlvl->content);
+		shlvl->content = ft_itoa(lvl);
 	}
 	data->envp = convert_envp(data->my_env);
 }
@@ -31,17 +31,19 @@ static void	increment_mnslvl(t_data *data)
 //deals with sig for mns recursion
 int	mns_mns(t_data *data, t_cmd *cmd)
 {
+	int	ret;
+
 	if (cmd->pid != 1)
 		cmd->pid = secured_fork(data);
 	if (cmd->pid == 1)
 	{
-		increment_mnslvl(data);
+		increment_shlvl(data);
 		execve("./minishell", cmd->cmd_arg, data->envp);
 		perror("execve failed");
 		ft_end(data);
 		exit(127);
 	}
 	signals_init(3);
-	waiter(data, cmd);
-	return (0);
+	ret = waiter(data, cmd);
+	return (ret);
 }

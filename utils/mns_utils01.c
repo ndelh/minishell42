@@ -30,7 +30,7 @@ void	closer(int count, ...)
 
 //waits for children in order of creation.
 //gets wait statuses and set data->exit accordingly.
-void	waiter(t_data *data, t_cmd *cmd)
+int	waiter(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid;
 	int		w_status;
@@ -53,6 +53,7 @@ void	waiter(t_data *data, t_cmd *cmd)
 	signals_init(0);
 	if (data->exit == 131)
 		write(1, "Quit\n", 5);
+	return (w_status);
 }
 
 void	secured_dup2(t_data *data, int fd1, int fd2)

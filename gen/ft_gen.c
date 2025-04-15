@@ -55,8 +55,8 @@ t_env	*ft_gen_env_list(char **envp)
 {
 	t_env	*to_ret;
 	t_env	*to_add;
-	char	*mnslvl_n;
-	char	*mnslvl_v;
+	char	*shlvl_n;
+	char	*shlvl_v;
 
 	to_ret = NULL;
 	while (*envp)
@@ -65,11 +65,11 @@ t_env	*ft_gen_env_list(char **envp)
 		ft_add_last_env(&to_ret, to_add);
 		envp++;
 	}
-	if (!go_to_env_node(to_ret, "MNSLVL"))
+	if (!go_to_env_node(to_ret, "SHLVL"))
 	{
-		mnslvl_n = ft_strdup("MNSLVL");
-		mnslvl_v = ft_strdup("1");
-		env_lstadd_back(&to_ret, env_lstnew(mnslvl_n, mnslvl_v, 1));
+		shlvl_n = ft_strdup("SHLVL");
+		shlvl_v = ft_strdup("1");
+		env_lstadd_back(&to_ret, env_lstnew(shlvl_n, shlvl_v, 1));
 		return (to_ret);
 	}
 	return (to_ret);

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:57:50 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/20 10:14:14 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:15:50 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_free_tab(char **tab)
 	temp = tab;
 	while (*tab)
 	{
+
 		free(*tab);
 		tab++;
 	}

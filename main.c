@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:55:46 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/02 16:10:40 by agamay           ###   ########.fr       */
+/*   Updated: 2025/04/15 18:33:55 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,15 @@ int	g_signal;
 
 void	tokenize_exec(t_data *data, char *line)
 {
-	if (primal_parse(line) && check_first_char(line))
-	{
-		add_history(line);
-		ft_tokenize(data, line);
-		if (data->cmd_list)
+	if (line)
+	{	add_history(line);
+		tokenize(line, data);
+		if (data->cmd_list && !data->no_exec && g_signal != SIGINT)
 			start_exec(data);
 		free_cmd_list(data->cmd_list);
 		data->cmd_list = NULL;
+		data->no_exec = 0;
 	}
-	else if (line && *line)
-		data->exit = 2;
 }
 
 void	read_loop(t_data *data)

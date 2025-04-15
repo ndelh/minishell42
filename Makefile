@@ -6,7 +6,7 @@
 #    By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/10 17:08:53 by ndelhota          #+#    #+#              #
-#    Updated: 2025/03/27 18:45:19 by ndelhota         ###   ########.fr        #
+#    Updated: 2025/04/15 17:53:07 by ndelhota         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,32 +17,26 @@ SRC := main.c \
        gen/ft_dup_std.c\
        gen/convert_list_to_envp.c \
        gen/mns_sig_init.c \
-       tokenize/begin.c \
-       tokenize/ft_split_quote.c \
-       tokenize/first_sort.c \
-       tokenize/second_sort.c \
-       tokenize/split_pipe.c \
-       tokenize/separate_cmd.c \
-       tokenize/split_redir.c \
-       tokenize/third_sort.c \
-       tokenize/seek_block_utils.c \
-       tokenize/seek_block.c \
-       tokenize/seek_block_tail.c \
-       tokenize/isolate_redir.c \
-       tokenize/expand.c \
-       tokenize/gen_expand.c \
-       tokenize/expand_utils.c \
-       tokenize/complex_line.c \
-       tokenize/convert_list.c \
-       tokenize/convert_redir_list.c \
-       tokenize/tokenize_utils.c \
-       tokenize/create_here_doc.c \
-       tokenize/here_doc_utils.c \
-       tokenize/is_builtin.c \
+       tokenizer/tokenize.c \
+       tokenizer/gen_list.c \
+       tokenizer/quoting.c \
+       tokenizer/piping.c \
+       tokenizer/redirecting.c \
+       tokenizer/sorting_by_cmd.c \
+       tokenizer/sorting_in_cmd.c \
+       tokenizer/convert_redir.c \
+       tokenizer/convert_cmd.c \
+       tokenizer/tokenize_end.c \
+       tokenizer/tokenize_utils.c \
+       tokenizer/gen_expand.c \
+       tokenizer/redir_utils.c \
+       tokenizer/create_here_doc.c \
+       tokenizer/here_doc_utils.c \
+       tokenizer/expand_utils.c \
+       tokenizer/expand_in_redir.c \
+       tokenizer/is_builtin.c \
        utils/tab_utils.c \
        utils/list_utils.c \
-       utils/primal_parsing.c \
-       utils/parse_utils.c \
        utils/prompt.c \
        builtin/mns_export01.c \
        builtin/mns_export02.c \

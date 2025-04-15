@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:44:26 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/27 19:56:12 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:47:21 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_env	*ft_gen_env_list(char **envp)
 	t_env	*to_add;
 	char	*mnslvl_n;
 	char	*mnslvl_v;
-	int		lvl;
+	//int		lvl;
 
 	to_ret = NULL;
 	while (*envp)

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:48:40 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/24 11:52:33 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/14 14:15:25 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,22 @@ void	free_token_list(t_token *to_free)
 	}
 }
 
-void	free_cmd_list(t_cmd *to_free)
+void	free_cmd_list(t_cmd *list)
 {
 	t_cmd	*temp;
-	int		i;
+	int	nb;
 
-	i = 0;
-	while (to_free)
+	nb = 1;	
+	temp = list;
+	while (list)
 	{
-		temp = to_free->next;
-		if (to_free->cmd_arg)
-		{
-			print_complex_tab(to_free->cmd_arg, to_free->tab_line);
-			free_complex_tab(to_free->cmd_arg, to_free->tab_line);
-		}
-		free_token_list(to_free->current_cmd);
-		free_token_list(to_free->rdir_list);
-		free(to_free);
-		to_free = temp;
-		i++;
+		temp = list->next;
+		ft_free_tab(list->cmd_arg);
+		free_line_list(&list->cmd_line);
+		free_token_list(list->rdir_list);
+		free_line_list(&list->redir_line);
+		free(list);
+		nb++;
+		list = temp;
 	}
 }

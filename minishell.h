@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/27 20:52:35 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:20:04 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_cmd
 {
 	struct s_cmd	*previous;
 	struct s_cmd	*next;
+	struct s_line	*cmd_line;
+	struct s_line	*redir_line;
 	char			**cmd_arg;
 	int				tab_line;
 	char			*cmd_path;
@@ -87,13 +89,63 @@ typedef struct s_data
 	int			standard_in;
 	int			standard_out;
 	int			line_hdoc;
+	int			no_exec;
 	int			exit;
 }	t_data;
+
+typedef	struct s_line
+{
+	char	letter;
+	t_type	type;
+	t_type	redir_type;
+	int	wr;
+	int	cmd_number;
+	struct s_line	*end_quote;
+	struct s_line	*end_redir;
+	struct s_line	*end_expand;
+	struct s_line	*previous;
+	struct s_line	*next;
+}	t_line;
 
 int		primal_parse(char *s);
 void	ft_gen(t_data **data, char **envp);
 void	ft_dup_std(t_data *data);
 char	**convert_envp(t_env *my_env);
+//tokenize
+t_line	*gen_list(char *line);
+int	quoting(t_line *line);
+int	piping(t_line *list, char *line);
+int	redirecting(t_line *list);
+void	free_line_list(t_line **list);
+void	tokenize(char *line, t_data *data);
+t_cmd	*sorting_by_cmd(t_line *line);
+void	sorting_in_cmd(t_cmd *list);
+void	create_redir_list(t_cmd *list, t_data *data);
+void	convert_cmd(t_cmd *list);
+void	gen_expand(t_data *data, t_cmd *cmd);
+t_line*	expand_in_redir(t_data *data, t_line *redir);
+void	empty_new(t_line **cursor, t_line **cmd_line, t_line *end_expand);
+void	existing_new(t_line **cursor, t_line **cmd_line, t_line *end_expand, t_line *new);
+void	change_hdoc(t_cmd *cmd, t_data *data);
+//tokenize_utils
+void	add_last_line(t_line **list, t_line *to_add);
+void	add_last_in_redir(t_line **list, t_line *new);
+int	is_white_space(char c);
+int	is_redir_ender(char c);
+int	count_inside_quote(t_line **line);
+t_line	*go_to_last_node(t_line *line);
+int	seek_expand_end_cmd(t_line *line);
+void	dubious_redir(t_data *data);
+void	find_end_expand(t_line **line);
+char	*gen_name(void);
+t_env	*find_env_node(t_env *env, t_line *line);
+t_line	*add_quote_content(t_line *line, char *to_ret, int *i);
+t_line	*create_cmd_expand(t_env *env, t_line *line);
+void	dubious_redir(t_data *data);
+void	check_hdoc(t_token *node, t_line *list);
+void	write_in_hdoc(t_line *list, int fd);
+//tokenize_clean
+void	free_line_list(t_line **line);
 //utils
 void	ft_prompt(char **display, t_data *data);
 void	ft_free_tab(char **tab);
@@ -119,38 +171,6 @@ void	secured_dup2(t_data *data, int fd1, int fd2);
 void	secured_pipe(t_data *data, t_cmd *cmd);
 pid_t	secured_fork(t_data *data);
 //tokenize
-int		is_incomplete(char *s);
-int		count_expand_line(char *s, t_env *env);
-int		count_expand_split(char *s);
-int		check_expand(char *s);
-int		redir_alone(char *s);
-int		global_len(t_token *list, t_token *stoppage);
-void	replace_expand(t_data *data, char **tab, t_env *env, t_token *list);
-void	expand_not_needed(t_token *list);
-void	free_complex_tab(char **tab, int i);
-void	ft_tokenize(t_data *data, char *line);
-void	create_cmd_list(t_data *data, t_token *to_shatter);
-char	**split_quote(char *s);
-char	*ft_mend_line(char **tab, int i);
-char	**isolate_expand(char *s, int i);
-char	**split_at_char(char *s, char c);
-char	*gen_expand_line(t_data *data, char *s, t_env *env, t_token *list);
-void	first_sort(t_data *data, char **first_split);
-void	gen_pipe_list(t_token **oldlist);
-void	gen_redirection_line(t_token **oldlist);
-void	restablish_link(t_token **cursor, t_token *p, t_token *n);
-void	gen_new_chain(t_token **list, char **tab);
-t_token	*arrange_head(t_token *head, t_token *old_p, t_token *old_n);
-void	seek_block(t_cmd *list);
-void	sort_redir_exe(t_cmd *list);
-void	arrange_tail(t_token **cursor, t_token *old_p, t_token *old_n);
-char	**split_at_redir(char *s);
-void	expand_in_list(t_cmd *cmd, t_data *data);
-void	convert_cmd_list(t_cmd *cmd, t_data *data);
-void	multiple_complex_line(t_token *list, t_cmd *cmd, int *i, t_data *data);
-void	one_complex_line(t_token **list, t_cmd *cmd, int *i);
-void	convert_redir_list(t_cmd *cmd);
-void	change_hdoc(t_cmd *cmd, t_data *data);
 char	*gen_name(void);
 void	modulate_line(t_data *data, char **line, t_env *my_env);
 void	is_builtin(t_cmd *list);

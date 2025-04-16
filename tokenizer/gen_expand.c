@@ -70,7 +70,7 @@ t_line	*create_cmd_expand(t_env *env, t_line *line, t_data *data)
 		to_ret = gen_list(to_exp->content);
 	else if (line->next->letter == '?')
 	{
-		char_itoa = ft_itoa(data->exit);
+		char_itoa = ft_itoa(data->exit % 255);
 		to_ret = gen_list(char_itoa);
 		free(char_itoa);
 	}

@@ -42,7 +42,7 @@ char	*ft_vastrjoin(size_t n, ...)
 	while (n--)
 	{
 		vastr = va_arg(str, char *);
-		while (*vastr)
+		while (vastr && *vastr)
 			*temp++ = *vastr++;
 	}
 	va_end(str);

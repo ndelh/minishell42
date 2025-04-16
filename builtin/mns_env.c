@@ -38,6 +38,8 @@ void	assign_(t_data *data)
 	int		len;
 
 	cmd = (t_cmd *)ft_lstlast((t_list *)data->cmd_list);
+	if (!cmd->cmd_arg || !*(cmd->cmd_arg))
+		return ;
 	len = tab_len(cmd->cmd_arg);
 	if (!cmd->buildin && len == 1)
 		us_c = check_access(data, cmd->cmd_arg[0]);

@@ -12,6 +12,7 @@
 
 #include "../minishell.h"
 
+//status 0 will not be printed by env command.
 t_env	*env_lstnew(char *name, char *content, int status)
 {
 	t_env	*new_node;

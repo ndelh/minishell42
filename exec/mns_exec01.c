@@ -133,4 +133,5 @@ void	start_exec(t_data *data)
 	}
 	else
 		handle_pipes(data, cmd);
+	assign_(data);
 }

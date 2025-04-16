@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 12:37:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 18:15:46 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:59:19 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_line	*expand_in_redir(t_data *data, t_line *redir)
 	{
 		if (cursor->end_expand)
 		{
-			new = create_cmd_expand(data->my_env, cursor);
+			new = create_cmd_expand(data->my_env, cursor, data);
 			if (new)
 				existing_new(&cursor, &head, cursor->end_expand, new);
 			else

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:55:46 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 18:33:55 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/16 12:37:56 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	g_signal;
 void	tokenize_exec(t_data *data, char *line)
 {
 	if (line)
-	{	add_history(line);
+	{
+		add_history(line);
 		tokenize(line, data);
 		if (data->cmd_list && !data->no_exec && g_signal != SIGINT)
 			start_exec(data);

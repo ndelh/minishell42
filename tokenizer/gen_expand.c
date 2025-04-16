@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:28:52 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 18:54:04 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/15 19:04:01 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	empty_new(t_line **cursor, t_line **cmd_line, t_line *end_expand)
 	free_line_list(&to_free);
 }
 
-t_line	*create_cmd_expand(t_env *env, t_line *line)
+t_line	*create_cmd_expand(t_env *env, t_line *line, t_data *data)
 {
 	t_env	*to_exp;
 	t_line	*to_ret;
@@ -72,6 +72,7 @@ t_line	*create_cmd_expand(t_env *env, t_line *line)
 	{
 		char_itoa = ft_itoa(data->exit);
 		to_ret = gen_list(char_itoa);
+		free(char_itoa);
 	}
 	return (to_ret);
 }
@@ -88,7 +89,7 @@ void	expand_in_cmd(t_data *data, t_cmd *cmd)
 	{
 		if (cursor->end_expand)
 		{
-			new = create_cmd_expand(data->my_env, cursor);
+			new = create_cmd_expand(data->my_env, cursor, data);
 			if (new)
 				existing_new(&cursor, &cmd->cmd_line, cursor->end_expand,
 					new);

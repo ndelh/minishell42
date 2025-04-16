@@ -1,0 +1,14 @@
+builtin
+end
+exec
+gen
+lib
+main.c
+Makefile
+minishell
+minishell.h
+ndelhota
+obj
+tokenize
+tokenizer
+utils

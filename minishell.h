@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 18:20:04 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:58:49 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	find_end_expand(t_line **line);
 char	*gen_name(void);
 t_env	*find_env_node(t_env *env, t_line *line);
 t_line	*add_quote_content(t_line *line, char *to_ret, int *i);
-t_line	*create_cmd_expand(t_env *env, t_line *line);
+t_line	*create_cmd_expand(t_env *env, t_line *line, t_data *data);
 void	dubious_redir(t_data *data);
 void	check_hdoc(t_token *node, t_line *list);
 void	write_in_hdoc(t_line *list, int fd);

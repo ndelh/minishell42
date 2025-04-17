@@ -41,7 +41,7 @@ char	*ft_vastrjoin(size_t n, ...)
 	va_start(str, n);
 	while (n--)
 	{
-		vastr = va_arg(str, char *);t 
+		vastr = va_arg(str, char *);
 		while (vastr && *vastr)
 			*temp++ = *vastr++;
 	}

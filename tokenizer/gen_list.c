@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 17:19:03 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 18:13:07 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:38:31 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_line	*gen_node(char line)
 	return (to_ret);
 }
 
-t_line	*gen_list(char *line)
+t_line	*gen_list(char *line, t_data *data)
 {
 	t_line	*to_ret;
 	t_line	*to_add;
@@ -51,7 +51,7 @@ t_line	*gen_list(char *line)
 		if (!to_add)
 		{
 			free_line_list(&to_ret);
-			return (NULL);
+			mns_exit(data, NULL);
 		}
 		add_last_line(&to_ret, to_add);
 		line++;

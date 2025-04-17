@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:22:49 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 17:57:54 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:41:43 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	fill_heredoc(t_data *data, int fd, t_token *list)
 	nb = 1;
 	while (line != NULL && ft_strcmp(line, list->piece) && g_signal != SIGINT)
 	{
-		line_list = gen_list(line);
+		line_list = gen_list(line, data);
 		if (!list->h_no_expand)
 			line_list = expand_in_redir(data, line_list);
 		write_in_hdoc(line_list, fd);

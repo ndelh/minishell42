@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:48:40 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/17 14:29:22 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:37:09 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	free_token_list(t_token *to_free)
 void	free_cmd_list(t_cmd *list)
 {
 	t_cmd	*temp;
-	int	nb;
+	int		nb;
 
-	nb = 1;	
+	nb = 1;
 	temp = list;
 	while (list)
 	{

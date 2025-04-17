@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:28:52 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 19:04:01 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:41:01 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ t_line	*create_cmd_expand(t_env *env, t_line *line, t_data *data)
 	to_ret = NULL;
 	to_exp = find_env_node(env, line);
 	if (to_exp && to_exp->content)
-		to_ret = gen_list(to_exp->content);
+		to_ret = gen_list(to_exp->content, data);
 	else if (line->next->letter == '?')
 	{
 		char_itoa = ft_itoa(data->exit % 255);
-		to_ret = gen_list(char_itoa);
+		to_ret = gen_list(char_itoa, data);
 		free(char_itoa);
 	}
 	return (to_ret);

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:06:49 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/17 14:31:40 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:39:44 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	tokenize(char *line, t_data *data)
 {
 	t_line	*list;
 
-	list = gen_list(line);
+	list = gen_list(line, data);
 	if (!quoting(list))
 		free_line_list(&list);
 	if (!piping(list, line))

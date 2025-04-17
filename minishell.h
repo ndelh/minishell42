@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 18:58:49 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:39:25 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ft_gen(t_data **data, char **envp);
 void	ft_dup_std(t_data *data);
 char	**convert_envp(t_env *my_env);
 //tokenize
-t_line	*gen_list(char *line);
+t_line	*gen_list(char *line, t_data *data);
 int	quoting(t_line *line);
 int	piping(t_line *list, char *line);
 int	redirecting(t_line *list);

@@ -21,7 +21,6 @@ void	ft_free_tab(char **tab)
 	temp = tab;
 	while (*tab)
 	{
-
 		free(*tab);
 		tab++;
 	}

@@ -25,7 +25,8 @@ int	good_line(char *s)
 		s++;
 	}
 	return (0);
-}	
+}
+
 void	tokenize_exec(t_data *data, char *line)
 {
 	if (good_line(line))
@@ -39,6 +40,8 @@ void	tokenize_exec(t_data *data, char *line)
 		free_cmd_list(data->cmd_list);
 		data->cmd_list = NULL;
 		data->no_exec = 0;
+		if (g_signal == SIGINT)
+			data->exit = 130;
 	}
 }
 

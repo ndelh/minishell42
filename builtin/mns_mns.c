@@ -37,6 +37,7 @@ int	mns_mns(t_data *data, t_cmd *cmd)
 		cmd->pid = secured_fork(data);
 	if (cmd->pid == 1)
 	{
+		closer(2, data->standard_in, data->standard_out);
 		increment_shlvl(data);
 		execve("./minishell", cmd->cmd_arg, data->envp);
 		perror("execve failed");

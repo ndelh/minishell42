@@ -93,13 +93,13 @@ typedef struct s_data
 	int			exit;
 }	t_data;
 
-typedef	struct s_line
+typedef struct s_line
 {
-	char	letter;
-	t_type	type;
-	t_type	redir_type;
-	int	wr;
-	int	cmd_number;
+	char			letter;
+	t_type			type;
+	t_type			redir_type;
+	int				wr;
+	int				cmd_number;
 	struct s_line	*end_quote;
 	struct s_line	*end_redir;
 	struct s_line	*end_expand;
@@ -113,9 +113,9 @@ void	ft_dup_std(t_data *data);
 char	**convert_envp(t_env *my_env);
 //tokenize
 t_line	*gen_list(char *line, t_data *data);
-int	quoting(t_line *line);
-int	piping(t_line *list, char *line);
-int	redirecting(t_line *list);
+int		quoting(t_line *line);
+int		piping(t_line *list, char *line);
+int		redirecting(t_line *list);
 void	free_line_list(t_line **list);
 void	tokenize(char *line, t_data *data);
 t_cmd	*sorting_by_cmd(t_line *line, t_data *data);
@@ -123,18 +123,19 @@ void	sorting_in_cmd(t_cmd *list);
 void	create_redir_list(t_cmd *list, t_data *data);
 void	convert_cmd(t_cmd *listi, t_data *data);
 void	gen_expand(t_data *data, t_cmd *cmd);
-t_line*	expand_in_redir(t_data *data, t_line *redir);
+t_line	*expand_in_redir(t_data *data, t_line *redir);
 void	empty_new(t_line **cursor, t_line **cmd_line, t_line *end_expand);
-void	existing_new(t_line **cursor, t_line **cmd_line, t_line *end_expand, t_line *new);
+void	existing_new(t_line **cursor, t_line **cmd_line,
+			t_line *end_expand, t_line *new);
 void	change_hdoc(t_cmd *cmd, t_data *data);
 //tokenize_utils
 void	add_last_line(t_line **list, t_line *to_add);
 void	add_last_in_redir(t_line **list, t_line *new);
-int	is_white_space(char c);
-int	is_redir_ender(char c);
-int	count_inside_quote(t_line **line);
+int		is_white_space(char c);
+int		is_redir_ender(char c);
+int		count_inside_quote(t_line **line);
 t_line	*go_to_last_node(t_line *line);
-int	seek_expand_end_cmd(t_line *line);
+int		seek_expand_end_cmd(t_line *line);
 void	dubious_redir(t_data *data);
 void	find_end_expand(t_line **line);
 char	*gen_name(void);

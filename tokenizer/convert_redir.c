@@ -6,16 +6,21 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 17:11:08 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 18:23:07 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 16:42:23 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_last_node(t_token **list, t_token *new)
+void	add_last_node(t_token **list, t_token *new, t_data *data)
 {
 	static t_token	*cursor;
 
+	if (!new)
+	{
+		free_token_list(*list);
+		mns_exit(data, NULL);
+	}
 	if (!*list)
 		*list = new;
 	else
@@ -53,21 +58,23 @@ int	count_char_redir(t_line *line, t_data *data)
 	return (count);
 }
 
-void	fill_redir_node(t_token *node, t_line **line, t_data *data)
+void	fill_redir_node(t_token *node, t_line **line, t_data *data,
+		t_line *stoppage)
 {
 	int		i;
-	t_line	*stoppage;
 	t_line	*temp;
 	char	*to_fill;
 
-	stoppage = (*line)->end_redir->next;
 	if (stoppage)
 		stoppage->previous = NULL;
 	(*line)->end_redir->next = NULL;
 	*line = expand_in_redir(data, *line);
 	i = count_char_redir(*line, data);
 	node->type = (*line)->redir_type;
+	check_h_doc(node, *line);
 	to_fill = ft_calloc(sizeof(char), (i + 1));
+	if (!to_fill)
+		mns_exit(data, NULL);
 	i = 0;
 	temp = *line;
 	while (*line)
@@ -90,9 +97,12 @@ t_token	*convert_redir_list(t_line *line, t_data *data)
 	while (line)
 	{
 		to_add = malloc(sizeof(t_token) * 1);
-		ft_memset(to_add, 0, sizeof(t_token));
-		fill_redir_node(to_add, &line, data);
-		add_last_node(&list, to_add);
+		if (to_add)
+		{
+			ft_memset(to_add, 0, sizeof(t_token));
+			fill_redir_node(to_add, &line, data, line->end_redir->next);
+		}
+		add_last_node(&list, to_add, data);
 	}
 	return (list);
 }

@@ -6,7 +6,7 @@
 /*   By: agamay <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 16:45:49 by agamay            #+#    #+#             */
-/*   Updated: 2025/03/31 16:45:50 by agamay           ###   ########.fr       */
+/*   Updated: 2025/04/17 16:24:00 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static char	*check_access(t_data *data, char *cmd)
 			return (ret);
 		free(ret);
 	}
-	return (NULL);
+	ret = ft_strdup(cmd);
+	return (ret);
 }
 
 //takes last arg from last fct, puts it in "_" value.

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:41:58 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 17:55:05 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 16:39:28 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	dubious_redir(t_data *data)
 
 void	check_h_doc(t_token *node, t_line *list)
 {
+	if (node->type != HEREDOC)
+		return ;
 	while (list)
 	{
 		if (list->end_quote)

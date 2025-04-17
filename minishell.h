@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/17 15:08:50 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 16:40:47 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ t_line	*create_cmd_expand(t_env *env, t_line *line, t_data *data);
 void	dubious_redir(t_data *data);
 void	check_hdoc(t_token *node, t_line *list);
 void	write_in_hdoc(t_line *list, int fd);
+void	check_h_doc(t_token *node, t_line *list);
 //tokenize_clean
 void	free_line_list(t_line **line);
 //utils

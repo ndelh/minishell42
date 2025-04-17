@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/17 14:51:32 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:08:50 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	piping(t_line *list, char *line);
 int	redirecting(t_line *list);
 void	free_line_list(t_line **list);
 void	tokenize(char *line, t_data *data);
-t_cmd	*sorting_by_cmd(t_line *line);
+t_cmd	*sorting_by_cmd(t_line *line, t_data *data);
 void	sorting_in_cmd(t_cmd *list);
 void	create_redir_list(t_cmd *list, t_data *data);
 void	convert_cmd(t_cmd *listi, t_data *data);

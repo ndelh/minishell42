@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:14:21 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 18:11:47 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:13:52 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,15 @@ void	add_last_in_redir(t_line **list, t_line *new)
 	cursor = new;
 }
 
-void	add_last_cmd(t_cmd **list, t_cmd *new)
+void	add_last_cmd(t_cmd **list, t_cmd *new, t_data *data)
 {
 	static t_cmd	*cursor;
 
+	if (!new)
+	{
+		free_cmd_list(*list);
+		mns_exit(data, NULL);
+	}
 	if (!*list)
 		*list = new;
 	else
@@ -51,7 +56,7 @@ t_cmd	*gen_cmd_node(void)
 	return (to_ret);
 }
 
-t_cmd	*sorting_by_cmd(t_line *line)
+t_cmd	*sorting_by_cmd(t_line *line, t_data *data)
 {
 	int		nb;
 	t_cmd	*cmd_list;
@@ -63,8 +68,9 @@ t_cmd	*sorting_by_cmd(t_line *line)
 	{
 		nb++;
 		cmd_node = gen_cmd_node();
-		cmd_node->cmd_line = line;
-		add_last_cmd(&cmd_list, cmd_node);
+		if (cmd_node)
+			cmd_node->cmd_line = line;
+		add_last_cmd(&cmd_list, cmd_node, data);
 		while (line && line->cmd_number == nb)
 			line = line->next;
 		if (line)

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 15:48:40 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/14 14:15:25 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:29:22 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	free_cmd_list(t_cmd *list)
 		ft_free_tab(list->cmd_arg);
 		free_line_list(&list->cmd_line);
 		free_token_list(list->rdir_list);
+		free_line_list(&list->redir_line);
+		free_line_list(&list->cmd_line);
 		free_line_list(&list->redir_line);
 		free(list);
 		nb++;

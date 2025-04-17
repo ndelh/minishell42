@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:37:17 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/16 13:01:51 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:38:58 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,14 @@ void	find_end_expand(t_line **line)
 		reminder->end_expand = *line;
 		return ;
 	}
-	if (*line)
+	if (*line && ((ft_isalnum((*line)->letter))
+			|| (*line)->letter == '_'))
 	{
 		while ((*line)->next && (ft_isalnum((*line)->next->letter)
 				|| (*line)->next->letter == '_'))
 			*line = (*line)->next;
+		reminder->end_expand = *line;
 	}
-	reminder->end_expand = *line;
 }
 
 int	seek_expand_end_cmd(t_line *line)

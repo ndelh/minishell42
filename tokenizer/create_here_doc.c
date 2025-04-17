@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 12:22:49 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/29 14:46:00 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:57:54 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,21 @@ char	*gen_valid_name(t_data *data)
 	return (NULL);
 }
 
-void	fill_heredoc(t_data *data, int fd, t_token *list, t_env *my_env)
+void	fill_heredoc(t_data *data, int fd, t_token *list)
 {
 	char	*line;
 	int		nb;
+	t_line	*line_list;
 
 	line = readline(">");
 	nb = 1;
 	while (line != NULL && ft_strcmp(line, list->piece) && g_signal != SIGINT)
 	{
+		line_list = gen_list(line);
 		if (!list->h_no_expand)
-			modulate_line(data, &line, my_env);
-		ft_putendl_fd(line, fd);
+			line_list = expand_in_redir(data, line_list);
+		write_in_hdoc(line_list, fd);
+		free_line_list(&line_list);
 		free(line);
 		nb++;
 		line = readline(">");
@@ -72,7 +75,7 @@ void	adjust_here_doc(t_data *data, t_token *list)
 	my_env = data->my_env;
 	name = gen_valid_name(data);
 	fd = open(name, O_WRONLY | O_CREAT, 0666);
-	fill_heredoc(data, fd, list, my_env);
+	fill_heredoc(data, fd, list);
 	close(fd);
 	free(list->piece);
 	list->piece = name;

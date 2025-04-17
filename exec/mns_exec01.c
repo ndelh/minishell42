@@ -45,7 +45,7 @@ static void	check_access(t_data *data, t_cmd *cmd, int prev)
 	char	*cmd_path;
 	int		i;
 
-	if (!cmd->cmd_arg || cmd->buildin)
+	if (!cmd->cmd_arg || !*(cmd->cmd_arg) || cmd->buildin)
 		return ;
 	i = -1;
 	if (!check_nature(data, cmd, cmd->cmd_arg[0]))

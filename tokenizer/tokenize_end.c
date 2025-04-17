@@ -1,32 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replace_expansion.c                                :+:      :+:    :+:   */
+/*   tokenize_end.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/07 19:33:37 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/24 13:02:39 by ndelhota         ###   ########.fr       */
+/*   Created: 2025/04/10 17:16:45 by ndelhota          #+#    #+#             */
+/*   Updated: 2025/04/15 18:25:12 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	has_expand(char *s)
+void	free_tab(char **to_free)
 {
-	while (*s && *s != '$')
-		s++;
-	if (*s)
-		return (1);
-	return (0);
+	char	**reminder;
+
+	reminder = to_free;
+	while (*to_free)
+	{
+		printf("%s\n", *to_free);
+		free(*to_free);
+		to_free++;
+	}
+	free(reminder);
 }
 
-void	replace_expansion(t_data *data, t_token *list)
+void	free_line_list(t_line **line)
 {
-	while (*list)
+	t_line	*temp;
+
+	if (!*line)
+		return ;
+	while (*line)
 	{
-		if (list->type != S_QUOTE && has_expand(list->piece))
-			remodulate_list(list);
-		list = list->next;
+		temp = (*line)->next;
+		free(*line);
+		*line = temp;
 	}
+	*line = NULL;
 }

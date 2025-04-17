@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 18:33:34 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/03/27 20:43:24 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:58:52 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,6 @@ void	print_eof(int nb, char *limiter)
 	ft_putstr_fd(" delimited by end of file (wanted `", 2);
 	ft_putstr_fd(limiter, 2);
 	ft_putstr_fd("')\n", 2);
-}
-
-void	modulate_line(t_data *data, char **line, t_env *my_env)
-{
-	char	*to_ret;
-
-	to_ret = gen_expand_line(data, *line, my_env, NULL);
-	free(*line);
-	*line = to_ret;
 }
 
 char	*gen_name(void)

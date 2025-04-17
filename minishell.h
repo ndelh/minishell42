@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 13:32:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/17 14:39:25 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:51:32 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	tokenize(char *line, t_data *data);
 t_cmd	*sorting_by_cmd(t_line *line);
 void	sorting_in_cmd(t_cmd *list);
 void	create_redir_list(t_cmd *list, t_data *data);
-void	convert_cmd(t_cmd *list);
+void	convert_cmd(t_cmd *listi, t_data *data);
 void	gen_expand(t_data *data, t_cmd *cmd);
 t_line*	expand_in_redir(t_data *data, t_line *redir);
 void	empty_new(t_line **cursor, t_line **cmd_line, t_line *end_expand);

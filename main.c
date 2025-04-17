@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:55:46 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/17 14:23:33 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:32:30 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	tokenize_exec(t_data *data, char *line)
 		tokenize(line, data);
 		if (data->cmd_list && !data->no_exec && g_signal != SIGINT)
 			start_exec(data);
+		if (data->no_exec)
+			data->exit = 2;
 		free_cmd_list(data->cmd_list);
 		data->cmd_list = NULL;
 		data->no_exec = 0;

@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 18:06:49 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 18:14:53 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:31:40 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	tokenize(char *line, t_data *data)
 		free_line_list(&list);
 	if (!redirecting(list))
 		free_line_list(&list);
+	if (!list)
+		data->exit = 2;
 	data->cmd_list = sorting_by_cmd(list);
 	sorting_in_cmd(data->cmd_list);
 	gen_expand(data, data->cmd_list);

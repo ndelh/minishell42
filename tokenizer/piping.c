@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:30:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/15 18:14:00 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:19:18 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	parse_pipe(char *line)
 		line++;
 	if (*line == '|')
 		return (0);
-	while (*(line + 1))
+	while (*line && *(line + 1))
 		line++;
 	while (is_white_space(*line))
 		line--;

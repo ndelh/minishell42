@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:55:46 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/16 12:37:56 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:23:33 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,21 @@
 
 int	g_signal;
 
+int	good_line(char *s)
+{
+	if (!s)
+		return (0);
+	while (*s)
+	{
+		if (!is_white_space(*s))
+			return (1);
+		s++;
+	}
+	return (0);
+}	
 void	tokenize_exec(t_data *data, char *line)
 {
-	if (line)
+	if (good_line(line))
 	{
 		add_history(line);
 		tokenize(line, data);

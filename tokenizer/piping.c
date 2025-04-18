@@ -6,11 +6,22 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:30:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/17 14:19:18 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/18 10:19:06 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	check_double_pipe(char *line)
+{
+	while (*line)
+	{
+		if (*line && *line == '|' && *(line + 1) == '|')
+			return (0);
+		line++;
+	}
+	return (1);
+}
 
 int	parse_pipe(char *line)
 {
@@ -54,7 +65,7 @@ int	piping(t_line *list, char *line)
 {
 	if (!list)
 		return (0);
-	if (!parse_pipe(line))
+	if (!parse_pipe(line) || !check_double_pipe(line))
 	{
 		ft_putendl_fd("syntax error near unexpected token `|'", 2);
 		return (0);

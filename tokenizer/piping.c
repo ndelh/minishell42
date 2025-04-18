@@ -6,7 +6,7 @@
 /*   By: ndelhota <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:30:23 by ndelhota          #+#    #+#             */
-/*   Updated: 2025/04/18 10:19:06 by ndelhota         ###   ########.fr       */
+/*   Updated: 2025/04/18 12:27:08 by ndelhota         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,17 @@
 
 int	check_double_pipe(char *line)
 {
+	char	a;
+
 	while (*line)
 	{
+		if (*line == '\'' || *line == '\"')
+		{
+			a = *line;
+			line++;
+			while (*line && *line != a)
+				line++;
+		}
 		if (*line && *line == '|' && *(line + 1) == '|')
 			return (0);
 		line++;

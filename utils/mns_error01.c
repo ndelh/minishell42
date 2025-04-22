@@ -20,7 +20,6 @@ void	redir_error(t_data *data, t_cmd *cmd, t_token *rdir_list)
 	cmd->rdir_list = NULL;
 	if (cmd->pid == 1)
 	{
-		rl_clear_history();
 		closer(2, cmd->pfd[0], cmd->pfd[1]);
 		ft_end(data);
 		exit(1);
@@ -37,7 +36,6 @@ void	isdir_error(t_data *data, t_cmd *cmd)
 	cmd->rdir_list = NULL;
 	if (cmd->pid == 1)
 	{
-		rl_clear_history();
 		closer(2, cmd->pfd[0], cmd->pfd[1]);
 		ft_end(data);
 		exit(126);
@@ -62,7 +60,6 @@ void	fct_error(t_data *data, t_cmd *cmd)
 	cmd->rdir_list = NULL;
 	if (cmd->pid == 1)
 	{
-		rl_clear_history();
 		closer(2, cmd->pfd[0], cmd->pfd[1]);
 		ft_end(data);
 		exit(127);

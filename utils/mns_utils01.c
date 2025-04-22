@@ -92,6 +92,7 @@ pid_t	secured_fork(t_data *data)
 	}
 	if (!ret)
 	{
+		rl_clear_history();
 		signals_init(1);
 		ret = 1;
 	}

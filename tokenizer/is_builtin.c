@@ -19,7 +19,7 @@ int	is_build(char **s)
 	if (!ft_strcmp(*s, "echo") || !ft_strcmp(*s, "env")
 		|| !ft_strcmp(*s, "unset") || !ft_strcmp(*s, "export")
 		|| !ft_strcmp(*s, "pwd") || !ft_strcmp(*s, "cd")
-		|| !ft_strcmp(*s, "./minishell")
+		|| ft_strnstr(*s, "minishell", ft_strlen(*s))
 		|| !ft_strcmp(*s, "exit"))
 		return (1);
 	return (0);
